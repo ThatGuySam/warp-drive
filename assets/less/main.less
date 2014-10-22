@@ -18,12 +18,18 @@
 @import "layouts/pages/_home";       // Home page styling
 @import "layouts/_posts";            // Post styling
 
-//Material
-@import "material/material";			// Material Design
-@import "material/ripples";				// Material Ripple
+
+// Custom
 
 
-@import "icon-font";					// Icon Font
+@import "../vendor/font-awesome/less/font-awesome";		// Font Awesome
+
+// Material
+@import "material/material";							// Material Design
+@import "material/ripples";								// Material Ripple
+
+
+@import "icon-font";									// Icon Font
 
 
 
@@ -44,14 +50,40 @@ p {
 	font-family: "Open Sans","Helvetica Neue",Helvetica,Arial,sans-serif;
 }
 
+
+
+/*
+
+Menu
+
+*/
+
+
 .navbar-nav {
 	width: 100%;
 }
 
-.navbar-nav>li {
+.menu-item {
+	text-align: center;
+	text-transform: uppercase;
+}
+
+.menu-outer-item {
+	font-size: 1.2em;
 	text-align: center;
 }
 
-.navbar-brand {
-	font-size: 1.5em;
+.menu-item:after {
+	content: " ";
+	position: absolute;
+	bottom: 0;
+	left: 0;
+	background: #d8d8d8;
+	width: 100%;
+	height: 0px;
+	z-index: -1;
+}
+
+.menu-item:hover:after {
+	height: 5px;
 }

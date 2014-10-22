@@ -43,6 +43,7 @@ Menu
 
 */
 
+/* Custom Menu Classes */
 
 remove_filter('nav_menu_css_class', 'roots_nav_menu_css_class', 10);
 
@@ -51,7 +52,7 @@ function roots_custom_nav_menu_css_class($classes, $item) {
   $classes = preg_replace('/(current(-menu-|[-_]page[-_])(item|parent|ancestor))/', 'active', $classes);
   $classes = preg_replace('/^((menu|page)[-_\w+]+)+/', '', $classes);
 
-  $classes[] = 'col-sm-2 menu-' . $slug;
+  $classes[] = 'col-sm-2 menu-item menu-' . $slug;
 
   $classes = array_unique($classes);
 
@@ -60,6 +61,7 @@ function roots_custom_nav_menu_css_class($classes, $item) {
 add_filter('nav_menu_css_class', 'roots_custom_nav_menu_css_class', 10, 2);
 
 
+/* Outer Menu Buttons */
 
 function add_search_form_to_menu($items, $args) {
  
@@ -67,7 +69,29 @@ function add_search_form_to_menu($items, $args) {
  if( !($args->theme_location == 'primary_navigation') )
  return $items;
  
+	ob_start(); ?>
+		
+	<li class="menu-outer-item col-sm-1">
+      <a href="<?php echo esc_url(home_url('/')); ?>"><i class="icon-guts-g"></i></a>
+	</li>
+		    
+	<?php $before = ob_get_clean();
+	
+	
+	ob_start(); ?>
+		
+	<li class="menu-outer-item search-toggle col-sm-1">
+		<a href="javascript:void;">
+			<span class="glyphicon glyphicon-search"></span>
+		</a>
+	</li>
+		    
+	<?php $after = ob_get_clean();
+		
+		
+ 
  // On main menu: put styling around search and append it to the menu items
- return $items . '<li class="search-toggle col-sm-1"></li>';
+ return 
+ 	$before . $items . $after;
 }
 add_filter('wp_nav_menu_items', 'add_search_form_to_menu', 10, 2);
