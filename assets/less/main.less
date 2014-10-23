@@ -32,14 +32,62 @@
 @import "icon-font";									// Icon Font
 
 
+@guts-red: #a20000;
 
-//@brand-primary:         #a20000;
+@off-white: #d8d8d8;
 
+@secondary-white: #eaeaea;
 
+@off-black: #323232;
 
-.input-group .input-group-btn .btn {
-	border-radius: 0;
+/*
+-webkit-transition: all 500ms cubic-bezier(0.230, 1.000, 0.320, 1.000); 
+   -moz-transition: all 500ms cubic-bezier(0.230, 1.000, 0.320, 1.000); 
+     -o-transition: all 500ms cubic-bezier(0.230, 1.000, 0.320, 1.000); 
+        transition: all 500ms cubic-bezier(0.230, 1.000, 0.320, 1.000);
+
+-webkit-transition-timing-function: cubic-bezier(0.230, 1.000, 0.320, 1.000); 
+   -moz-transition-timing-function: cubic-bezier(0.230, 1.000, 0.320, 1.000); 
+     -o-transition-timing-function: cubic-bezier(0.230, 1.000, 0.320, 1.000); 
+        transition-timing-function: cubic-bezier(0.230, 1.000, 0.320, 1.000);
+*/
+
+.backgroundRGBa(@colour, @alpha) {
+	@alphaColour: hsla(hue(@colour), saturation(@colour), lightness(@colour), @alpha);
+	@ieAlphaColour: argb(@alphaColour);
+	
+	background-color: @colour; // Fallback for older browsers
+	background-color: @alphaColour; 
+	
+	// IE hacks
+	zoom: 1; // hasLayout
+	background-color: transparent\9;
+	-ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorstr=@{ieAlphaColour}, endColorstr=@{ieAlphaColour})"; // IE 8+
+        filter:  ~"progid:DXImageTransform.Microsoft.gradient(startColorstr=@{ieAlphaColour}, endColorstr=@{ieAlphaColour})";  // IE 6 & 7 
+	
 }
+
+
+.transition( @property:all, @duration:500ms ) {
+	-webkit-transition: @property @duration cubic-bezier(0.230, 1.000, 0.320, 1.000); 
+	   -moz-transition: @property @duration cubic-bezier(0.230, 1.000, 0.320, 1.000); 
+	     -o-transition: @property @duration cubic-bezier(0.230, 1.000, 0.320, 1.000); 
+	        transition: @property @duration cubic-bezier(0.230, 1.000, 0.320, 1.000);
+	
+	-webkit-transition-timing-function: cubic-bezier(0.230, 1.000, 0.320, 1.000); 
+	   -moz-transition-timing-function: cubic-bezier(0.230, 1.000, 0.320, 1.000); 
+	     -o-transition-timing-function: cubic-bezier(0.230, 1.000, 0.320, 1.000); 
+	        transition-timing-function: cubic-bezier(0.230, 1.000, 0.320, 1.000);
+}
+
+
+
+/*
+
+Typography
+
+*/
+
 
 body, h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4 {
 	font-family: "Lato","Helvetica Neue",Helvetica,Arial,sans-serif;
@@ -54,10 +102,39 @@ p {
 
 /*
 
+Interface
+
+*/
+
+.input-group .input-group-btn .btn {
+	border-radius: 0;
+}
+
+
+
+
+/*
+
+Body
+
+*/
+
+
+body {
+	background-color: @off-white;
+}
+
+
+/*
+
 Menu
 
 */
 
+
+.navbar, .navbar-default {
+	.backgroundRGBa(@off-black, 0.9)
+}
 
 .navbar-nav {
 	width: 100%;
@@ -78,12 +155,23 @@ Menu
 	position: absolute;
 	bottom: 0;
 	left: 0;
-	background: #d8d8d8;
+	background: @off-white;
 	width: 100%;
 	height: 0px;
 	z-index: -1;
+	
+	.transition( height, 250ms);
 }
 
 .menu-item:hover:after {
 	height: 5px;
 }
+
+
+
+
+/*
+
+Hero
+
+*/

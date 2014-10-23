@@ -938,6 +938,12 @@ img {
   -webkit-transition: all 0.2s ease-in-out;
   -o-transition: all 0.2s ease-in-out;
   transition: all 0.2s ease-in-out;
+  -webkit-transition: all 0.2s ease-in-out 500ms cubic-bezier(0.23, 1, 0.32, 1);
+  -o-transition: all 0.2s ease-in-out 500ms cubic-bezier(0.23, 1, 0.32, 1);
+  transition: all 0.2s ease-in-out 500ms cubic-bezier(0.23, 1, 0.32, 1);
+  -webkit-transition-timing-function: cubic-bezier(0.23, 1, 0.32, 1);
+  -o-transition-timing-function: cubic-bezier(0.23, 1, 0.32, 1);
+  transition-timing-function: cubic-bezier(0.23, 1, 0.32, 1);
   display: inline-block;
   width: 100% \9;
   max-width: 100%;
@@ -2353,6 +2359,12 @@ output {
   -webkit-transition: border-color ease-in-out .15s, -webkit-box-shadow ease-in-out .15s;
   -o-transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
   transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
+  -webkit-transition: border-color ease-in-out .15s, -webkit-box-shadow ease-in-out .15s 500ms cubic-bezier(0.23, 1, 0.32, 1);
+  -o-transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s 500ms cubic-bezier(0.23, 1, 0.32, 1);
+  transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s 500ms cubic-bezier(0.23, 1, 0.32, 1);
+  -webkit-transition-timing-function: cubic-bezier(0.23, 1, 0.32, 1);
+  -o-transition-timing-function: cubic-bezier(0.23, 1, 0.32, 1);
+  transition-timing-function: cubic-bezier(0.23, 1, 0.32, 1);
 }
 .form-control:focus {
   border-color: #66afe9;
@@ -3071,6 +3083,12 @@ input[type="button"].btn-block {
   -webkit-transition: opacity 0.15s linear;
   -o-transition: opacity 0.15s linear;
   transition: opacity 0.15s linear;
+  -webkit-transition: opacity 0.15s linear 500ms cubic-bezier(0.23, 1, 0.32, 1);
+  -o-transition: opacity 0.15s linear 500ms cubic-bezier(0.23, 1, 0.32, 1);
+  transition: opacity 0.15s linear 500ms cubic-bezier(0.23, 1, 0.32, 1);
+  -webkit-transition-timing-function: cubic-bezier(0.23, 1, 0.32, 1);
+  -o-transition-timing-function: cubic-bezier(0.23, 1, 0.32, 1);
+  transition-timing-function: cubic-bezier(0.23, 1, 0.32, 1);
 }
 .fade.in {
   opacity: 1;
@@ -3094,6 +3112,12 @@ tbody.collapse.in {
   -webkit-transition: height 0.35s ease;
   -o-transition: height 0.35s ease;
   transition: height 0.35s ease;
+  -webkit-transition: height 0.35s ease 500ms cubic-bezier(0.23, 1, 0.32, 1);
+  -o-transition: height 0.35s ease 500ms cubic-bezier(0.23, 1, 0.32, 1);
+  transition: height 0.35s ease 500ms cubic-bezier(0.23, 1, 0.32, 1);
+  -webkit-transition-timing-function: cubic-bezier(0.23, 1, 0.32, 1);
+  -o-transition-timing-function: cubic-bezier(0.23, 1, 0.32, 1);
+  transition-timing-function: cubic-bezier(0.23, 1, 0.32, 1);
 }
 .caret {
   display: inline-block;
@@ -4581,6 +4605,12 @@ a.list-group-item.active > .badge,
   -webkit-transition: all 0.2s ease-in-out;
   -o-transition: all 0.2s ease-in-out;
   transition: all 0.2s ease-in-out;
+  -webkit-transition: all 0.2s ease-in-out 500ms cubic-bezier(0.23, 1, 0.32, 1);
+  -o-transition: all 0.2s ease-in-out 500ms cubic-bezier(0.23, 1, 0.32, 1);
+  transition: all 0.2s ease-in-out 500ms cubic-bezier(0.23, 1, 0.32, 1);
+  -webkit-transition-timing-function: cubic-bezier(0.23, 1, 0.32, 1);
+  -o-transition-timing-function: cubic-bezier(0.23, 1, 0.32, 1);
+  transition-timing-function: cubic-bezier(0.23, 1, 0.32, 1);
 }
 .thumbnail > img,
 .thumbnail a > img,
@@ -4725,6 +4755,12 @@ a.wp-caption.active {
   -webkit-transition: width 0.6s ease;
   -o-transition: width 0.6s ease;
   transition: width 0.6s ease;
+  -webkit-transition: width 0.6s ease 500ms cubic-bezier(0.23, 1, 0.32, 1);
+  -o-transition: width 0.6s ease 500ms cubic-bezier(0.23, 1, 0.32, 1);
+  transition: width 0.6s ease 500ms cubic-bezier(0.23, 1, 0.32, 1);
+  -webkit-transition-timing-function: cubic-bezier(0.23, 1, 0.32, 1);
+  -o-transition-timing-function: cubic-bezier(0.23, 1, 0.32, 1);
+  transition-timing-function: cubic-bezier(0.23, 1, 0.32, 1);
 }
 .progress-striped .progress-bar,
 .progress-bar-striped {
@@ -5719,6 +5755,12 @@ button.close {
   -webkit-transition: 0.6s ease-in-out left;
   -o-transition: 0.6s ease-in-out left;
   transition: 0.6s ease-in-out left;
+  -webkit-transition: 0.6s ease-in-out left 500ms cubic-bezier(0.23, 1, 0.32, 1);
+  -o-transition: 0.6s ease-in-out left 500ms cubic-bezier(0.23, 1, 0.32, 1);
+  transition: 0.6s ease-in-out left 500ms cubic-bezier(0.23, 1, 0.32, 1);
+  -webkit-transition-timing-function: cubic-bezier(0.23, 1, 0.32, 1);
+  -o-transition-timing-function: cubic-bezier(0.23, 1, 0.32, 1);
+  transition-timing-function: cubic-bezier(0.23, 1, 0.32, 1);
 }
 .carousel-inner > .item > img,
 .carousel-inner > .item > a > img {
@@ -13916,9 +13958,22 @@ fieldset[disabled] .navbar .btn-link:focus {
   content: '\47';
 }
 /* 'G' */
-.input-group .input-group-btn .btn {
-  border-radius: 0;
-}
+/*
+-webkit-transition: all 500ms cubic-bezier(0.230, 1.000, 0.320, 1.000); 
+   -moz-transition: all 500ms cubic-bezier(0.230, 1.000, 0.320, 1.000); 
+     -o-transition: all 500ms cubic-bezier(0.230, 1.000, 0.320, 1.000); 
+        transition: all 500ms cubic-bezier(0.230, 1.000, 0.320, 1.000);
+
+-webkit-transition-timing-function: cubic-bezier(0.230, 1.000, 0.320, 1.000); 
+   -moz-transition-timing-function: cubic-bezier(0.230, 1.000, 0.320, 1.000); 
+     -o-transition-timing-function: cubic-bezier(0.230, 1.000, 0.320, 1.000); 
+        transition-timing-function: cubic-bezier(0.230, 1.000, 0.320, 1.000);
+*/
+/*
+
+Typography
+
+*/
 body,
 h1,
 h2,
@@ -13938,9 +13993,34 @@ p {
 }
 /*
 
+Interface
+
+*/
+.input-group .input-group-btn .btn {
+  border-radius: 0;
+}
+/*
+
+Body
+
+*/
+body {
+  background-color: #d8d8d8;
+}
+/*
+
 Menu
 
 */
+.navbar,
+.navbar-default {
+  background-color: #323232;
+  background-color: rgba(50, 50, 50, 0.9);
+  zoom: 1;
+  background-color: transparent\9;
+  -ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorstr=#e6323232, endColorstr=#e6323232)";
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr=#e6323232, endColorstr=#e6323232);
+}
 .navbar-nav {
   width: 100%;
 }
@@ -13961,8 +14041,19 @@ Menu
   width: 100%;
   height: 0px;
   z-index: -1;
+  -webkit-transition: height 250ms cubic-bezier(0.23, 1, 0.32, 1);
+  -o-transition: height 250ms cubic-bezier(0.23, 1, 0.32, 1);
+  transition: height 250ms cubic-bezier(0.23, 1, 0.32, 1);
+  -webkit-transition-timing-function: cubic-bezier(0.23, 1, 0.32, 1);
+  -o-transition-timing-function: cubic-bezier(0.23, 1, 0.32, 1);
+  transition-timing-function: cubic-bezier(0.23, 1, 0.32, 1);
 }
 .menu-item:hover:after {
   height: 5px;
 }
+/*
+
+Hero
+
+*/
 /*# sourceMappingURL=main.css.map */
