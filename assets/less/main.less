@@ -32,25 +32,30 @@
 @import "icon-font";									// Icon Font
 
 
+/*
+
+Variables
+
+*/
+
+
 @guts-red: #a20000;
 
 @off-white: #d8d8d8;
 
-@secondary-white: #eaeaea;
+@secondary-light: #eaeaea;
 
 @off-black: #323232;
 
-/*
--webkit-transition: all 500ms cubic-bezier(0.230, 1.000, 0.320, 1.000); 
-   -moz-transition: all 500ms cubic-bezier(0.230, 1.000, 0.320, 1.000); 
-     -o-transition: all 500ms cubic-bezier(0.230, 1.000, 0.320, 1.000); 
-        transition: all 500ms cubic-bezier(0.230, 1.000, 0.320, 1.000);
+@secondary-dark: #4d4d4d;
 
--webkit-transition-timing-function: cubic-bezier(0.230, 1.000, 0.320, 1.000); 
-   -moz-transition-timing-function: cubic-bezier(0.230, 1.000, 0.320, 1.000); 
-     -o-transition-timing-function: cubic-bezier(0.230, 1.000, 0.320, 1.000); 
-        transition-timing-function: cubic-bezier(0.230, 1.000, 0.320, 1.000);
+
+/*
+
+Mixins
+
 */
+
 
 .backgroundRGBa(@colour, @alpha) {
 	@alphaColour: hsla(hue(@colour), saturation(@colour), lightness(@colour), @alpha);
@@ -62,8 +67,6 @@
 	// IE hacks
 	zoom: 1; // hasLayout
 	background-color: transparent\9;
-	-ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorstr=@{ieAlphaColour}, endColorstr=@{ieAlphaColour})"; // IE 8+
-        filter:  ~"progid:DXImageTransform.Microsoft.gradient(startColorstr=@{ieAlphaColour}, endColorstr=@{ieAlphaColour})";  // IE 6 & 7 
 	
 }
 
@@ -87,6 +90,9 @@
 Typography
 
 */
+
+
+@import url(http://fonts.googleapis.com/css?family=Lato:300,400,700italic|Open+Sans:300italic,400italic,700,300,400);
 
 
 body, h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4 {
@@ -124,6 +130,12 @@ body {
 	background-color: @off-white;
 }
 
+/* Bootstrap No Padding */
+.row > .nopadding {
+   padding: 0 !important;
+   margin: 0 !important;
+}
+
 
 /*
 
@@ -140,9 +152,18 @@ Menu
 	width: 100%;
 }
 
+.nav > li > a {
+	
+	padding: 10px 0;
+	
+}
+
 .menu-item {
 	text-align: center;
 	text-transform: uppercase;
+	z-index: 0;
+	font-weight: 600;
+	letter-spacing: 0.05em;
 }
 
 .menu-outer-item {
@@ -173,5 +194,12 @@ Menu
 /*
 
 Hero
+
+*/
+
+
+/*
+
+Footer
 
 */

@@ -52,7 +52,7 @@ function roots_custom_nav_menu_css_class($classes, $item) {
   $classes = preg_replace('/(current(-menu-|[-_]page[-_])(item|parent|ancestor))/', 'active', $classes);
   $classes = preg_replace('/^((menu|page)[-_\w+]+)+/', '', $classes);
 
-  $classes[] = 'col-sm-2 menu-item menu-' . $slug;
+  $classes[] = 'col-sm-2 nopadding menu-item menu-' . $slug;
 
   $classes = array_unique($classes);
 

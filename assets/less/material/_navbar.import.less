@@ -35,12 +35,20 @@
                 background-color: @navbar-link-hover-bg;
             }
         }
-        > .active > a {
+        > .active {
             &,
             &:hover,
             &:focus {
                 color: @navbar-link-active-color;
-                background-color: @navbar-link-active-bg;
+                background-color: @off-black;
+            }
+        }
+        > .active > a {
+            &,
+            &:hover,
+            &:focus {
+                color: inherit;
+                background-color: transparent;
             }
         }
         > .disabled > a {
