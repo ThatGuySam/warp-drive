@@ -2,7 +2,8 @@
 @import "_bootstrap";
 
 // Variable overrides and custom variables
-@import "_variables"; 
+@import "_variables";
+
 
 // Roots
 @import "_global";                   // Base styling & custom mixins
@@ -50,6 +51,12 @@ Variables
 @secondary-dark: #4d4d4d;
 
 
+
+@link-color:		@off-black;
+
+@link-hover-color:	@secondary-dark;
+
+
 /*
 
 Mixins
@@ -57,7 +64,7 @@ Mixins
 */
 
 
-.backgroundRGBa(@colour, @alpha) {
+.backgroundRGBa(@colour: @off-black, @alpha: 1.0) {
 	@alphaColour: hsla(hue(@colour), saturation(@colour), lightness(@colour), @alpha);
 	@ieAlphaColour: argb(@alphaColour);
 	
@@ -104,7 +111,14 @@ p {
 	font-family: "Open Sans","Helvetica Neue",Helvetica,Arial,sans-serif;
 }
 
-
+::selection {  /* WebKit/Blink Browsers */
+	.backgroundRGBa();
+	color: @off-white;
+}
+::-moz-selection { /* Gecko Browsers */
+	.backgroundRGBa();
+	color: @off-white;
+}
 
 /*
 
@@ -131,9 +145,21 @@ body {
 }
 
 /* Bootstrap No Padding */
-.row > .nopadding {
-   padding: 0 !important;
+.row > .nopadding,
+.container-fluid.nopadding {
+   padding-left: 0 !important;
+   padding-right: 0 !important;
    margin: 0 !important;
+}
+
+.dark {
+	.backgroundRGBa();
+	color: @off-white;
+}
+
+.wrap {
+	padding-top: 3em;
+	padding-bottom: 3em;
 }
 
 
@@ -145,16 +171,20 @@ Menu
 
 
 .navbar, .navbar-default {
-	.backgroundRGBa(@off-black, 0.9)
+	position: absolute;
+	left: 0;
+	right: 0;
+	
+	.backgroundRGBa(@off-black, 0.9);
 }
 
 .navbar-nav {
 	width: 100%;
 }
 
-.nav > li > a {
+.navbar .navbar-nav > li > a {
 	
-	padding: 10px 0;
+	padding: 20px 0;
 	
 }
 
@@ -198,8 +228,56 @@ Hero
 */
 
 
+.hero-container {
+	padding-top: 60px;
+	
+	h1, h2, h3 {
+		text-transform: uppercase;
+		font-weight: 600;
+		letter-spacing: 0.1em;
+	}
+	
+}
+
+.page-header {
+	border-bottom: initial;
+}
+
+
 /*
 
 Footer
 
 */
+
+.footer {
+	color: @off-white;
+	
+	min-height: 300px;
+	
+	.backgroundRGBa(@off-black);
+}
+
+
+/*
+
+Widgets
+
+*/
+
+/* Widgets Head */
+.widget {
+	
+	> h3 {
+		text-transform: uppercase;
+	}
+	
+	a {
+		color: #ffffff;
+	}
+	
+	a:hover,
+	a:focus {
+		color: @off-white;
+	}
+}
