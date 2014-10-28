@@ -23,6 +23,25 @@ var Roots = {
   common: {
     init: function() {
       // JavaScript to be fired on all pages
+      
+		if ( undefined !== window.jQuery ) { jQuery(function ($) { 'use strict';
+			
+			$("a.scrollto").each( function() {
+			
+			var $this = $(this);
+			
+				$this.click(function() {
+					$('html, body').animate({
+						scrollTop: $( $this.attr('href') ).offset().top
+					}, 1000);
+					
+					event.preventDefault();
+				});
+				
+			});
+			
+		}); }
+		
     }
   },
   // Home page

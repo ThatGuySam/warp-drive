@@ -22,6 +22,13 @@ function roots_wp_title($title) {
 add_filter('wp_title', 'roots_wp_title', 10);
 
 
+add_image_size( '1080', 1920, 1080, true );
+add_image_size( '720', 1280, 720, true );
+add_image_size( '360', 640, 360, true );
+add_image_size( 'thumb-hd', 400, 225, true );
+
+
+
 function show_sitemap() {
   if( isset($_GET['show_sitemap'])) {
     $the_query = new WP_Query(array('post_type' => 'any', 'posts_per_page' => '-1', 'post_status' => 'publish'));

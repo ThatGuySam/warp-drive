@@ -10,10 +10,11 @@
   <?php
     do_action('get_header');
     get_template_part('templates/header');
+    get_template_part('templates/hero');
   ?>
 
   <div class="wrap container" role="document">
-    <div class="content row">
+    <div id="content" class="content row">
       <main class="main" role="main">
         <?php include roots_template_path(); ?>
       </main><!-- /.main -->

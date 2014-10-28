@@ -868,11 +868,13 @@ th {
   content: "\e200";
 }
 * {
+  -ms-box-sizing: border-box;
   -webkit-box-sizing: border-box;
   box-sizing: border-box;
 }
 *:before,
 *:after {
+  -ms-box-sizing: border-box;
   -webkit-box-sizing: border-box;
   box-sizing: border-box;
 }
@@ -939,6 +941,9 @@ img {
   -webkit-transition: all 0.2s ease-in-out;
   -o-transition: all 0.2s ease-in-out;
   transition: all 0.2s ease-in-out;
+  -webkit-transition: all all 0.2s ease-in-out ease-out;
+  -o-transition: all all 0.2s ease-in-out ease-out;
+  transition: all all 0.2s ease-in-out ease-out;
   -webkit-transition: all 0.2s ease-in-out 500ms cubic-bezier(0.23, 1, 0.32, 1);
   -o-transition: all 0.2s ease-in-out 500ms cubic-bezier(0.23, 1, 0.32, 1);
   transition: all 0.2s ease-in-out 500ms cubic-bezier(0.23, 1, 0.32, 1);
@@ -2309,6 +2314,7 @@ label {
   font-weight: bold;
 }
 input[type="search"] {
+  -ms-box-sizing: border-box;
   -webkit-box-sizing: border-box;
   box-sizing: border-box;
 }
@@ -2360,6 +2366,9 @@ output {
   -webkit-transition: border-color ease-in-out .15s, -webkit-box-shadow ease-in-out .15s;
   -o-transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
   transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
+  -webkit-transition: all border-color ease-in-out .15s, -webkit-box-shadow ease-in-out .15s ease-out;
+  -o-transition: all border-color ease-in-out .15s, box-shadow ease-in-out .15s ease-out;
+  transition: all border-color ease-in-out .15s, box-shadow ease-in-out .15s ease-out;
   -webkit-transition: border-color ease-in-out .15s, -webkit-box-shadow ease-in-out .15s 500ms cubic-bezier(0.23, 1, 0.32, 1);
   -o-transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s 500ms cubic-bezier(0.23, 1, 0.32, 1);
   transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s 500ms cubic-bezier(0.23, 1, 0.32, 1);
@@ -2762,7 +2771,11 @@ select[multiple].input-lg {
 fieldset[disabled] .btn {
   cursor: not-allowed;
   pointer-events: none;
+  -moz-opacity: 0.65;
+  -khtml-opacity: 0.65;
+  -webkit-opacity: 0.65;
   opacity: 0.65;
+  -ms-filter: progid:DXImageTransform.Microsoft.Alpha(opacity=65);
   filter: alpha(opacity=65);
   -webkit-box-shadow: none;
   box-shadow: none;
@@ -3084,6 +3097,9 @@ input[type="button"].btn-block {
   -webkit-transition: opacity 0.15s linear;
   -o-transition: opacity 0.15s linear;
   transition: opacity 0.15s linear;
+  -webkit-transition: all opacity 0.15s linear ease-out;
+  -o-transition: all opacity 0.15s linear ease-out;
+  transition: all opacity 0.15s linear ease-out;
   -webkit-transition: opacity 0.15s linear 500ms cubic-bezier(0.23, 1, 0.32, 1);
   -o-transition: opacity 0.15s linear 500ms cubic-bezier(0.23, 1, 0.32, 1);
   transition: opacity 0.15s linear 500ms cubic-bezier(0.23, 1, 0.32, 1);
@@ -3113,6 +3129,9 @@ tbody.collapse.in {
   -webkit-transition: height 0.35s ease;
   -o-transition: height 0.35s ease;
   transition: height 0.35s ease;
+  -webkit-transition: all height 0.35s ease ease-out;
+  -o-transition: all height 0.35s ease ease-out;
+  transition: all height 0.35s ease ease-out;
   -webkit-transition: height 0.35s ease 500ms cubic-bezier(0.23, 1, 0.32, 1);
   -o-transition: height 0.35s ease 500ms cubic-bezier(0.23, 1, 0.32, 1);
   transition: height 0.35s ease 500ms cubic-bezier(0.23, 1, 0.32, 1);
@@ -3428,7 +3447,11 @@ tbody.collapse.in {
 [data-toggle="buttons"] > .btn > input[type="checkbox"] {
   position: absolute;
   z-index: -1;
+  -moz-opacity: 0;
+  -khtml-opacity: 0;
+  -webkit-opacity: 0;
   opacity: 0;
+  -ms-filter: progid:DXImageTransform.Microsoft.Alpha(opacity=0);
   filter: alpha(opacity=0);
 }
 .input-group {
@@ -4606,6 +4629,9 @@ a.list-group-item.active > .badge,
   -webkit-transition: all 0.2s ease-in-out;
   -o-transition: all 0.2s ease-in-out;
   transition: all 0.2s ease-in-out;
+  -webkit-transition: all all 0.2s ease-in-out ease-out;
+  -o-transition: all all 0.2s ease-in-out ease-out;
+  transition: all all 0.2s ease-in-out ease-out;
   -webkit-transition: all 0.2s ease-in-out 500ms cubic-bezier(0.23, 1, 0.32, 1);
   -o-transition: all 0.2s ease-in-out 500ms cubic-bezier(0.23, 1, 0.32, 1);
   transition: all 0.2s ease-in-out 500ms cubic-bezier(0.23, 1, 0.32, 1);
@@ -4756,6 +4782,9 @@ a.wp-caption.active {
   -webkit-transition: width 0.6s ease;
   -o-transition: width 0.6s ease;
   transition: width 0.6s ease;
+  -webkit-transition: all width 0.6s ease ease-out;
+  -o-transition: all width 0.6s ease ease-out;
+  transition: all width 0.6s ease ease-out;
   -webkit-transition: width 0.6s ease 500ms cubic-bezier(0.23, 1, 0.32, 1);
   -o-transition: width 0.6s ease 500ms cubic-bezier(0.23, 1, 0.32, 1);
   transition: width 0.6s ease 500ms cubic-bezier(0.23, 1, 0.32, 1);
@@ -5386,7 +5415,11 @@ a.list-group-item-danger.active:focus {
   line-height: 1;
   color: #000000;
   text-shadow: 0 1px 0 #ffffff;
+  -moz-opacity: 0.2;
+  -khtml-opacity: 0.2;
+  -webkit-opacity: 0.2;
   opacity: 0.2;
+  -ms-filter: progid:DXImageTransform.Microsoft.Alpha(opacity=20);
   filter: alpha(opacity=20);
 }
 .close:hover,
@@ -5394,7 +5427,11 @@ a.list-group-item-danger.active:focus {
   color: #000000;
   text-decoration: none;
   cursor: pointer;
+  -moz-opacity: 0.5;
+  -khtml-opacity: 0.5;
+  -webkit-opacity: 0.5;
   opacity: 0.5;
+  -ms-filter: progid:DXImageTransform.Microsoft.Alpha(opacity=50);
   filter: alpha(opacity=50);
 }
 button.close {
@@ -5461,11 +5498,19 @@ button.close {
   background-color: #000000;
 }
 .modal-backdrop.fade {
+  -moz-opacity: 0;
+  -khtml-opacity: 0;
+  -webkit-opacity: 0;
   opacity: 0;
+  -ms-filter: progid:DXImageTransform.Microsoft.Alpha(opacity=0);
   filter: alpha(opacity=0);
 }
 .modal-backdrop.in {
+  -moz-opacity: 0.5;
+  -khtml-opacity: 0.5;
+  -webkit-opacity: 0.5;
   opacity: 0.5;
+  -ms-filter: progid:DXImageTransform.Microsoft.Alpha(opacity=50);
   filter: alpha(opacity=50);
 }
 .modal-header {
@@ -5531,11 +5576,19 @@ button.close {
   visibility: visible;
   font-size: 12px;
   line-height: 1.4;
+  -moz-opacity: 0;
+  -khtml-opacity: 0;
+  -webkit-opacity: 0;
   opacity: 0;
+  -ms-filter: progid:DXImageTransform.Microsoft.Alpha(opacity=0);
   filter: alpha(opacity=0);
 }
 .tooltip.in {
+  -moz-opacity: 0.9;
+  -khtml-opacity: 0.9;
+  -webkit-opacity: 0.9;
   opacity: 0.9;
+  -ms-filter: progid:DXImageTransform.Microsoft.Alpha(opacity=90);
   filter: alpha(opacity=90);
 }
 .tooltip.top {
@@ -5756,6 +5809,9 @@ button.close {
   -webkit-transition: 0.6s ease-in-out left;
   -o-transition: 0.6s ease-in-out left;
   transition: 0.6s ease-in-out left;
+  -webkit-transition: all 0.6s ease-in-out left ease-out;
+  -o-transition: all 0.6s ease-in-out left ease-out;
+  transition: all 0.6s ease-in-out left ease-out;
   -webkit-transition: 0.6s ease-in-out left 500ms cubic-bezier(0.23, 1, 0.32, 1);
   -o-transition: 0.6s ease-in-out left 500ms cubic-bezier(0.23, 1, 0.32, 1);
   transition: 0.6s ease-in-out left 500ms cubic-bezier(0.23, 1, 0.32, 1);
@@ -5803,7 +5859,11 @@ button.close {
   left: 0;
   bottom: 0;
   width: 15%;
+  -moz-opacity: 0.5;
+  -khtml-opacity: 0.5;
+  -webkit-opacity: 0.5;
   opacity: 0.5;
+  -ms-filter: progid:DXImageTransform.Microsoft.Alpha(opacity=50);
   filter: alpha(opacity=50);
   font-size: 20px;
   color: #ffffff;
@@ -5833,7 +5893,11 @@ button.close {
   outline: 0;
   color: #ffffff;
   text-decoration: none;
+  -moz-opacity: 0.9;
+  -khtml-opacity: 0.9;
+  -webkit-opacity: 0.9;
   opacity: 0.9;
+  -ms-filter: progid:DXImageTransform.Microsoft.Alpha(opacity=90);
   filter: alpha(opacity=90);
 }
 .carousel-control .icon-prev,
@@ -13965,6 +14029,12 @@ fieldset[disabled] .navbar .btn-link:focus {
   content: '\47';
 }
 /* 'G' */
+/*---------------------------------------------------
+    LESS Elements 0.9
+  ---------------------------------------------------
+    A set of useful LESS mixins
+    More info at: http://lesselements.com
+  ---------------------------------------------------*/
 /*
 
 Variables
@@ -14033,13 +14103,7 @@ Body
 */
 body {
   background-color: #d8d8d8;
-}
-/* Bootstrap No Padding */
-.row > .nopadding,
-.container-fluid.nopadding {
-  padding-left: 0 !important;
-  padding-right: 0 !important;
-  margin: 0 !important;
+  font-size: 16px;
 }
 .dark {
   background-color: #323232;
@@ -14062,22 +14126,48 @@ Menu
   left: 0;
   right: 0;
   background-color: #323232;
-  background-color: rgba(50, 50, 50, 0.9);
+  background-color: rgba(50, 50, 50, 0.95);
   zoom: 1;
   background-color: transparent\9;
 }
-.navbar-nav {
+.navbar .navbar-nav {
   width: 100%;
+}
+.navbar .navbar-nav > li {
+  font-size: 0;
 }
 .navbar .navbar-nav > li > a {
   padding: 20px 0;
+  font-size: initial;
+  letter-spacing: 0.05em;
 }
 .menu-item {
   text-align: center;
   text-transform: uppercase;
   z-index: 0;
   font-weight: 600;
-  letter-spacing: 0.05em;
+  /*
+	&:active,
+	&:focus {
+		a {
+			color: @off-black;
+		}
+		&:after {
+			height: 100%;
+		}
+	}
+*/
+}
+.navbar .navbar-nav > .menu-item.active {
+  color: #323232;
+  background-color: #d8d8d8;
+  zoom: 1;
+  background-color: transparent\9;
+}
+.navbar .navbar-nav > .menu-item.active:after {
+  background-color: #323232;
+  zoom: 1;
+  background-color: transparent\9;
 }
 .menu-outer-item {
   font-size: 1.2em;
@@ -14092,6 +14182,9 @@ Menu
   width: 100%;
   height: 0px;
   z-index: -1;
+  -webkit-transition: all height 250ms;
+  -o-transition: all height 250ms;
+  transition: all height 250ms;
   -webkit-transition: height 250ms cubic-bezier(0.23, 1, 0.32, 1);
   -o-transition: height 250ms cubic-bezier(0.23, 1, 0.32, 1);
   transition: height 250ms cubic-bezier(0.23, 1, 0.32, 1);
@@ -14107,8 +14200,9 @@ Menu
 Hero
 
 */
-.hero-container {
-  padding-top: 60px;
+.hero-section {
+  max-width: 1140px;
+  margin: 0px auto;
 }
 .hero-container h1,
 .hero-container h2,
@@ -14116,6 +14210,60 @@ Hero
   text-transform: uppercase;
   font-weight: 600;
   letter-spacing: 0.1em;
+}
+.hero-container.hero-image .hero-organism {
+  position: relative;
+  margin: auto;
+  width: 100%;
+  height: 0;
+  padding-bottom: 56.25%;
+}
+.hero-container.hero-image .hero-organism > iframe,
+.hero-container.hero-image .hero-organism > video,
+.hero-container.hero-image .hero-organism > img,
+.hero-container.hero-image .hero-organism > div {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+}
+.hero-container.hero-image .hero-organism > iframe,
+.hero-container.hero-image .hero-organism > video,
+.hero-container.hero-image .hero-organism > img,
+.hero-container.hero-image .hero-organism > div {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+}
+.hero-container.hero-image .page-header {
+  position: relative;
+  top: 40%;
+  text-align: center;
+  color: #ffffff;
+  text-shadow: 0 0 2px #000000;
+}
+.hero-container.hero-image .page-header h1 {
+  font-size: 3em;
+}
+.hero-container.hero-text {
+  padding-top: 60px;
+}
+.hero-container .read-more a {
+  color: #ffffff;
+  text-transform: uppercase;
+  text-shadow: 0 0 2px #000000;
+  -webkit-transition: all scale 250ms;
+  -o-transition: all scale 250ms;
+  transition: all scale 250ms;
+  -webkit-transition: scale 250ms cubic-bezier(0.23, 1, 0.32, 1);
+  -o-transition: scale 250ms cubic-bezier(0.23, 1, 0.32, 1);
+  transition: scale 250ms cubic-bezier(0.23, 1, 0.32, 1);
+  -webkit-transition-timing-function: cubic-bezier(0.23, 1, 0.32, 1);
+  -o-transition-timing-function: cubic-bezier(0.23, 1, 0.32, 1);
+  transition-timing-function: cubic-bezier(0.23, 1, 0.32, 1);
+}
+.hero-container .read-more a:hover {
+  height: 3em;
+  text-decoration: none;
 }
 .page-header {
   border-bottom: initial;
@@ -14147,5 +14295,67 @@ Widgets
 .widget a:hover,
 .widget a:focus {
   color: #d8d8d8;
+}
+/*
+
+Organsisms
+
+*/
+/*
+
+Cheats
+
+*/
+.ir {
+  position: relative;
+  margin: auto;
+  width: 100%;
+  height: 0;
+  padding-bottom: 56.25%;
+}
+.ir > iframe,
+.ir > video,
+.ir > img,
+.ir > div {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+}
+.ir-hd {
+  position: relative;
+  margin: auto;
+  width: 100%;
+  height: 0;
+  padding-bottom: 56.25%;
+}
+.ir-hd > iframe,
+.ir-hd > video,
+.ir-hd > img,
+.ir-hd > div {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+}
+.ir-square {
+  position: relative;
+  margin: auto;
+  width: 100%;
+  height: 0;
+  padding-bottom: 100%;
+}
+.ir-square > iframe,
+.ir-square > video,
+.ir-square > img,
+.ir-square > div {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+}
+/* Bootstrap No Padding */
+.row > .nopadding,
+.container-fluid.nopadding {
+  padding-left: 0 !important;
+  padding-right: 0 !important;
+  margin: 0 !important;
 }
 /*# sourceMappingURL=main.css.map */
