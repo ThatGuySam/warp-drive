@@ -89,7 +89,7 @@ function add_search_form_to_menu($items, $args) {
 		
 	<li class="menu-outer-item search-toggle col-sm-1">
 		<a href="javascript:void;">
-			<span class="glyphicon glyphicon-search"></span>
+			<i class="fa fa-search"></i>
 		</a>
 	</li>
 		    
