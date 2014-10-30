@@ -3,7 +3,7 @@
 
   <!--[if lt IE 8]>
     <div class="alert alert-warning">
-      <?php _e('You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.', 'roots'); ?>
+      <?php _e('You are using an <strong>outdated browser</strong>. Please <a href="http://outdatedbrowser.com/">upgrade your browser</a> to ensure you have the safest and best experience at GutsChurch.com', 'roots'); ?>
     </div>
   <![endif]-->
 
