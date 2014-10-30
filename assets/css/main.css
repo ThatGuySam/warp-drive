@@ -14531,11 +14531,6 @@ Menu
   zoom: 1;
   background-color: transparent\9;
 }
-.navbar .navbar-nav > .menu-item.active:after {
-  background-color: #323232;
-  zoom: 1;
-  background-color: transparent\9;
-}
 .menu-outer-item {
   font-size: 1.2em;
   text-align: center;
