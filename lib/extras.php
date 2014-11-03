@@ -34,9 +34,9 @@ add_action('wp_print_styles', 'deregister_styles', 100);
 
 function deregister_styles() {
   //Visual Composer
-  wp_deregister_style('js_composer_front');
-  wp_deregister_style('js_composer_custom_css');
-  wp_deregister_script('wpb_composer_front_js');
+  if( wp_style_is( 'js_composer_front', 'registered' ) )		wp_deregister_style('js_composer_front');
+  if( wp_style_is( 'js_composer_custom_css', 'registered' ) )	wp_deregister_style('js_composer_custom_css');
+  if( wp_script_is( 'wpb_composer_front_js', 'registered' ) )	wp_deregister_script('wpb_composer_front_js');
 }
 
 
