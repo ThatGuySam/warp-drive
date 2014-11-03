@@ -19,7 +19,8 @@ module.exports = function(grunt) {
     'assets/vendor/bootstrap/js/tab.js',
     'assets/vendor/bootstrap/js/affix.js',
     'assets/js/plugins/*.js',
-    'assets/js/_*.js'
+    'assets/js/_*.js',
+    '../../plugins/js_composer/assets/js/js_composer_front.js'
   ];
   
   var domain = 'http://localhost:8888/gc-dev/';

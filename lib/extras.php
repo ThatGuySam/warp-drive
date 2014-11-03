@@ -29,6 +29,18 @@ add_image_size( 'thumb-hd', 400, 225, true );
 
 
 
+/* Plugin Deregisters for script concatenation */
+add_action('wp_print_styles', 'deregister_styles', 100);
+
+function deregister_styles() {
+  //Visual Composer
+  wp_deregister_style('js_composer_front');
+  wp_deregister_style('js_composer_custom_css');
+  wp_deregister_script('wpb_composer_front_js');
+}
+
+
+
 function show_sitemap() {
   if( isset($_GET['show_sitemap'])) {
     $the_query = new WP_Query(array('post_type' => 'any', 'posts_per_page' => '-1', 'post_status' => 'publish'));
