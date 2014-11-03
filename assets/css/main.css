@@ -18165,6 +18165,7 @@ Hero
 .hero-section {
   max-width: 1140px;
   margin: 0px auto;
+  overflow: hidden;
 }
 .hero-container h1,
 .hero-container h2,
