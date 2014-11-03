@@ -1,4 +1,4 @@
-<footer class="content-info footer" role="contentinfo">
+<footer class="content-info footer dark" role="contentinfo">
   <div class="container row-fluid">
     <?php dynamic_sidebar('sidebar-footer'); ?>
   </div>
