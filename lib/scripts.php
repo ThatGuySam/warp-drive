@@ -35,7 +35,7 @@ function roots_scripts() {
       'fontawesome'	=> '//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css',
       //'css'       => '/assets/css/main.clean.css?' . $assets['assets/css/main.clean.css']['hash'],
       'js'        => '/assets/js/scripts.min.js?' . $assets['assets/js/scripts.min.js']['hash'],
-      'modernizr' => '/assets/js/vendor/modernizr.min.js'.$assets['assets/js/scripts.min.js']['hash'],
+      'modernizr' => '/assets/js/vendor/modernizr.min.js?'.$assets['assets/js/scripts.min.js']['hash'],
       'jquery'    => '//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js'
     );
   }
