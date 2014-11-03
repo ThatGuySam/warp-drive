@@ -14478,6 +14478,13 @@ body {
   background-color: transparent\9;
   color: #d8d8d8;
 }
+.dark a {
+  color: #ffffff;
+}
+.dark a:hover,
+.dark a:focus {
+  color: #d8d8d8;
+}
 .wrap {
   padding-top: 3em;
   padding-bottom: 3em;
@@ -14636,11 +14643,7 @@ Footer
 
 */
 .footer {
-  color: #d8d8d8;
   min-height: 300px;
-  background-color: #323232;
-  zoom: 1;
-  background-color: transparent\9;
 }
 /*
 
@@ -14650,13 +14653,6 @@ Widgets
 /* Widgets Head */
 .widget > h3 {
   text-transform: uppercase;
-}
-.widget a {
-  color: #ffffff;
-}
-.widget a:hover,
-.widget a:focus {
-  color: #d8d8d8;
 }
 /*
 
