@@ -1,4 +1,11 @@
 <?php
+
+require get_theme_root().'/'.get_template().'/lib/vendor/autoload.php';
+
+use League\ColorExtractor\Client as ColorExtractor;
+
+$client = new ColorExtractor;
+
 /**
  * Clean up the_excerpt()
  */
@@ -29,7 +36,71 @@ add_image_size( 'thumb-hd', 400, 225, true );
 
 
 
-/* Plugin Deregisters for script concatenation */
+function get_avg_luminance($filename, $num_samples=10) {
+    $img = imagecreatefromjpeg($filename);
+ 
+    $width = imagesx($img);
+    $height = imagesy($img);
+ 
+    $x_step = intval($width/$num_samples);
+    $y_step = intval($height/$num_samples);
+ 
+    $total_lum = 0;
+ 
+    $sample_no = 1;
+ 
+    for ($x=0; $x<$width; $x+=$x_step) {
+        for ($y=0; $y<$height; $y+=$y_step) {
+ 
+            $rgb = imagecolorat($img, $x, $y);
+            $r = ($rgb >> 16) & 0xFF;
+            $g = ($rgb >> 8) & 0xFF;
+            $b = $rgb & 0xFF;
+ 
+            // choose a simple luminance formula from here
+            // http://stackoverflow.com/questions/596216/formula-to-determine-brightness-of-rgb-color
+            $lum = ($r+$r+$b+$g+$g+$g)/6;
+ 
+            $total_lum += $lum;
+ 
+            $sample_no++;
+        }
+    }
+ 
+    // work out the average
+    $avg_lum  = $total_lum/$sample_no;
+    return $avg_lum;
+    // assume a medium gray is the threshold, #acacac or RGB(172, 172, 172)
+    // this equates to a luminance of 170
+}
+
+function insert_luminance_data($post_ID) {
+    $src = wp_get_attachment_image_src( $post_ID, 'thumb-hd' )[0];
+    $lum = get_avg_luminance($src, 10, true);
+    add_post_meta( $post_ID, 'image_lum', $lum, true ) || update_post_meta( $post_ID, 'image_lum', $lum );
+    return $post_ID;
+}
+
+//add_filter('add_attachment', 'insert_luminance_data', 10, 2);
+
+
+
+/**
+ * Manage google fonts of load_google_font()
+ * set GOOGLE_FONTS constant in config.php
+ */
+function load_google_fonts() {
+
+  if( ! defined( 'GOOGLE_FONTS' ) ) return;
+
+  echo '<link href="http://fonts.googleapis.com/css?family=' . GOOGLE_FONTS . '" rel="stylesheet" type="text/css" />'."\n";
+
+}
+
+add_action( 'wp_head', 'load_google_fonts' , 1);
+
+
+/* Plugin Deregisters to avoid redendancy after script concatenation */
 add_action('wp_print_styles', 'deregister_styles', 100);
 
 function deregister_styles() {
@@ -305,7 +376,7 @@ function heroOrganism($hero){
 			
 				ob_start(); ?>
 				
-				<a href="">
+				<!-- <a href=""> -->
 				
 					<img src="<?php echo $hero->src; ?>" alt="<?php echo roots_title(); ?> Image">
 					
@@ -314,21 +385,14 @@ function heroOrganism($hero){
 						<div class="container">
 							<div class="page-header">
 								<h1>
-								<?php echo roots_title(); ?>
+									<?php //print_r( get_post_meta( $hero->attachment_id , 'image_lum' ) ); ?>
 								</h1>
-								<div class="read-more">
-									<a href="#content" class="scrollto">
-										<span>More</span>
-										<br>
-										<span><i class="fa fa-angle-down fa-2x"></i></span>
-									</a>
-								</div>
 							</div>
 						</div>
 						
 					</div>
 					
-				</a>
+				<!-- </a> -->
 				
 				<?php $hero->output = ob_get_clean();
 				

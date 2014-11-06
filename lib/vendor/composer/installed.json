@@ -1,0 +1,63 @@
+[
+    {
+        "name": "league/color-extractor",
+        "version": "0.1.5",
+        "version_normalized": "0.1.5.0",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/thephpleague/color-extractor.git",
+            "reference": "da4d24a3f974eca48e27fbd2c7c4b5effbdf8785"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/thephpleague/color-extractor/zipball/da4d24a3f974eca48e27fbd2c7c4b5effbdf8785",
+            "reference": "da4d24a3f974eca48e27fbd2c7c4b5effbdf8785",
+            "shasum": ""
+        },
+        "require": {
+            "ext-gd": "*",
+            "php": ">=5.3.0"
+        },
+        "replace": {
+            "matthecat/colorextractor": "*"
+        },
+        "require-dev": {
+            "laravel/framework": "~4.1",
+            "orchestra/testbench": "~2.0",
+            "silex/silex": "~1.1",
+            "squizlabs/php_codesniffer": "~1.5"
+        },
+        "time": "2014-05-30 13:29:10",
+        "type": "library",
+        "installation-source": "dist",
+        "autoload": {
+            "psr-0": {
+                "League\\ColorExtractor": [
+                    "src",
+                    "tests"
+                ]
+            }
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "MIT"
+        ],
+        "authors": [
+            {
+                "name": "Mathieu Lechat",
+                "email": "math.lechat@gmail.com",
+                "homepage": "http://matthecat.com",
+                "role": "Developer"
+            }
+        ],
+        "description": "Extract colors from an image as a human would do.",
+        "homepage": "https://github.com/thephpleague/color-extractor",
+        "keywords": [
+            "color",
+            "extract",
+            "human",
+            "image",
+            "palette"
+        ]
+    }
+]
