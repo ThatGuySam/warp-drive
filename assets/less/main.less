@@ -25,6 +25,8 @@
 
 @import "../vendor/font-awesome/less/font-awesome";		// Font Awesome
 
+@import (inline) "../vendor/slick/slick.css";
+
 // Material
 @import "material/material";							// Material Design
 @import "material/ripples";								// Material Ripple
@@ -82,7 +84,7 @@ Mixins
 }
 
 
-.transition( @property:all, @duration:500ms ) {
+.transition( @property:all, @duration:500ms, @delay:0 ) {
 	-webkit-transition: @property @duration cubic-bezier(0.230, 1.000, 0.320, 1.000); 
 	   -moz-transition: @property @duration cubic-bezier(0.230, 1.000, 0.320, 1.000); 
 	     -o-transition: @property @duration cubic-bezier(0.230, 1.000, 0.320, 1.000); 
@@ -92,6 +94,15 @@ Mixins
 	   -moz-transition-timing-function: cubic-bezier(0.230, 1.000, 0.320, 1.000); 
 	     -o-transition-timing-function: cubic-bezier(0.230, 1.000, 0.320, 1.000); 
 	        transition-timing-function: cubic-bezier(0.230, 1.000, 0.320, 1.000);
+	        
+	
+	& when ( @delay > 0 ) {
+	
+		-webkit-transition-delay: @delay;
+		   -moz-transition-delay: @delay;
+		   	 -o-transition-delay: @delay;
+		   	 	transition-delay: @delay;
+	}
 }
 
 
@@ -568,7 +579,7 @@ Menu
 	left: 0;
 	right: 0;
 	
-	.backgroundRGBa(@off-black, 0.95);
+	.backgroundRGBa(@off-black, 0.9);
 }
 
 .navbar .navbar-nav {
@@ -650,10 +661,32 @@ Hero
 */
 
 .hero-section {
-	max-width: 1140px;
-	margin: 0px auto;
+	overflow: hidden;
+	margin-bottom: 0;
+	
+	
+	&:hover{
+		
+		.slick-prev,.slick-next {
+			.transition( all, 750ms, 0ms);
+		}
+		
+		.slick-prev {
+			left: 25px;
+		}
+		
+		.slick-next {
+			right: 25px;
+		}
+		
+	}
+	
 }
 
+.foreground {
+	//height: 100%;
+	max-width: 1140px;
+}
 
 .hero-container {
 	
@@ -663,14 +696,21 @@ Hero
 		letter-spacing: 0.1em;
 	}
 	
-	&.hero-image {
+	&.hero-media {
 		.hero-organism {
-			.ir();
+			//.ir();
+			position: relative;
+			height: 100%;
+			img {
+				width: 100%;
+				position: absolute;
+			}
 		}
 		
 		.page-header {
-			position: relative;
-			top: 40%;
+			position: absolute;
+			top: 30%;
+			width: 100%;
 			text-align: center;
 			color: #ffffff;
 			text-shadow: 0 0 2px rgba(0, 0, 0, 1.0);
@@ -706,6 +746,26 @@ Hero
 		
 	}
 	
+}
+
+
+.slick-prev {
+	left: -50px;
+}
+
+.slick-next {
+	right: -50px;
+}
+
+.slick-prev, .slick-next {
+	height: 40px;
+	width: 40px;
+	
+	&:before {
+		font-size: 40px;
+	}
+
+	.transition( all, 750ms, 1s);
 }
 
 .page-header {
@@ -746,7 +806,7 @@ Organsisms
 
 */
 
-.three-up {
+.thin-promos {
 
 	margin-left:	0;
 	margin-right:	0;
@@ -777,6 +837,22 @@ Organsisms
 	}
 	
 }
+
+
+
+
+/*
+
+Pages
+
+*/
+
+
+.home .wrap {
+	padding-top: 0.5em;
+}
+
+
 
 
 /*

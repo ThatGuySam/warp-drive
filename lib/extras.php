@@ -122,7 +122,7 @@ add_filter('wp_nav_menu_items', 'add_search_form_to_menu', 10, 2);
 add_action('admin_head', 'my_custom_css');
 
 function my_custom_css() {
-  echo '<link rel="stylesheet" type="text/css" href="'.get_template_directory_uri() . '/css/admin.css'.'">';
+  echo '<link rel="stylesheet" type="text/css" href="'.get_template_directory_uri() . '/assets/css/admin.css'.'">';
   //get_template_directory_uri() . '/css/responsive.css'
 }
 
@@ -280,6 +280,106 @@ function getJson($url) {
 
     return $json;
 }
+
+
+function heroOrganism($hero){
+		
+		switch ($hero->kind) {
+			case "text":
+				
+				ob_start(); ?>
+					
+					
+					<div class="container">
+						<div class="page-header">
+							<h1>
+							<?php echo roots_title(); ?>
+							</h1>
+						</div>
+					</div>
+				
+				<?php $hero->output = ob_get_clean();
+				
+			break;
+			case "media":
+			
+				ob_start(); ?>
+				
+				<a href="">
+				
+					<img src="<?php echo $hero->src; ?>" alt="<?php echo roots_title(); ?> Image">
+					
+					<div class="foreground ir">
+					
+						<div class="container">
+							<div class="page-header">
+								<h1>
+								<?php echo roots_title(); ?>
+								</h1>
+								<div class="read-more">
+									<a href="#content" class="scrollto">
+										<span>More</span>
+										<br>
+										<span><i class="fa fa-angle-down fa-2x"></i></span>
+									</a>
+								</div>
+							</div>
+						</div>
+						
+					</div>
+					
+				</a>
+				
+				<?php $hero->output = ob_get_clean();
+				
+			break;
+			case "video":
+			//code to be executed if n=label2;
+			break;
+			case "slider":
+			//code to be executed if n=label3;
+			break;
+			case "shortcode":
+				ob_start(); ?>
+				
+				
+				
+					<img src="<?php echo $hero->src; ?>" alt="<?php echo roots_title(); ?> Image">
+					
+					
+					<div class="container">
+						<div class="page-header">
+							<h1>
+							<?php echo roots_title(); ?>
+							</h1>
+							<div class="read-more">
+								<a href="#content" class="scrollto">
+									<span>More</span>
+									<br>
+									<span><i class="fa fa-angle-down fa-2x"></i></span>
+								</a>
+							</div>
+						</div>
+					</div>
+					
+					
+				
+				<?php $hero->output = ob_get_clean();
+			break;
+			default:
+		}
+		
+		
+		ob_start(); ?>
+			<div class="hero-organism">
+				<?php echo $hero->output; ?>
+			</div>
+		<?php $hero->output = ob_get_clean();
+		
+		
+		return $hero->output;
+	}
+
 
 
 //Video Carousel

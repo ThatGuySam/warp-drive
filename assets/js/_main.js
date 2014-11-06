@@ -26,19 +26,96 @@ var Roots = {
       
 		if ( undefined !== window.jQuery ) { jQuery(function ($) { 'use strict';
 			
+			/* easeOutQuint */
+			jQuery.extend( jQuery.easing, {
+				easeOutQuint: function (x, t, b, c, d) {
+					return c*((t=t/d-1)*t*t*t*t + 1) + b;
+				}
+			});
+			
+			
+			/* Header */
+			
+			function sizeHero() {
+				
+				var $media = $(".hero-organism > img");
+				
+				var wh = window.innerHeight;
+				var ww = window.innerWidth;
+				
+				var heroHeight = wh-25;
+				
+				var ratio = 9/16;
+				
+				$(".hero-media .hero-section")
+					.css("height", heroHeight+"px")
+					.css("max-height", Math.round( ww*ratio )+"px");
+					
+					
+				if( ( ww*ratio ) > heroHeight ) {
+					
+					var top_offset = Math.round(
+						 (
+						 	( ww*ratio ) - heroHeight 
+						 )/2 
+					);
+					
+					$media.css("margin-top", -top_offset+"px");
+						
+				} else {
+					
+					if( $media.css("margin-top") ) {
+						$media.css("margin-top", "");
+					}
+					
+				}
+					
+/*
+				$(".foreground")
+					.css("width", Math.round( wh/ratio )+"px");
+*/
+					
+					
+			}
+			
+			$( window ).resize(function() {
+				sizeHero();
+			});
+			
+			
+			$('.hero-slick .hero-section').slick({
+				autoplay: true,
+				autoplaySpeed: 6000,
+				speed: 1000,
+				fade: true,
+				easing: 'easeOutQuint'
+			});
+			
+			
+			
+			
+			/* Content */
+			
 			$("a.scrollto").each( function() {
 			
-			var $this = $(this);
-			
+				var $this = $(this);
+				
 				$this.click(function() {
 					$('html, body').animate({
 						scrollTop: $( $this.attr('href') ).offset().top
-					}, 1000);
+					}, 750, "easeOutQuint");
 					
 					event.preventDefault();
 				});
 				
 			});
+			
+			
+			
+			
+			/* Init */
+			
+			sizeHero();
 			
 		}); }
 		
