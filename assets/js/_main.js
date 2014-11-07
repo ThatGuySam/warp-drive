@@ -84,10 +84,13 @@ var Roots = {
 			
 			
 			$('.hero-slick .hero-section').slick({
+				arrows: !Modernizr.touch,
 				autoplay: true,
 				autoplaySpeed: 6000,
 				speed: 1000,
 				fade: true,
+				speed: 750,
+				fade: !Modernizr.touch,
 				easing: 'easeOutQuint'
 			});
 			
@@ -101,9 +104,19 @@ var Roots = {
 				var $this = $(this);
 				
 				$this.click(function() {
+					
+					//Bind Stop for Scrolling
+					$("html, body").bind("scroll mousedown DOMMouseScroll mousewheel keyup", function(){
+						$('html, body').stop();
+					});
+					
 					$('html, body').animate({
 						scrollTop: $( $this.attr('href') ).offset().top
 					}, 750, "easeOutQuint");
+					}, 2500, 'easeOutQuint', function() {
+						//Unbind Stop for Scrolling
+						$("html, body").unbind("scroll mousedown DOMMouseScroll mousewheel keyup");
+					});
 					
 					event.preventDefault();
 				});
