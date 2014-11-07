@@ -142,7 +142,7 @@ function roots_custom_nav_menu_css_class($classes, $item) {
   $classes = preg_replace('/(current(-menu-|[-_]page[-_])(item|parent|ancestor))/', 'active', $classes);
   $classes = preg_replace('/^((menu|page)[-_\w+]+)+/', '', $classes);
 
-  $classes[] = 'col-sm-2 nopadding menu-item menu-' . $slug;
+  $classes[] = 'col-sm-2 hidden-sm hidden-xs nopadding menu-item menu-' . $slug;
 
   $classes = array_unique($classes);
 
@@ -283,9 +283,8 @@ function parse_title($unparsed) {
 
 function ago($time){
 	
-	if( $time < strtotime('-14 day') )
-	$periods = array("second", "minute", "hour", "day", "week");
-	$lengths = array("60","60","24","7","4.35");
+	$periods = array("second", "minute", "hour", "day", "week", "month", "year", "decade");
+	$lengths = array("60","60","24","7","4.35","12","10");
 	
 	$now = time();
 	
@@ -296,11 +295,7 @@ function ago($time){
 	   $difference /= $lengths[$j];
 	}
 	
-	//$difference = round($difference);
-	
-	$diff_array = explode( ".", $difference);
-	
-	$difference = $diff_array[0];
+	$difference = round($difference);
 	
 	if($difference != 1) {
 	   $periods[$j].= "s";
@@ -385,7 +380,7 @@ function heroOrganism($hero){
 						<div class="container">
 							<div class="page-header">
 								<h1>
-									<?php //print_r( get_post_meta( $hero->attachment_id , 'image_lum' ) ); ?>
+									<?php echo do_shortcode( $hero->text ); ?>
 								</h1>
 							</div>
 						</div>
@@ -399,9 +394,6 @@ function heroOrganism($hero){
 			break;
 			case "video":
 			//code to be executed if n=label2;
-			break;
-			case "slider":
-			//code to be executed if n=label3;
 			break;
 			case "shortcode":
 				ob_start(); ?>
@@ -662,22 +654,6 @@ class Boxes {
 			$props[$prop] = true;
 		}
 		
-/*
-		static function hasProp( $class_name ) {
-			$output = array_key_exists( $class_name , $props );
-			return;
-		}
-*/
-
-		
-/*
-		function random_name () {
-			
-		}
-*/
-		//$array = explode('-', $string, 2);
-		
-		//debug( $props );
 		
 		//Feed Type
 		switch ($type) {
@@ -723,6 +699,7 @@ class Boxes {
 
 			<div class="frame">
 				<ul class="easecubic">
+				<?php /* <ul class="easecubic"> */ ?>
 					<?php foreach($boxes as $box){ ?>
 					
 						<?php 
@@ -751,12 +728,15 @@ class Boxes {
 						
 					<?php } ?>
 				</ul>
+				<?php /* </ul> */ ?>
 			</div>
 
+<!--
 			<div class="controls">
 				<div class="prevPage easecubic"><span> <i class="fa fa-chevron-left fa-2x"></i> </span></div>
 				<div class="nextPage easecubic"><span> <i class="fa fa-chevron-right fa-2x"></i> </span></div>
 			</div>
+-->
 		</div>
 		<?php
 		$content = ob_get_clean();
@@ -803,7 +783,27 @@ class Boxes {
 						$boxesContainer.imagesLoaded( function( $images, $proper, $broken ) {
 							
 							$boxesContainer.css("display", "");
+							
+							
+							$frame.find("ul").slick({
+								arrows: !Modernizr.touch,
+								infinite: false,
+								speed: 750,
+								slide: 'li',
+								slidesToShow: 4,
+								slidesToScroll: 4,
+								easing: 'easeOutQuint'
+								responsive: [{
+									breakpoint: 768,
+										settings: {
+											slidesToShow: 1,
+											slidesToScroll: 1,
+										}
+									}
+								}]
+							});
 						
+/*
 							var sly = new Sly($frame, {
 								horizontal: 1,
 								itemNav: 'basic',
@@ -830,6 +830,7 @@ class Boxes {
 								prevPage: $boxesContainer.find('.prevPage'),
 								nextPage: $boxesContainer.find('.nextPage')
 							}).init();
+*/
 							
 						});
 					

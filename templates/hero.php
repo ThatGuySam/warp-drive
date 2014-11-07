@@ -6,6 +6,8 @@
 	
 	$hero->kind = "text";
 	
+	$hero->text = roots_title();
+	
 	if( has_post_thumbnail() ){
 		$thumbnail_src = wp_get_attachment_image_src( get_post_thumbnail_id( $post->ID ), "full" );
 		
@@ -40,13 +42,20 @@
 		
 			<?php
 				
+				//Hide After
+				if( get_sub_field('hide_after') && ( get_sub_field('hide_after') / 1000 + (24*60*60) ) < date('U') )//date is set and it has passed
+					continue;//Skip
 				
 				//Setup Image
-				$attachment_id = get_sub_field('image');
+				$hero->attachment_id = get_sub_field('image');
 				
-				$image_attachment = wp_get_attachment_image_src($attachment_id, '720');
+				$image_attachment = wp_get_attachment_image_src($hero->attachment_id, '720');
 				
 				$hero->src = $image_attachment[0];
+				
+				
+				//Setup Foreground
+				$hero->text = get_sub_field('title');
 				
 			?>
 			
@@ -63,7 +72,19 @@
 		<?php endif; ?>
 		
 	</div>
-
+	
+	
+	<?php if( $hero->kind !== "text"): ?>
+		
+		<div class="read-more hidden-md hidden-sm hidden-xs">
+			<a href="#content" class="scrollto">
+				<span>Start</span>
+				<br>
+				<span><i class="fa fa-angle-down fa-2x"></i></span>
+			</a>
+		</div>
+		
+	<?php endif; ?>
 	
 	
 	
