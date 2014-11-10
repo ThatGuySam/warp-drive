@@ -56,6 +56,12 @@ Variables
 
 @secondary-dark: #4d4d4d;
 
+@lato: "Lato","Helvetica Neue",Helvetica,Arial,sans-serif;
+
+@open-sans: "Open Sans","Helvetica Neue",Helvetica,Arial,sans-serif;
+
+
+
 
 
 @link-color:		@off-black;
@@ -81,6 +87,16 @@ Mixins
 	zoom: 1; // hasLayout
 	background-color: transparent\9;
 	
+}
+
+.skrim() {	
+	background: -moz-linear-gradient(top,  rgba(0,0,0,0) 0%, rgba(0,0,0,1) 100%);
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(0,0,0,0)), color-stop(100%,rgba(0,0,0,1)));
+	background: -webkit-linear-gradient(top,  rgba(0,0,0,0) 0%,rgba(0,0,0,1) 100%);
+	background: -o-linear-gradient(top,  rgba(0,0,0,0) 0%,rgba(0,0,0,1) 100%);
+	background: -ms-linear-gradient(top,  rgba(0,0,0,0) 0%,rgba(0,0,0,1) 100%);
+	background: linear-gradient(to bottom,  rgba(0,0,0,0) 0%,rgba(0,0,0,1) 100%);
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#00000000', endColorstr='#000000',GradientType=0 );
 }
 
 
@@ -124,6 +140,55 @@ Mixins
 }
 
 
+/*
+
+Icons
+
+*/
+
+
+.search-icon, .down-arrow, .up-arrow, .left-arrow, .right-arrow {
+	display: inline-block;
+	font: normal normal normal 14px/1 FontAwesome;
+	line-height: 1;
+	font-size: inherit;
+	text-rendering: auto;
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+
+}
+
+.down-arrow:before {
+	font-family: FontAwesome;
+	content: "\f107";
+	font-size: 2em;
+}
+
+.up-arrow:before {
+	font-family: FontAwesome;
+	content: "\f106";
+}
+
+.left-arrow:before {
+	font-family: FontAwesome;
+	content: "\f104";
+}
+
+.right-arrow:before {
+	font-family: FontAwesome;
+	content: "\f105";
+}
+
+.slick-next:before {
+	font-family: FontAwesome;
+	content: "\f105";
+}
+
+
+.slick-prev:before {
+	font-family: FontAwesome;
+	content: "\f104";
+}
 
 /*
 
@@ -138,12 +203,12 @@ Typography
 
 
 body, h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4 {
-	font-family: "Lato","Helvetica Neue",Helvetica,Arial,sans-serif;
+	font-family: @lato;
 	font-weight: 300;
 }
 
 p {
-	font-family: "Open Sans","Helvetica Neue",Helvetica,Arial,sans-serif;
+	font-family: @open-sans;
 }
 
 ::selection {  /* WebKit/Blink Browsers */
@@ -301,7 +366,7 @@ Hero
 	&:hover{
 		
 		.slick-prev,.slick-next {
-			//.transition( all, 750ms, 0ms);
+			.backgroundRGBa(@off-black, 0.9);
 		}
 		
 		.slick-prev {
@@ -338,7 +403,6 @@ Hero
 	
 	&.hero-media {
 		.hero-organism {
-			//.ir();
 			position: relative;
 			height: 100%;
 			img {
@@ -369,27 +433,27 @@ Hero
 	.read-more {
 	
 		position: absolute;
-		bottom: 10px;
+		.backgroundRGBa(@off-black, 0.9);
+		bottom: 0;
 		left: 50%;
-		width: 200px;
-		margin-left: -100px;
+		width: 100px;
+		margin-left: -50px;
+		padding-top: 5px;
 		text-align: center;
 	
-		a {
-			color: #ffffff;
-			text-transform: uppercase;
-			text-shadow: 0 0 2px rgba(0, 0, 0, 1.0);
-			font-weight: 500;
-			
-			.transition( scale , 250ms );
-			
-			&:hover {
-				height: 3em;
-				text-decoration: none;
-				
-			}
-			
+		color: #ffffff;
+		text-transform: uppercase;
+		text-shadow: 0 0 2px rgba(0, 0, 0, 1.0);
+		font-weight: 500;
+		
+		span {
+			line-height: 1em;
 		}
+		
+		.down-arrow {
+			line-height: 0.4em;
+		}
+			
 		
 	}
 	
@@ -437,15 +501,141 @@ Organsisms
 	
 	.slick-slider {
 		padding: 0;
+		margin-bottom: 0;
 	}
+	
+	/* Boxes */
 	
 	li img {
 		width: 100%;
+		
+		.transition( opacity , 750ms );
 	}
 	
+	ul li {
+		margin: 0 1px;
+		position: relative;
+		text-align: center;
+		cursor: pointer;
+		overflow: hidden;
+	}
+	
+	
+	.box-video {
+	
+		@anim-dir: left;
+		
+		.box-header, .box-caption, &:after {
+			position: absolute;
+			right: 0;
+			left: 0;
+			
+			color: #fff;
+			
+			.transition( @anim-dir , 750ms );
+		}
+		
+		&:after {
+		    content: "";
+		    display: block;
+		    top: 0;
+		    bottom: 0;
+		    box-shadow: 0 1px 0 #000;
+		    pointer-events: none;
+		    
+		    z-index: -1;
+		    
+		    background: @off-black;
+		    //.skrim();
+		}
+		
+		
+		&:hover {
+			
+			img {
+				opacity: 0.3;
+			}
+			
+			.box-header {
+				left: 0;
+			}
+			
+			.box-date {
+				left: 0;
+			}
+			
+			&:after {
+				//height: 80%;
+			}
+			
+		}
+		
+		
+		.box-header {
+			&:before{
+				content: '';
+				display: inline-block;
+				height: 100%; 
+				vertical-align: middle;
+				margin-right: -0.25em;
+			}
+			h3 {margin: 0;}
+			.box-header-content {
+				display: inline-block;
+				vertical-align: middle;
+			}
+			top: 0;
+			bottom: 0;
+			left: -100%;
+			width: 100%;
+			
+			text-align: left;
+			z-index: 1;
+			background-color: transparent;
+			padding: 0.4em;
+			font-weight: 600;
+			overflow: hidden;
+			text-shadow: 0 0 4px #000;
+			line-height: 1em;
+			margin-bottom: 5px;
+		}
+		
+		.box-date {
+			position: relative;
+			font-size: 0.85em;
+			font-weight: 300;
+			text-shadow: 0 0 4px #000;
+			box-sizing: content-box;
+			width: auto;
+			left: -100%;
+			pointer-events: none;
+			z-index: 1;
+			
+			.transition( @anim-dir , 500ms, 150ms );
+		}
+		
+	}
+	
+	
+	/* Controls */
 	.slick-prev, .slick-next{
 		&:before {
 			color: @off-black;
+		}
+	}
+	
+}
+
+.text-overlay {
+	
+	.box-video {
+		
+		img {
+			opacity: 0.3;
+		}
+		
+		.box-header {
+			left: 0;
 		}
 	}
 	
@@ -465,6 +655,17 @@ Organsisms
 	
 	&:before {
 		font-size: 40px;
+		
+		.transition( opacity , 250ms );
+	}
+	
+	
+	&.slick-disabled {
+		&:before {
+			opacity: 0;
+			
+			
+		}
 	}
 
 	.transition( all, 750ms);

@@ -588,12 +588,14 @@ function boxesVimeo($source) {
 		}
 		
 		if( isset($details->date) ){
-			$date = date( "D n/j" , strtotime( $details->date ) );
+			$date = date( "F jS" , strtotime( $details->date ) );
 		} else {
-			$date = date( "D n/j" , strtotime( $post->upload_date ) );
+			$date = date( "F jS" , strtotime( $post->upload_date ) );
 		}
 		
-		$text = $post->title;
+		$title = $post->title;
+		
+		$text = "";
 		
 		if( get_page_template_slug() !== "page-watch.php" ) {
 			$link = "/watch#".$post->id;
@@ -606,6 +608,7 @@ function boxesVimeo($source) {
 		$boxes[$i]['id'] 		= $post->id;
 		$boxes[$i]['image_url'] = $post->thumbnail_large;
 		$boxes[$i]['date'] 		= $date;
+		$boxes[$i]['title'] 	= $title;
 		$boxes[$i]['text'] 		= $text;
 		$boxes[$i]['desc'] 		= $desc[0];
 		$boxes[$i]['link'] 		= $link;
@@ -703,7 +706,7 @@ class Boxes {
 					<?php foreach($boxes as $box){ ?>
 					
 						<?php 
-							if( $props['date-format-human'] ){
+							if( isset( $props['date-format-human'] ) ){
 								
 								$normal_date = strtotime( $box['date'] );
 								
@@ -719,9 +722,19 @@ class Boxes {
 							<a href="<?php echo $box['link']; ?>" target="<?php echo $target; ?>" >
 								<img class="easecubic" src="<?php echo $box['image_url']; ?>" alt="<?php echo $box['text']; ?>" >
 								
-								<div class="box-date easecubic"><p><?php echo $box['date']; ?></p></div>
+								<div class="box-header easecubic">
+									
+									<div class="box-header-content">
+										<h3><?php echo parse_title( $box['title'] ); ?></h3>
+										<div class="box-date easecubic"><?php echo $box['date']; ?></div>
+									</div>
+								</div>
+								
+								
 							
 								<div class="box-caption easecubic"><p><?php echo parse_title( $box['text'] ); ?></p></div>
+								
+								
 							</a>
 							
 						</li>
@@ -773,88 +786,7 @@ class Boxes {
 			<script type="text/javascript">
 				if ( undefined !== window.jQuery ) { jQuery(function ($) { 'use strict';
 					
-					function boxize($boxesContainer){
 					
-						var $frame = $boxesContainer.find('.frame'); window.frr = $frame;
-						
-						$boxesContainer.css("display", "none");
-						
-						
-						$boxesContainer.imagesLoaded( function( $images, $proper, $broken ) {
-							
-							$boxesContainer.css("display", "");
-							
-							
-							$frame.find("ul").slick({
-								arrows: !Modernizr.touch,
-								infinite: false,
-								speed: 750,
-								slide: 'li',
-								slidesToShow: 4,
-								slidesToScroll: 4,
-								easing: 'easeOutQuint'
-								responsive: [{
-									breakpoint: 768,
-										settings: {
-											slidesToShow: 1,
-											slidesToScroll: 1,
-										}
-									}
-								}]
-							});
-						
-/*
-							var sly = new Sly($frame, {
-								horizontal: 1,
-								itemNav: 'basic',
-								smart: 1,
-								mouseDragging: 1,
-								touchDragging: 1,
-								releaseSwing: 1,
-								scrollBar: $boxesContainer.find('.scrollbar'),
-								scrollBy: 0, 
-								pagesBar: $boxesContainer.find('.pages'),
-								speed: 0,
-								moveBy: 600,
-								elasticBounds: 1,
-								dragHandle: 1,
-								dynamicHandle: 1,
-								clickBar: 1,
-								keyboardNavBy: 'pages',
-						
-								// Buttons
-								forward: $boxesContainer.find('.forward'),
-								backward: $boxesContainer.find('.backward'),
-								prev: $boxesContainer.find('.prev'),
-								next: $boxesContainer.find('.next'),
-								prevPage: $boxesContainer.find('.prevPage'),
-								nextPage: $boxesContainer.find('.nextPage')
-							}).init();
-*/
-							
-						});
-					
-						// Method calling buttons
-						$boxesContainer.on('click', 'button[data-action]', function () {
-							var action = $(this).data('action');
-					
-							switch (action) {
-								case 'add':
-									sly.add('<li>' + sly.items.length + '</li>');
-									break;
-								case 'remove':
-									sly.remove(-1);
-									break;
-								default:
-									sly[action]();
-							}
-						});
-					}
-					
-					
-					$('.boxes').each(function() {
-						boxize( $(this) );
-					});
 
 				}); }
 			</script>

@@ -93,6 +93,60 @@ var Roots = {
 			});
 			
 			
+			function boxize($boxesContainer){
+					
+				var $frame = $boxesContainer.find('.frame'); window.frr = $frame;
+				
+				$boxesContainer.css("display", "none");
+				
+				
+				$boxesContainer.imagesLoaded( function( $images, $proper, $broken ) {
+					
+					$boxesContainer.css("display", "");
+					
+					
+					$frame.find("ul").slick({
+						arrows: !Modernizr.touch,
+						infinite: false,
+						speed: 750,
+						slide: 'li',
+						slidesToShow: 4,
+						slidesToScroll: 4,
+						easing: 'easeOutQuint',
+						responsive: [{
+							breakpoint: 768,
+							settings: {
+								slidesToShow: 1,
+								slidesToScroll: 1,
+							}
+						}]
+					});
+					
+				});
+			
+				// Method calling buttons
+				$boxesContainer.on('click', 'button[data-action]', function () {
+					var action = $(this).data('action');
+			
+					switch (action) {
+						case 'add':
+							//Add slide function
+							break;
+						case 'remove':
+							//Remove slide function
+							break;
+						default:
+							sly[action]();
+					}
+				});
+			}
+			
+			
+			$('.boxes').each(function() {
+				boxize( $(this) );
+			});
+			
+			
 			
 			
 			/* Content */
