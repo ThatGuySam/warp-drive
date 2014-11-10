@@ -394,6 +394,7 @@ Hero
 .hero-container {
 	
 	position: relative;
+	overflow: hidden;
 	
 	h1, h2, h3 {
 		text-transform: uppercase;
@@ -408,6 +409,9 @@ Hero
 			img {
 				width: 100%;
 				position: absolute;
+				
+				.transition( margin, 750ms);
+				
 			}
 		}
 		
@@ -552,7 +556,7 @@ Organsisms
 		
 		&:hover {
 			
-			img {
+			.box-image {
 				opacity: 0.3;
 			}
 			
@@ -591,8 +595,7 @@ Organsisms
 			
 			text-align: left;
 			z-index: 1;
-			background-color: transparent;
-			padding: 0.4em;
+			padding: 0.8em;
 			font-weight: 600;
 			overflow: hidden;
 			text-shadow: 0 0 4px #000;
@@ -630,11 +633,15 @@ Organsisms
 	
 	.box-video {
 		
-		img {
+		.box-image {
 			opacity: 0.3;
 		}
 		
 		.box-header {
+			left: 0;
+		}
+		
+		.box-date {
 			left: 0;
 		}
 	}
@@ -723,8 +730,47 @@ Pages
 	padding-top: 0.5em;
 }
 
+/*
 
+Media Queries
 
+*/
+
+/* Large Devices, Wide Screens */
+@media only screen and (max-width : 1200px) {
+
+}
+
+/* Medium Devices, Desktops */
+@media only screen and (max-width : 992px) {
+	.navbar .navbar-nav > li > a {
+		padding: 15px 0;
+	}
+	
+	.navbar.navbar-default {
+		position: relative;
+		margin-bottom: 0;
+	}
+}
+
+/* Small Devices, Tablets */
+@media only screen and (max-width : 768px) {
+	.navbar.navbar-default {
+		position: relative;
+	}
+}
+
+/* Extra Small Devices, Phones */ 
+@media only screen and (max-width : 480px) {
+	.navbar .navbar-nav > li > a {
+		padding: 7px 0;
+	}
+}
+
+/* Custom, iPhone Retina */ 
+@media only screen and (max-width : 320px) {
+    
+}
 
 /*
 
@@ -746,3 +792,5 @@ Cheats
    padding-right: 0 !important;
    margin: 0 !important;
 }
+
+

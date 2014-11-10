@@ -6,6 +6,20 @@ use League\ColorExtractor\Client as ColorExtractor;
 
 $client = new ColorExtractor;
 
+function debug( $this ) {
+	
+	ob_start(); ?>
+	
+		<pre>
+			<?php print_r($this); ?>
+		</pre>
+	
+	<?php $output = ob_get_clean();
+	
+	echo $output;
+	
+}
+
 /**
  * Clean up the_excerpt()
  */
@@ -142,7 +156,7 @@ function roots_custom_nav_menu_css_class($classes, $item) {
   $classes = preg_replace('/(current(-menu-|[-_]page[-_])(item|parent|ancestor))/', 'active', $classes);
   $classes = preg_replace('/^((menu|page)[-_\w+]+)+/', '', $classes);
 
-  $classes[] = 'col-sm-2 hidden-sm hidden-xs nopadding menu-item menu-' . $slug;
+  $classes[] = 'col-xs-2 hidden-xs nopadding menu-item menu-' . $slug;
 
   $classes = array_unique($classes);
 
@@ -161,7 +175,7 @@ function add_search_form_to_menu($items, $args) {
  
 	ob_start(); ?>
 		
-	<li class="menu-outer-item col-sm-1">
+	<li class="menu-outer-item col-xs-1">
       <a href="<?php echo esc_url(home_url('/')); ?>"><i class="icon-guts-g"></i></a>
 	</li>
 		    
@@ -170,7 +184,7 @@ function add_search_form_to_menu($items, $args) {
 	
 	ob_start(); ?>
 		
-	<li class="menu-outer-item search-toggle col-sm-1">
+	<li class="menu-outer-item search-toggle col-xs-1 pull-right">
 		<a href="javascript:void;">
 			<i class="fa fa-search "></i>
 		</a>
@@ -437,81 +451,6 @@ function heroOrganism($hero){
 	}
 
 
-
-//Video Carousel
-
-function videosFromJSON($data, $title, $method) {
-
-	$carousel_id = md5($data);
-	
-	?>
-		<section>
-		
-			<h2><?php echo $title; ?></h2>
-		
-		<?php
-			//echo do_shortcode('[flexslider]');
-						
-		    $vid_url = parse_url($data);
-		    
-	     ?>
-		
-			<div id="<?php echo $title; ?>" class="flexslider slider-<?php echo $carousel_id; ?> vid-carousel easeout ">
-			    <ul class="slides">
-			    
-			    </ul>
-			</div>
-			
-			<script>
-				jQuery(document).ready(function($) {
-					jQuery.noConflict();
-					//Pure JS Vimeo Carousel(Finally)
-					$.getJSON('http://vimeo.com/api/v2<?php echo $vid_url['path']; ?>/videos.json', {format: 'json'}, function(data) {
-					    jQuery.each(data, function(i, val) {
-					        var thumbnail = data[i].thumbnail_medium;
-					        var vid = data[i].id;
-					        var rawTitle = data[i].title;
-					        var title = data[i].title.replace(" | ","<br>");//add | to r\ converter
-					        var description = data[i].description;
-					      $('.slider-<?php echo $carousel_id; ?> ul.slides')
-					          .append('\
-					              <li>\
-					               <a href=\"#'+vid+'\" class=\"vimeoVid easeout\" title=\"'+rawTitle+'\">\
-					                    <div class=\"vid-carousel-item easeout vid-'+vid+'\">\
-					                        <img src=\"'+thumbnail+'\" alt=\"'+rawTitle+'\" longdesc=\"http://vimeo.com/'+vid+'\">\
-					                        <h4 id=\"vid-title-'+vid+'\" class=\"vid-title easeout\" name=\"'+rawTitle+'\" >\
-					                        '+title+'\
-					                        </h4>\
-					                    </div>\
-					                </a>\
-					              </li>\
-					          ');//append
-					    });//.each
-					})
-					.done(function() {
-					    $('.slider-<?php echo $carousel_id; ?>').flexslider({
-					        animation: 'slide',
-					        animationLoop: false,
-					        slideshow: false,
-					        itemWidth: 210,
-					        itemMargin: 0,
-					        controlNav: false,
-					        prevText: '',
-							nextText: ''
-					    });
-					}).fail(function() {
-					    $('.slider-<?php echo $carousel_id; ?>').html('<h2>Ruh-Roh</h2>Something went went wrong. Send an email to <a href="mailto:admin@gutschurch.com">admin@gutschurch.com</a> and we\'ll get this sorted out in no time. Meanwhile you can always watch right on our <a href="https://vimeo.com/gutschurch">Vimeo Channel!</a>');
-					});
-				});
-				</script>
-			
-	
-		</section>
-	<?php
-	
-}
-
-
 function boxesInstagram($user_id) {
 
 	$boxes = array();
@@ -549,7 +488,7 @@ function boxesInstagram($user_id) {
 }
 
 
-function boxesVimeo($source) {
+function boxesVimeo($source, $amount) {
 
 	$boxes = array();
 	
@@ -561,6 +500,7 @@ function boxesVimeo($source) {
 	
 	$i=0;
 	foreach ($json as $post) {
+		//debug( $post );
 		
 		$details = new stdClass;
 		
@@ -577,9 +517,7 @@ function boxesVimeo($source) {
 				
 				$dkey = strtolower( trim( $vals[0] ) );
 				
-				$dval = trim( $vals[1] );
-				
-				//echo $dkey." ".$dval; 
+				$dval = trim( $vals[1] ); 
 				
 				$details->$dkey = $dval;
 			}
@@ -595,10 +533,8 @@ function boxesVimeo($source) {
 		
 		$title = $post->title;
 		
-		$text = "";
-		
 		if( get_page_template_slug() !== "page-watch.php" ) {
-			$link = "/watch#".$post->id;
+			$link = "/watch/?vid=".$post->id;
 		} else {
 			$link = "#".$post->id;
 		}
@@ -609,11 +545,11 @@ function boxesVimeo($source) {
 		$boxes[$i]['image_url'] = $post->thumbnail_large;
 		$boxes[$i]['date'] 		= $date;
 		$boxes[$i]['title'] 	= $title;
-		$boxes[$i]['text'] 		= $text;
+		$boxes[$i]['text'] 		= $title;
 		$boxes[$i]['desc'] 		= $desc[0];
 		$boxes[$i]['link'] 		= $link;
 		
-		if( $i >= 7 ) break;
+		if( $i >= $amount - 1 ) break;
 		
 		$i++;
 	}
@@ -644,6 +580,7 @@ class Boxes {
 			'type' => false,
 			'source' => false,
 			'class' => false,
+			'amount' => 8,
 		), $atts, 'boxes' ) );
 		
 		
@@ -669,7 +606,7 @@ class Boxes {
 		        
 		        break;
 		    case "vimeo":
-		        $boxes = boxesVimeo($source);
+		        $boxes = boxesVimeo($source, $amount);
 		        
 		        $vid_url = parse_url($source);
 		        $boxes_id = preg_replace('/[^\da-z]/i', '', $vid_url['path'] );
@@ -679,8 +616,8 @@ class Boxes {
 		        
 		        
 		        break;
-		    case "fb-events":
-		        echo "fb events!";
+		    case "events":
+		        echo "events!";
 		        break;
 		    case "category":
 		        echo $source;
@@ -720,7 +657,9 @@ class Boxes {
 						<li id="box-<?php echo $type; ?>-<?php echo $box['id']; ?>" class="box-<?php echo $box['type']; ?> easecubic">
 							
 							<a href="<?php echo $box['link']; ?>" target="<?php echo $target; ?>" >
-								<img class="easecubic" src="<?php echo $box['image_url']; ?>" alt="<?php echo $box['text']; ?>" >
+								<div class="box-image">
+									<img class="easecubic" data-lazy="<?php echo $box['image_url']; ?>" alt="<?php echo $box['text']; ?>" >
+								</div>
 								
 								<div class="box-header easecubic">
 									
@@ -732,7 +671,7 @@ class Boxes {
 								
 								
 							
-								<div class="box-caption easecubic"><p><?php echo parse_title( $box['text'] ); ?></p></div>
+								<div class="box-caption easecubic"><p><?php echo parse_title( $box['desc'] ); ?></p></div>
 								
 								
 							</a>
