@@ -76,13 +76,13 @@
 	
 	<?php if( $hero->kind !== "text"): ?>
 		
-		<div class="read-more hidden-md hidden-sm hidden-xs">
-			<a href="#content" class="scrollto">
+		<a href="#content" class="scrollto">
+			<div class="read-more hidden-md hidden-sm hidden-xs">
 				<span>Start</span>
 				<br>
-				<span><i class="fa fa-angle-down fa-2x"></i></span>
-			</a>
-		</div>
+				<span><i class="down-arrow"></i></span>
+			</div>
+		</a>
 		
 	<?php endif; ?>
 	
