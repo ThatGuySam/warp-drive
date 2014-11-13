@@ -13,7 +13,7 @@ add_theme_support('jquery-cdn');            // Enable to load jQuery from the Go
  */
 define('GOOGLE_ANALYTICS_ID', 'UA-9224686-1'); // UA-XXXXX-Y (Note: Universal Analytics only, not Classic Analytics)
 
-define('GOOGLE_FONTS', 'Lato:300,400,700|Open+Sans:400italic,700italic,400,700');
+define('GOOGLE_FONTS', 'Lato:200,300,400,700|Open+Sans:400italic,700italic,400,700');
 
 if (!defined('WP_ENV')) {
   define('WP_ENV', 'production');  // scripts.php checks for values 'production' or 'development'

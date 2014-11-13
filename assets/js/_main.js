@@ -34,6 +34,16 @@ var Roots = {
 			});
 			
 			
+			
+			/* Menu */
+			
+			
+			$(".search-toggle").click( function(){
+				$(".expanded-nav").toggleClass("expanded-nav-open");
+				
+				return false;
+			});
+			
 			/* Header */
 			
 			function sizeHero() {

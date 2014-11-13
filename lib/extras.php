@@ -147,27 +147,82 @@ Menu
 
 */
 
+register_nav_menus(array(
+	'expanded_navigation' => __('Expanded Navigation')
+));
+
 /* Custom Menu Classes */
 
 remove_filter('nav_menu_css_class', 'roots_nav_menu_css_class', 10);
 
 function roots_custom_nav_menu_css_class($classes, $item) {
-  $slug = sanitize_title($item->title);
-  $classes = preg_replace('/(current(-menu-|[-_]page[-_])(item|parent|ancestor))/', 'active', $classes);
-  $classes = preg_replace('/^((menu|page)[-_\w+]+)+/', '', $classes);
-
-  $classes[] = 'col-xs-2 hidden-xs nopadding menu-item menu-' . $slug;
-
-  $classes = array_unique($classes);
-
-  return array_filter($classes, 'is_element_empty');
+	
+	$menu_locations = get_nav_menu_locations();
+	
+	
+	
+	$slug = sanitize_title($item->title);
+	$classes = preg_replace('/(current(-menu-|[-_]page[-_])(item|parent|ancestor))/', 'active', $classes);
+	$classes = preg_replace('/^((menu|page)[-_\w+]+)+/', '', $classes);
+	
+	if ( has_term($menu_locations['primary_navigation'], 'nav_menu', $item) ) {
+		$classes[] = 'col-xs-2 hidden-xs nopadding menu-item menu-' . $slug;
+	}
+	
+	$classes = array_unique($classes);
+	
+	return array_filter($classes, 'is_element_empty');
 }
 add_filter('nav_menu_css_class', 'roots_custom_nav_menu_css_class', 10, 2);
 
 
+//Add extra css classes to menu items
+function expanded_nav_menu_css_class( $classes = array(), $item, $args ) {
+    $location_name = 'expanded_navigation';
+    static $top_level_count = 0; //Top level menu items counter
+ 
+    if($args->theme_location== $location_name){ //Limit to this menu location only
+        
+        if($item->menu_item_parent==0 and $top_level_count!==null){ //Count top level menu items
+            $top_level_count++; //Increment
+        }
+        
+        if ( ( $locations = get_nav_menu_locations() ) && isset( $locations[ $location_name ] ) ) {
+            $main_nav = wp_get_nav_menu_object( $locations[ $location_name ] );
+				
+			if( $item->menu_item_parent==0 ){
+				$classes[] = 'col-lg-2 col-md-3 col-sm-4 col-xs-6';
+			}
+			
+            if ($item->menu_order == 1) {
+                $classes[] = 'col-lg-offset-1 menu-item-first'; //First menu item
+            }
+            if($top_level_count==count_top_level_menu_items($main_nav->term_id)){
+                $classes[] = 'menu-item-last'; //Last top level menu item
+                $top_level_count = null; //Disable our counter, no need for it
+            }
+        }
+    }
+    return $classes;
+}
+add_filter( 'nav_menu_css_class', 'expanded_nav_menu_css_class', 10, 3 );
+ 
+//Function to count the total number of top level menus. Useful for menus with sub menus
+function count_top_level_menu_items($menu_id){
+    $count = 0;
+    $menu_items = wp_get_nav_menu_items($menu_id);
+    foreach($menu_items as $menu_item){
+        if($menu_item->menu_item_parent==0){
+            $count++;
+        }
+    }
+    return $count;
+}
+
+
 /* Outer Menu Buttons */
 
-function add_search_form_to_menu($items, $args) {
+function add_outer_menu($items, $args) {
  
  // If this isn't the main navbar menu, do nothing
  if( !($args->theme_location == 'primary_navigation') )
@@ -185,7 +240,7 @@ function add_search_form_to_menu($items, $args) {
 	ob_start(); ?>
 		
 	<li class="menu-outer-item search-toggle col-xs-1 pull-right">
-		<a href="javascript:void;">
+		<a href="#">
 			<i class="fa fa-search "></i>
 		</a>
 	</li>
@@ -197,8 +252,9 @@ function add_search_form_to_menu($items, $args) {
  // On main menu: put styling around search and append it to the menu items
  return 
  	$before . $items . $after;
+ 	
 }
-add_filter('wp_nav_menu_items', 'add_search_form_to_menu', 10, 2);
+add_filter('wp_nav_menu_items', 'add_outer_menu', 10, 2);
 
 
 
