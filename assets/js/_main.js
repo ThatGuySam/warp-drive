@@ -195,6 +195,19 @@ var Roots = {
 			
 			sizeHero();
 			
+			console.log("Test");
+			
+			Modernizr.on('webp', function (result) {
+				// `result == Modernizr.webp`
+				console.log(result);  // either `true` or `false`
+				if (result) {
+					// Has WebP support
+				}
+				else {
+					// No WebP support
+				}
+			});
+			
 		}); }
 		
     }
