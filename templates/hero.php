@@ -8,6 +8,10 @@
 	
 	$hero->text = roots_title();
 	
+	$hero->index = 0;
+	
+	$hero->srcType = "src";
+	
 	if( has_post_thumbnail() ){
 		$thumbnail_src = wp_get_attachment_image_src( get_post_thumbnail_id( $post->ID ), "full" );
 		
@@ -43,11 +47,15 @@
 			<?php
 				
 				//Hide After
-				if( get_sub_field('hide_after') && ( get_sub_field('hide_after') / 1000 + (24*60*60) ) < date('U') )//date is set and it has passed
+				if( get_sub_field('hide_after') && ( get_sub_field('hide_after') / 1000 + (24*60*60) ) < date('U') )//if date is set and it has passed
 					continue;//Skip
+				
+				if( $hero->index ) $hero->srcType = "data-lazy";//if it's anything but the first lazy load it
 				
 				//Setup Image
 				$hero->attachment_id = get_sub_field('image');
+				
+				$hero->link = get_sub_field('link');
 				
 				$image_attachment = wp_get_attachment_image_src($hero->attachment_id, '720');
 				
@@ -60,7 +68,10 @@
 			?>
 			
 			
-			<?php echo heroOrganism($hero); ?>
+			<?php 
+				echo heroOrganism($hero); 
+				$hero->index++;
+			?>
 			
 		
 		<?php endwhile; 
@@ -78,7 +89,7 @@
 		
 		<a href="#content" class="scrollto">
 			<div class="read-more hidden-md hidden-sm hidden-xs">
-				<span>Start</span>
+				<span>Scroll</span>
 				<br>
 				<span><i class="down-arrow"></i></span>
 			</div>

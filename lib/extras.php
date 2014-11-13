@@ -441,9 +441,9 @@ function heroOrganism($hero){
 			
 				ob_start(); ?>
 				
-				<!-- <a href=""> -->
+				<div class="hero-slide" >
 				
-					<img src="<?php echo $hero->src; ?>" alt="<?php echo roots_title(); ?> Image">
+					<img <?php echo $hero->srcType; ?>="<?php echo $hero->src; ?>" alt="<?php echo roots_title(); ?> Image">
 					
 					<div class="foreground ir">
 					
@@ -457,9 +457,23 @@ function heroOrganism($hero){
 						
 					</div>
 					
-				<!-- </a> -->
+				</div>
 				
 				<?php $hero->output = ob_get_clean();
+				
+				
+				//Link Wrapper
+				if( $hero->link !== "" ): ob_start(); ?>
+					
+					<a href="<?php echo $hero->link; ?>" >
+					
+						<?php echo $hero->output; ?>
+						
+					</a>
+					
+				<?php $hero->output = ob_get_clean(); endif;
+				
+
 				
 			break;
 			case "video":
