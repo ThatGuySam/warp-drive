@@ -53,7 +53,7 @@ var Roots = {
 				var wh = window.innerHeight;
 				var ww = window.innerWidth;
 				
-				var heroHeight = wh-25;
+				var heroHeight = wh;//-25;
 				
 				var ratio = 9/16;
 				
@@ -195,8 +195,9 @@ var Roots = {
 			
 			sizeHero();
 			
-			console.log("Test");
+			//console.log("Test");
 			
+/*
 			Modernizr.on('webp', function (result) {
 				// `result == Modernizr.webp`
 				console.log(result);  // either `true` or `false`
@@ -207,6 +208,7 @@ var Roots = {
 					// No WebP support
 				}
 			});
+*/
 			
 		}); }
 		
