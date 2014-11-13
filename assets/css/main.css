@@ -17826,49 +17826,30 @@ Menu
   left: 0;
   right: 0;
   background-color: #323232;
-  background-color: rgba(50, 50, 50, 0.9);
+  background-color: rgba(50, 50, 50, 0.98);
   zoom: 1;
   background-color: transparent\9;
 }
 .navbar .navbar-nav {
   width: 100%;
 }
-.navbar .navbar-nav > li {
+.navbar .navbar-nav#menu-primary-navigation > li {
   font-size: 0;
 }
-.navbar .navbar-nav > li > a {
+.navbar .navbar-nav#menu-primary-navigation > li > a {
   padding: 20px 0;
   font-size: initial;
   letter-spacing: 0.05em;
 }
 .menu-item {
   text-align: center;
-  text-transform: uppercase;
   z-index: 0;
   font-weight: 500;
-  /*
-	&:active,
-	&:focus {
-		a {
-			color: @off-black;
-		}
-		&:after {
-			height: 100%;
-		}
-	}
-*/
 }
-.navbar .navbar-nav > .menu-item.active {
-  color: #323232;
-  background-color: #d8d8d8;
-  zoom: 1;
-  background-color: transparent\9;
+.primary-nav .menu-item {
+  text-transform: uppercase;
 }
-.menu-outer-item {
-  font-size: 1.2em;
-  text-align: center;
-}
-.menu-item:after {
+.primary-nav .menu-item:after {
   content: " ";
   position: absolute;
   bottom: 0;
@@ -17887,8 +17868,101 @@ Menu
   -o-transition-timing-function: cubic-bezier(0.23, 1, 0.32, 1);
   transition-timing-function: cubic-bezier(0.23, 1, 0.32, 1);
 }
-.menu-item:hover:after {
+.primary-nav .menu-item:hover:after {
   height: 5px;
+}
+.primary-nav .menu-item.active,
+.primary-nav .menu-item.active:hover {
+  color: #323232;
+  background-color: #d8d8d8;
+  zoom: 1;
+  background-color: transparent\9;
+}
+.primary-nav .menu-outer-item {
+  font-size: 1.2em;
+  text-align: center;
+}
+.expanded-nav {
+  opacity: 0;
+  display: none;
+  overflow: hidden;
+  -webkit-transition: all opacity 750ms;
+  -o-transition: all opacity 750ms;
+  transition: all opacity 750ms;
+  -webkit-transition: opacity 750ms cubic-bezier(0.23, 1, 0.32, 1);
+  -o-transition: opacity 750ms cubic-bezier(0.23, 1, 0.32, 1);
+  transition: opacity 750ms cubic-bezier(0.23, 1, 0.32, 1);
+  -webkit-transition-timing-function: cubic-bezier(0.23, 1, 0.32, 1);
+  -o-transition-timing-function: cubic-bezier(0.23, 1, 0.32, 1);
+  transition-timing-function: cubic-bezier(0.23, 1, 0.32, 1);
+}
+.expanded-nav.expanded-nav-open {
+  opacity: 1;
+  display: block;
+}
+.expanded-nav a {
+  color: #d8d8d8;
+}
+.expanded-nav a:hover {
+  text-decoration: none;
+}
+.expanded-nav ul {
+  list-style: none;
+  position: relative;
+  padding-left: 0;
+}
+.expanded-nav li {
+  position: relative;
+  padding: 0 1em;
+  cursor: pointer;
+}
+.expanded-nav li li li {
+  padding: 0;
+  font-size: 0.85em;
+}
+.expanded-nav > ul {
+  padding-bottom: 2em;
+}
+.expanded-nav > ul > li > a {
+  font-size: 0.7em;
+  font-weight: 500;
+  text-transform: uppercase;
+  text-align: center;
+}
+.expanded-nav > ul > li > ul {
+  font-size: 1.2em;
+}
+.expanded-nav > ul > li > ul > li {
+  padding-top: 1em;
+  padding-bottom: 1.5em;
+  border-left: 1px solid;
+  border-bottom: 1px solid;
+  border-color: #4d4d4d;
+}
+.expanded-nav > ul > li > ul > li:hover {
+  border-color: #ffffff;
+}
+.expanded-nav > ul > li > ul > li > a {
+  font-size: 1.2em;
+}
+.expanded-nav > ul > li > ul > li > ul {
+  padding-left: 1em;
+}
+.expanded-nav > ul > li > ul > li > ul a {
+  font-weight: 200;
+}
+.expanded-nav > ul > li > ul > li > ul li:hover > a {
+  color: #fff;
+  font-weight: 300;
+}
+.expanded-nav > ul > li > ul > li > ul > li {
+  padding: 0.4em 0;
+}
+.expanded-nav .sub-menu {
+  list-style: none;
+}
+.expanded-nav .sub-menu li {
+  padding-right: 0;
 }
 /*
 
@@ -18215,7 +18289,7 @@ Organsisms
   top: 30%;
   left: 10%;
   text-transform: uppercase;
-  color: #d8d8d8;
+  color: #fff;
 }
 .thin-promos .wpb_content_element {
   margin-bottom: 2px;
