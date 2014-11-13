@@ -110,9 +110,13 @@ var Roots = {
 				$boxesContainer.css("display", "none");
 				
 				
-				$boxesContainer.imagesLoaded( function( $images, $proper, $broken ) {
+//				$boxesContainer.imagesLoaded( function( $images, $proper, $broken ) {
 					
 					$boxesContainer.css("display", "");
+					
+					var slidesToShow = $frame.data("show");
+					
+					//console.log( slidesToShow );
 					
 					
 					$frame.find("ul").slick({
@@ -120,8 +124,8 @@ var Roots = {
 						infinite: false,
 						speed: 750,
 						slide: 'li',
-						slidesToShow: 4,
-						slidesToScroll: 4,
+						slidesToShow: slidesToShow,
+						slidesToScroll: slidesToShow,
 						easing: 'easeOutQuint',
 						responsive: [{
 							breakpoint: 768,
@@ -132,7 +136,7 @@ var Roots = {
 						}]
 					});
 					
-				});
+//				});
 			
 				// Method calling buttons
 				$boxesContainer.on('click', 'button[data-action]', function () {

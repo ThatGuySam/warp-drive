@@ -544,11 +544,11 @@ function boxesInstagram($user_id) {
 }
 
 
-function boxesVimeo($source, $amount) {
+function boxesVimeo($boxes) {
 
-	$boxes = array();
+	$output = array();
 	
-	$vid_url = parse_url($source);
+	$vid_url = parse_url($boxes->source);
 	
 	$json_url = 'http://vimeo.com/api/v2'.$vid_url['path'].'/videos.json';
 	
@@ -596,21 +596,21 @@ function boxesVimeo($source, $amount) {
 		}
 		
 		
-		$boxes[$i]['type'] 		= "video";
-		$boxes[$i]['id'] 		= $post->id;
-		$boxes[$i]['image_url'] = $post->thumbnail_large;
-		$boxes[$i]['date'] 		= $date;
-		$boxes[$i]['title'] 	= $title;
-		$boxes[$i]['text'] 		= $title;
-		$boxes[$i]['desc'] 		= $desc[0];
-		$boxes[$i]['link'] 		= $link;
+		$output[$i]['type'] 		= "video";
+		$output[$i]['id'] 		= $post->id;
+		$output[$i]['image_url'] = $post->thumbnail_large;
+		$output[$i]['date'] 		= $date;
+		$output[$i]['title'] 	= $title;
+		$output[$i]['text'] 		= $title;
+		$output[$i]['desc'] 		= $desc[0];
+		$output[$i]['link'] 		= $link;
 		
-		if( $i >= $amount - 1 ) break;
+		if( $i >= $boxes->amount - 1 ) break;
 		
 		$i++;
 	}
 	
-	return $boxes;
+	return $output;
 	
 }
 
@@ -633,16 +633,18 @@ class Boxes {
 		self::$add_script = true;
 		
 		extract( shortcode_atts( array(
-			'type' => false,
-			'source' => false,
-			'class' => false,
-			'amount' => 8,
+			'type'		=> false,
+			'source'	=> false,
+			'class'		=> false,
+			'amount'	=> 8,
+			'show'		=> 3,
 		), $atts, 'boxes' ) );
 		
+		$boxes = new stdClass();
+		
+		foreach ($atts as $key => $value) {$boxes->$key = $value; }//Convert Shortcode attributes to object values
 		
 		$parsed_classes = explode(' ', $class);
-		
-		//$props = new stdClass();
 		
 		$props = array();
 		
@@ -650,26 +652,24 @@ class Boxes {
 			$props[$prop] = true;
 		}
 		
+		$boxes->props = $props;
+		
 		
 		//Feed Type
 		switch ($type) {
 		    case "instagram":
-		        $boxes = boxesInstagram($source);
-		        
-		        $boxes_id = $source;
+		        $boxes->boxes = boxesInstagram($boxes);
 		        
 		        $target = "_blank";
 		        
 		        break;
 		    case "vimeo":
-		        $boxes = boxesVimeo($source, $amount);
+		        $boxes->boxes = boxesVimeo($boxes);
 		        
-		        $vid_url = parse_url($source);
-		        $boxes_id = preg_replace('/[^\da-z]/i', '', $vid_url['path'] );
+		        $vid_url = parse_url($boxes->source);
+		        $boxes->id = preg_replace('/[^\da-z]/i', '', $vid_url['path'] );
 		        
 		        $target = "_self";
-		        
-		        
 		        
 		        break;
 		    case "events":
@@ -688,15 +688,16 @@ class Boxes {
 		       echo "Nothing here";
 		}		
 		
+		//debug( $boxes );
+		
 		ob_start();
 		?>
-			<div id="boxes-<?php echo $type; ?>-<?php echo $boxes_id; ?>" class="boxes boxes-<?php echo $type; ?> <?php echo $class; ?>">
+			<div id="boxes-<?php echo $type; ?>-<?php echo $boxes->id; ?>" class="boxes boxes-<?php echo $type; ?> <?php echo $class; ?>">
 
 
-			<div class="frame">
+			<div class="frame" data-show="<?php echo $boxes->show; ?>">
 				<ul class="easecubic">
-				<?php /* <ul class="easecubic"> */ ?>
-					<?php foreach($boxes as $box){ ?>
+					<?php foreach($boxes->boxes as $box){ ?>
 					
 						<?php 
 							if( isset( $props['date-format-human'] ) ){
@@ -736,15 +737,8 @@ class Boxes {
 						
 					<?php } ?>
 				</ul>
-				<?php /* </ul> */ ?>
 			</div>
-
-<!--
-			<div class="controls">
-				<div class="prevPage easecubic"><span> <i class="fa fa-chevron-left fa-2x"></i> </span></div>
-				<div class="nextPage easecubic"><span> <i class="fa fa-chevron-right fa-2x"></i> </span></div>
-			</div>
--->
+			
 		</div>
 		<?php
 		$content = ob_get_clean();
@@ -753,29 +747,21 @@ class Boxes {
 	}
 
 	static function register_script() {
-		//CSS
-		wp_register_style( 'font-awesome', '//netdna.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css', array(), '4.1.0', 'screen' );
-		
-		//JS
-		wp_register_script('imagesloaded', '//cdnjs.cloudflare.com/ajax/libs/jquery.imagesloaded/3.0.4/jquery.imagesloaded.js', array('jquery'), '3.0.4', true);
-		wp_register_script('sly', '//cdnjs.cloudflare.com/ajax/libs/Sly/1.2.1/sly.min.js', array('jquery'), '1.2.1', true);
+		//wp_register_style( 'font-awesome', '//netdna.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css', array(), '4.1.0', 'screen' );
+		//wp_register_script('imagesloaded', '//cdnjs.cloudflare.com/ajax/libs/jquery.imagesloaded/3.0.4/jquery.imagesloaded.js', array('jquery'), '3.0.4', true);
 	}
 
 	static function print_script() {
 		if ( ! self::$add_script )
 			return;
-			
-			//CSS
-			wp_print_styles('font-awesome');
-			
-			//JS
-			wp_print_scripts('imagesloaded');
-			wp_print_scripts('sly');
+			//wp_print_styles('font-awesome');
+			//wp_print_scripts('imagesloaded');
 	}
 	
 	static function internal_script() {
 		if ( ! self::$add_script )
 			return;
+/*
 		?>
 			
 			<script type="text/javascript">
@@ -797,6 +783,7 @@ class Boxes {
 				
 			</style>
 		<?php
+*/
 	}
 }
 
