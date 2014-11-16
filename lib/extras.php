@@ -425,7 +425,6 @@ function heroOrganism($hero){
 				
 				ob_start(); ?>
 					
-					
 					<div class="container">
 						<div class="page-header">
 							<h1>
@@ -433,7 +432,7 @@ function heroOrganism($hero){
 							</h1>
 						</div>
 					</div>
-				
+					
 				<?php $hero->output = ob_get_clean();
 				
 			break;

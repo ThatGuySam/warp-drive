@@ -94,7 +94,7 @@ Mixins
 	
 }
 
-.skrim() {	
+.scrim() {	
 	background: -moz-linear-gradient(top,  rgba(0,0,0,0) 0%, rgba(0,0,0,1) 100%);
 	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(0,0,0,0)), color-stop(100%,rgba(0,0,0,1)));
 	background: -webkit-linear-gradient(top,  rgba(0,0,0,0) 0%,rgba(0,0,0,1) 100%);
@@ -102,6 +102,14 @@ Mixins
 	background: -ms-linear-gradient(top,  rgba(0,0,0,0) 0%,rgba(0,0,0,1) 100%);
 	background: linear-gradient(to bottom,  rgba(0,0,0,0) 0%,rgba(0,0,0,1) 100%);
 	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#00000000', endColorstr='#000000',GradientType=0 );
+}
+
+
+.transition-delay( @delay ){
+	-webkit-transition-delay: @delay;
+	   -moz-transition-delay: @delay;
+	   	 -o-transition-delay: @delay;
+	   	 	transition-delay: @delay;
 }
 
 
@@ -118,13 +126,12 @@ Mixins
 	        
 	
 	& when ( @delay > 0 ) {
-	
-		-webkit-transition-delay: @delay;
-		   -moz-transition-delay: @delay;
-		   	 -o-transition-delay: @delay;
-		   	 	transition-delay: @delay;
+		
+		.transition-delay(@delay);
+		
 	}
 }
+
 
 
 @ir-ratio: 16/9;
@@ -454,25 +461,6 @@ Hero
 	overflow: hidden;
 	margin-bottom: 0;
 	
-	
-	&:hover{
-		
-		.slick-prev,.slick-next {
-			.backgroundRGBa(@primary-dark, 0.9);
-		}
-		
-		.slick-prev {
-			left: 25px;
-		}
-		
-		.slick-next {
-			right: 25px;
-		}
-		
-		
-		
-	}
-	
 }
 
 .foreground {
@@ -531,8 +519,7 @@ Hero
 	.read-more {
 	
 		position: absolute;
-		.backgroundRGBa(@primary-dark, 0.9);
-		bottom: 0;
+		bottom: -20%;
 		left: 50%;
 		width: 100px;
 		margin-left: -50px;
@@ -544,6 +531,10 @@ Hero
 		text-shadow: 0 0 2px rgba(0, 0, 0, 1.0);
 		font-weight: 500;
 		
+		.backgroundRGBa(@primary-dark, 0.9);
+		
+		.transition( bottom , 750ms );
+		
 		span {
 			line-height: 1em;
 		}
@@ -552,6 +543,31 @@ Hero
 			line-height: 0.4em;
 		}
 			
+		
+	}
+	
+	
+	&:hover{
+		
+		.slick-prev,.slick-next {
+			.backgroundRGBa(@primary-dark, 0.9);
+		}
+		
+		.slick-prev {
+			left: 25px;
+		}
+		
+		.slick-next {
+			right: 25px;
+		}
+		
+		.read-more {
+			bottom: 0;
+			
+			.transition-delay( 500ms );
+			
+			//.transition( bottom , 750ms, 500ms );
+		}
 		
 	}
 	
@@ -644,7 +660,7 @@ Organsisms
 		    z-index: -1;
 		    
 		    background: @primary-dark;
-		    //.skrim();
+		    //.scrim();
 		}
 		
 		
