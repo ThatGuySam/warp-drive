@@ -88,8 +88,8 @@
 	<?php if( $hero->kind !== "text"): ?>
 		
 		<a href="#content" class="scrollto">
-			<div class="read-more hidden-md hidden-sm hidden-xs">
-				<span>Scroll</span>
+			<div class="read-more hidden-sm hidden-xs">
+				<span class="read-more-text">Scroll</span>
 				<br>
 				<span><i class="down-arrow"></i></span>
 			</div>
