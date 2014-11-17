@@ -25,15 +25,6 @@
       </nav>
     <?php endif; ?>
 
-    <?php if (!comments_open() && !is_page() && post_type_supports(get_post_type(), 'comments')) : ?>
-      <div class="alert alert-warning">
-        <?php _e('Comments are closed.', 'roots'); ?>
-      </div>
-    <?php endif; ?>
-  <?php elseif(!comments_open() && !is_page() && post_type_supports(get_post_type(), 'comments')) : ?>
-    <div class="alert alert-warning">
-      <?php _e('Comments are closed.', 'roots'); ?>
-    </div>
   <?php endif; ?>
 </section><!-- /#comments -->
 
