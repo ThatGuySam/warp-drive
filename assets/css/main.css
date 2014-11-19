@@ -17972,6 +17972,15 @@ Hero
 .hero-section {
   overflow: hidden;
   margin-bottom: 0;
+  -webkit-transition: all 0.2s ease-out;
+  -o-transition: all 0.2s ease-out;
+  transition: all 0.2s ease-out;
+  -webkit-transition: all 500ms cubic-bezier(0.23, 1, 0.32, 1);
+  -o-transition: all 500ms cubic-bezier(0.23, 1, 0.32, 1);
+  transition: all 500ms cubic-bezier(0.23, 1, 0.32, 1);
+  -webkit-transition-timing-function: cubic-bezier(0.23, 1, 0.32, 1);
+  -o-transition-timing-function: cubic-bezier(0.23, 1, 0.32, 1);
+  transition-timing-function: cubic-bezier(0.23, 1, 0.32, 1);
 }
 .hero-section .hero-slide {
   height: 100%;
@@ -18430,6 +18439,60 @@ Media Queries
   }
 }
 /* Custom, iPhone Retina */
+/* CSS Fadein */
+.fadeIn {
+  opacity: 0;
+  -webkit-animation: fadeIn cubic-bezier(0.23, 1, 0.32, 1) 1;
+  -o-animation: fadeIn cubic-bezier(0.23, 1, 0.32, 1) 1;
+  animation: fadeIn cubic-bezier(0.23, 1, 0.32, 1) 1;
+  -webkit-animation-fill-mode: forwards;
+  -o-animation-fill-mode: forwards;
+  animation-fill-mode: forwards;
+  -webkit-transition: opacity;
+  -o-transition: opacity;
+  transition: opacity;
+  -webkit-transition: all opacity ease-out;
+  -o-transition: all opacity ease-out;
+  transition: all opacity ease-out;
+  -webkit-transition: opacity 500ms cubic-bezier(0.23, 1, 0.32, 1);
+  -o-transition: opacity 500ms cubic-bezier(0.23, 1, 0.32, 1);
+  transition: opacity 500ms cubic-bezier(0.23, 1, 0.32, 1);
+  -webkit-transition-timing-function: cubic-bezier(0.23, 1, 0.32, 1);
+  -o-transition-timing-function: cubic-bezier(0.23, 1, 0.32, 1);
+  transition-timing-function: cubic-bezier(0.23, 1, 0.32, 1);
+}
+.no-cssanimations .fadeIn {
+  opacity: 1;
+}
+/* Animation Times - Time for image to fade in
+	---------------------------------------------------- */
+.fadeIn-3s {
+  -webkit-animation-duration: 3s;
+  -o-animation-duration: 3s;
+  animation-duration: 3s;
+}
+.fadeIn-5s {
+  -webkit-animation-duration: 5s;
+  -o-animation-duration: 5s;
+  animation-duration: 5s;
+}
+/* Animation Delay - Time for image to be delayed
+	---------------------------------------------------- */
+.fadeIn-Delay-2s {
+  -webkit-animation-delay: 2s;
+  -o-animation-delay: 2s;
+  animation-delay: 2s;
+}
+.fadeIn-Delay-3s {
+  -webkit-animation-delay: 3s;
+  -o-animation-delay: 3s;
+  animation-delay: 3s;
+}
+.fadeIn-Delay-5s {
+  -webkit-animation-delay: 5s;
+  -o-animation-delay: 5s;
+  animation-delay: 5s;
+}
 /*
 
 Cheats
@@ -18486,5 +18549,31 @@ Cheats
   padding-left: 0 !important;
   padding-right: 0 !important;
   margin: 0 !important;
+}
+/* Key Frames
+---------------------------------------------------- */
+@-webkit-keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+@-o-keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
 }
 /*# sourceMappingURL=main.css.map */
