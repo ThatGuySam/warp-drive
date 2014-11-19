@@ -8,7 +8,8 @@ Filters
 
 
 function insert_luminance_data($post_ID) {
-    $src = wp_get_attachment_image_src( $post_ID, 'thumb-hd' )[0];
+    $image = wp_get_attachment_image_src( $post_ID, 'thumb-hd' );
+    $src = $image[0];
     $lum = get_avg_luminance($src, 10, true);
     add_post_meta( $post_ID, 'image_lum', $lum, true ) || update_post_meta( $post_ID, 'image_lum', $lum );
     return $post_ID;
@@ -166,6 +167,11 @@ function load_google_fonts() {
   echo '<link href="http://fonts.googleapis.com/css?family=' . GOOGLE_FONTS . '" rel="stylesheet" type="text/css" />'."\n";
 }
 add_action( 'wp_head', 'load_google_fonts' , 1);
+
+function load_ivy() { ?>
+  <script data-cfasync="false" type="text/javascript" src="//filamentapp.s3.amazonaws.com/b61aff4f71da85fe905c82ebfa528de0.js" async></script>
+<?php }
+add_action( 'wp_footer', 'load_ivy' , 1);
 
 
 //Custom Admin CSS
