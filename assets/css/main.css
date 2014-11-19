@@ -18009,8 +18009,7 @@ Hero
   height: 100%;
 }
 .foreground .container {
-  padding-left: 0;
-  padding-right: 0;
+  padding: 10% 0;
   text-align: center;
   height: 100%;
 }
@@ -18356,6 +18355,51 @@ Pages
 */
 .home .wrap {
   padding-top: 0.5em;
+}
+/* 
+
+Events
+
+*/
+/* Calendar */
+.timely {
+  font-family: "Lato", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-size: 1em;
+  color: #323232;
+}
+.timely .ai1ec-calendar-toolbar,
+.timely table.ai1ec-month-view {
+  color: #323232;
+  background-color: #d8d8d8;
+}
+.timely .ai1ec-month-view .ai1ec-date {
+  background: transparent;
+  line-height: 1.8em;
+  height: auto;
+  padding-top: 0.7em;
+}
+.timely .ai1ec-month-view .ai1ec-date a {
+  color: #323232;
+  text-shadow: none;
+  font-size: 1.4em;
+}
+.timely .ai1ec-btn-group > .ai1ec-btn-sm {
+  font-size: 1em;
+}
+.timely .ai1ec-month-view td,
+.timely .ai1ec-week-view td,
+.timely .ai1ec-oneday-view td {
+  border: 0px solid #eaeaea !important;
+  border-left-width: 2px !important;
+  border-bottom-width: 2px !important;
+}
+.timely .ai1ec-month-view th {
+  color: #d8d8d8 !important;
+  background-color: #323232 !important;
+  text-shadow: none;
+}
+.timely .ai1ec-month-view td.ai1ec-empty {
+  background: #eaeaea !important;
 }
 /*
 
