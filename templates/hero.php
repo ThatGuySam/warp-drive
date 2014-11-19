@@ -6,13 +6,14 @@
 	
 	$hero->kind = "text";
 	
-	$hero->text = roots_title();
+	$hero->text = get_the_title();
 	
 	$hero->index = 0;
 	
 	$hero->srcType = "src";
 	
 	if( has_post_thumbnail() ){
+	
 		$thumbnail_src = wp_get_attachment_image_src( get_post_thumbnail_id( $post->ID ), "full" );
 		
 		$hero->kind = "media";
@@ -30,13 +31,13 @@
 	
 	
 ?>
-<div class="hero-container <?php foreach ($hero->classes as &$class) echo "hero-".$class." "  ?> container-fluid nopadding dark">
+<div class="hero-container <?php foreach ($hero->classes as &$class) echo "hero-".$class." ";//echo all classes  ?>container-fluid nopadding dark">
 	
 <!--
 	
 	Hero Priorities
 	
-	Text < Slider < Image < Video < Organism
+	Text < Image < Video < Organism
 	
 -->
 	
@@ -60,7 +61,6 @@
 				$image_attachment = wp_get_attachment_image_src($hero->attachment_id, '720');
 				
 				$hero->src = $image_attachment[0];
-				
 				
 				//Setup Foreground
 				$hero->text = get_sub_field('title');
