@@ -25,17 +25,17 @@ function roots_scripts() {
       'js'        	=> '/assets/js/scripts.js',
       'modernizr' 	=> '/assets/vendor/modernizr/modernizr.js',
       'jquery'    	=> '//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.js',
-      'ivy'    	=> '//filamentapp.s3.amazonaws.com/b61aff4f71da85fe905c82ebfa528de0.js'
+      'ivy'			=> '//filamentapp.s3.amazonaws.com/b61aff4f71da85fe905c82ebfa528de0.js'
     );
   } else {
     $get_assets = file_get_contents(get_template_directory() . '/assets/manifest.json');
     $assets     = json_decode($get_assets, true);
     $assets     = array(
-      'css'       => '/assets/css/main.min.css?' . $assets['assets/css/main.min.css']['hash'],
-      'js'        => '/assets/js/scripts.min.js?' . $assets['assets/js/scripts.min.js']['hash'],
-      'modernizr' => '/assets/js/vendor/modernizr.min.js?'.$assets['assets/js/scripts.min.js']['hash'],
-      'jquery'    => '//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js',
-      'ivy'		  => '//filamentapp.s3.amazonaws.com/b61aff4f71da85fe905c82ebfa528de0.js'
+      'css'			=> '/assets/css/main.min.css?' . $assets['assets/css/main.min.css']['hash'],
+      'js'			=> '/assets/js/scripts.min.js?' . $assets['assets/js/scripts.min.js']['hash'],
+      'modernizr'	=> '/assets/js/vendor/modernizr.min.js?'.$assets['assets/js/scripts.min.js']['hash'],
+      'jquery'		=> '//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js',
+      'ivy'			=> '//filamentapp.s3.amazonaws.com/b61aff4f71da85fe905c82ebfa528de0.js'
     );
   }
 
