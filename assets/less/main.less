@@ -484,8 +484,7 @@ Hero
 	height: 100%;
 	
 	.container {
-		padding-left: 0;
-		padding-right: 0;
+		padding: 10% 0;
 		text-align: center;
 		
 		//css-tricks.com/centering-css-complete-guide/
@@ -868,6 +867,66 @@ Pages
 
 .home .wrap {
 	padding-top: 0.5em;
+}
+
+/* 
+
+Events
+
+*/
+
+
+/* Calendar */
+
+.timely {
+	font-family: "Lato", "Helvetica Neue", Helvetica, Arial, sans-serif;
+	font-size: 1em;
+	color: @primary-dark;
+	
+	//light
+	.ai1ec-calendar-toolbar,
+	table.ai1ec-month-view {
+		color: @primary-dark;
+		background-color: @primary-light;
+	}
+	
+	.ai1ec-month-view .ai1ec-date {
+		background: transparent;
+		line-height: 1.8em;
+		height: auto;
+		padding-top: 0.7em;
+		a {
+			color: @primary-dark;
+			text-shadow: none;
+			font-size: 1.4em;
+		}
+		
+	}
+	
+	.ai1ec-btn-group > .ai1ec-btn-sm {
+		font-size: 1em;
+	}
+	
+	//border
+	.ai1ec-month-view td, 
+	.ai1ec-week-view td, 
+	.ai1ec-oneday-view td {
+		border: 0px solid @secondary-light !important;
+		border-left-width: 2px !important;
+		border-bottom-width: 2px !important;
+	}
+	
+	//Freakin !imporant overrides
+	.ai1ec-month-view th {
+		color: @primary-light !important;
+		background-color: @primary-dark !important;
+		text-shadow: none;
+	}
+	
+	.ai1ec-month-view td.ai1ec-empty {
+		background: @secondary-light !important;
+	}
+	
 }
 
 /*
