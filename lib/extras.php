@@ -53,7 +53,7 @@ function heroOrganism($hero) {
 				<div class="container">
 					<div class="page-header">
 						<h1>
-						<?php echo roots_title(); ?>
+							<?php echo roots_title(); ?>
 						</h1>
 					</div>
 				</div>
@@ -81,6 +81,11 @@ function heroOrganism($hero) {
 								<?php echo parse_title( $hero->text ); ?>
 							</h1>
 						</div>
+						
+						<div class="hero-content">
+							<?php //echo do_shortcode('[content]'); ?>
+						</div>
+						
 					</div>
 					
 				</div>
@@ -152,6 +157,105 @@ function heroOrganism($hero) {
 	
 	return $hero->output;
 }
+
+
+
+
+
+class Content_Insert {
+	static $add_script;
+ 
+	static function init() {
+		add_shortcode('content', array(__CLASS__, 'handle_shortcode'));
+		
+		add_action('init', array(__CLASS__, 'register_script'));
+		add_action('wp_footer', array(__CLASS__, 'print_script'));
+		add_action('wp_footer', array(__CLASS__, 'internal_script'));
+	}
+ 
+	static function handle_shortcode($atts) {
+		self::$add_script = true;
+		
+		extract( shortcode_atts( array(
+			'class' => false,
+			'page' => get_the_ID()
+		), $atts, 'content' ) );
+		
+		
+		ob_start();
+		
+		// Default output if no pageid given
+		 $output = NULL;
+		
+		 // extract atts and assign to array
+		 
+		 // if a page id is specified, then run query
+		 if (!empty($page)) {
+			 $pageContent = new WP_query();
+			 $pageContent->query(array('page_id' => $page,'post_type' => array('page', 'ai1ec_event'),));
+			 while ($pageContent->have_posts()) : $pageContent->the_post();
+			 	// assign the content to $output
+			 	the_content();
+			 endwhile;
+		 }
+ 
+		?>
+			
+			
+			
+			
+			
+		<?php
+		$content = ob_get_clean();
+			
+		return $content;
+	}
+ 
+	static function register_script() {
+		//CSS
+		wp_register_style( 'font-awesome', '//netdna.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css', array(), '4.2.0', 'screen' );
+		
+		//JS
+		wp_register_script( 'jquery-plugin', get_stylesheet_directory_uri() . '/assets/js/jquery.plugin.js', array('jquery'), '1.0', true);
+		
+	}
+ 
+	static function print_script() {
+		if ( ! self::$add_script )
+			return;
+			
+			//CSS
+			if( wp_style_is( 'js_composer_front', 'registered' ) ) wp_print_styles('js_composer_front');
+			
+			//JS
+			//wp_print_scripts('jquery-plugin');
+			
+	}
+	
+	static function internal_script() {
+		if ( ! self::$add_script )
+			return;
+			
+			
+						
+		?>
+			
+			<script type="text/javascript">
+				if ( undefined !== window.jQuery ) { jQuery(function ($) { 'use strict';
+					
+				}); }
+			</script>
+			
+			<style>
+				
+			</style>
+		<?php
+	}
+}
+ 
+Content_Insert::init();
+
+
 
 
 
