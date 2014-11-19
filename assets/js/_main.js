@@ -57,9 +57,14 @@ var Roots = {
 				
 				var ratio = 9/16;
 				
+				var maxHeroHeight = Math.round( ww*ratio );
+				if( $("body").hasClass("single-ai1ec_event") ){// if it's an event
+					maxHeroHeight = 450;
+				}
+				 
 				$(".hero-media .hero-section")
 					.css("height", heroHeight+"px")
-					.css("max-height", Math.round( ww*ratio )+"px");
+					.css("max-height", maxHeroHeight+"px");
 					
 					
 				if( ( ww*ratio ) > heroHeight ) {
