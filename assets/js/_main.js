@@ -53,18 +53,19 @@ var Roots = {
 				var wh = window.innerHeight;
 				var ww = window.innerWidth;
 				
-				var heroHeight = wh;//-25;
-				
 				var ratio = 9/16;
 				
-				var maxHeroHeight = Math.round( ww*ratio );
+				var heroHeight = wh+"px";//-25;
+				var maxHeroHeight = Math.round( ww*ratio )+"px";
+				
 				if( $("body").hasClass("single-ai1ec_event") ){// if it's an event
-					maxHeroHeight = 450;
+					//maxHeroHeight = 450+"px";
+					heroHeight = "";
 				}
 				 
 				$(".hero-media .hero-section")
-					.css("height", heroHeight+"px")
-					.css("max-height", maxHeroHeight+"px");
+					.css("height", heroHeight)
+					.css("max-height", maxHeroHeight);
 					
 					
 				if( ( ww*ratio ) > heroHeight ) {
@@ -113,35 +114,30 @@ var Roots = {
 				var $frame = $boxesContainer.find('.frame'); window.frr = $frame;
 				
 				$boxesContainer.css("display", "none");
+					
+				$boxesContainer.css("display", "");
+				
+				var slidesToShow = $frame.data("show");
+				
+				//console.log( slidesToShow );
 				
 				
-//				$boxesContainer.imagesLoaded( function( $images, $proper, $broken ) {
-					
-					$boxesContainer.css("display", "");
-					
-					var slidesToShow = $frame.data("show");
-					
-					//console.log( slidesToShow );
-					
-					
-					$frame.find("ul").slick({
-						arrows: !Modernizr.touch,
-						infinite: false,
-						speed: 750,
-						slide: 'li',
-						slidesToShow: slidesToShow,
-						slidesToScroll: slidesToShow,
-						easing: 'easeOutQuint',
-						responsive: [{
-							breakpoint: 768,
-							settings: {
-								slidesToShow: 1,
-								slidesToScroll: 1,
-							}
-						}]
-					});
-					
-//				});
+				$frame.find("ul").slick({
+					arrows: !Modernizr.touch,
+					infinite: false,
+					speed: 750,
+					slide: 'li',
+					slidesToShow: slidesToShow,
+					slidesToScroll: slidesToShow,
+					easing: 'easeOutQuint',
+					responsive: [{
+						breakpoint: 768,
+						settings: {
+							slidesToShow: 1,
+							slidesToScroll: 1,
+						}
+					}]
+				});
 			
 				// Method calling buttons
 				$boxesContainer.on('click', 'button[data-action]', function () {
@@ -188,7 +184,7 @@ var Roots = {
 						$("html, body").unbind("scroll mousedown DOMMouseScroll mousewheel keyup");
 					});
 					
-					event.preventDefault();
+					return false;
 				});
 				
 			});
@@ -199,6 +195,10 @@ var Roots = {
 			/* Init */
 			
 			sizeHero();
+			
+			if( !Modernizr.cssanimations ){
+				$("html").addClass("no-cssanimations");
+			}
 			
 			//console.log("Test");
 			

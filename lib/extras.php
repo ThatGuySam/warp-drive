@@ -69,7 +69,7 @@ function heroOrganism($hero) {
 			
 				<img <?php echo $hero->srcType; ?>="<?php echo $hero->src; ?>" alt="">
 				
-				<div class="foreground" style="<?php //BG Color Overlay
+				<div class="foreground fadeIn fadeIn-3s fadeIn-Delay-2s" style="<?php //BG Color Overlay
 					if( get_field('page_color') ): 
 						?>background: <?php echo get_field('page_color'); ?>; <?php //#000000
 						?>background: rgba(<?php echo hex2rgb( get_field('page_color') ); ?>,0.8); <?php //rgba(0,0,0,0.8)
