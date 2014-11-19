@@ -1,7 +1,7 @@
 <?php while (have_posts()) : the_post(); ?>
   <article <?php post_class(); ?>>
     <header>
-      <?php get_template_part('templates/entry-meta'); ?>
+      <?php if( get_post_type() == "post") get_template_part('templates/entry-meta');//if it's a post( and not a Page or event ) ?>
     </header>
     <div class="entry-content">
       <?php the_content(); ?>
