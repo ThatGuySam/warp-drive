@@ -1,11 +1,13 @@
 <?php
 
-function debug( $this ) {
+function debug( $thing ) {
+	
+	if( $thing == null || $thing == false ) return;
 	
 	ob_start(); ?>
 	
 		<pre>
-			<?php print_r($this); ?>
+			<?php print_r($thing); ?>
 		</pre>
 	
 	<?php $output = ob_get_clean();
@@ -14,6 +16,16 @@ function debug( $this ) {
 	
 }
 
+
+function getThumb($id = "", $size = 'thumb-hd') {
+	
+	$thumb_id = get_post_thumbnail_id($id);
+	$thumb_url_array = wp_get_attachment_image_src($thumb_id, $size, true);
+	$thumb_url = $thumb_url_array[0];
+	
+	return $thumb_url;
+	
+}
 
 $normalizeChars = array(
     'Š'=>'S', 'š'=>'s', 'Ð'=>'Dj','Ž'=>'Z', 'ž'=>'z', 'À'=>'A', 'Á'=>'A', 'Â'=>'A', 'Ã'=>'A', 'Ä'=>'A',

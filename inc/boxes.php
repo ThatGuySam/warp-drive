@@ -1,5 +1,47 @@
 <?php
 
+function cacheHandler( $object, $function ) {
+    // cache files are created like cache/abcdef123456...
+    
+    $filename = $function . "-" . preg_replace("/[^\da-z]/i", '', $object->id );
+    $cacheFile = 'cache' . DIRECTORY_SEPARATOR . $filename;
+	
+	if( array_key_exists( 'purge' , $_GET ) ) unlink($cacheFile);
+	
+    if (file_exists($cacheFile)) {
+        $fh = fopen($cacheFile, 'r');
+        //$cacheTime = trim(fgets($fh));
+        
+        $cacheTime = filemtime($cacheFile);
+
+        // if data was cached recently, return cached data
+        if ($cacheTime > strtotime('-60 minutes')) {
+            $object_cached = file_get_contents($cacheFile);
+            
+            $output = json_decode( $object_cached );
+            
+            //echo "Cache Read";
+            return $output;
+        }
+
+        // else delete cache file
+        fclose($fh);
+        unlink($cacheFile);
+    }
+
+    
+    $output = $function($object);
+    
+    $new_object_json = json_encode( $output );
+	
+    $fh = fopen($cacheFile, 'w');
+    fwrite($fh, $new_object_json);
+    fclose($fh);
+	
+	//echo "File Made";
+    return $output;
+}
+
 function getJson($url) {
     // cache files are created like cache/abcdef123456...
     $cacheFile = 'cache' . DIRECTORY_SEPARATOR . "json-" . md5($url);
@@ -58,12 +100,12 @@ function boxesInstagram($user_id) {
 	foreach ($result->data as $post) {
 		//debug($post);
 		
-		$boxes[$i]['type'] 		= $post->type;
-		$boxes[$i]['id'] 		= $post->id;
+		$boxes[$i]['type'] =	$post->type;
+		$boxes[$i]['id'] =		$post->id;
 		$boxes[$i]['image_url'] = $post->images->low_resolution->url;
 		//$boxes[$i]['date'] 		= date( "D n/j" , strtotime( $post->created_time ) );
-		$boxes[$i]['text'] 		= $post->caption->text;
-		$boxes[$i]['link'] 		= $post->link;
+		$boxes[$i]['text'] = 	$post->caption->text;
+		$boxes[$i]['link'] = 	$post->link;
 		
 		$i++;
 	}
@@ -76,19 +118,20 @@ function boxesInstagram($user_id) {
 
 function boxesVimeo($boxes) {
 
-	$output = array();
+	$output = new stdClass();
 	
 	$vid_url = parse_url($boxes->source);
 	
-	$json_url = 'http://vimeo.com/api/v2'.$vid_url['path'].'/videos.json';
+	$json_url = 'http://vimeo.com/api/v2'.$boxes->source.'/videos.json';
 	
-	$json = json_decode( getJson($json_url) );
+	//$json = json_decode( getJson($json_url) );
+	
+	$json = json_decode( file_get_contents($json_url) );
 	
 	$i=0;
 	foreach ($json as $post) {
-		//debug( $post );
 		
-		$details = new stdClass;
+		$details = new stdClass();
 		
 		$desc = explode('<br />', $post->description);
 		
@@ -125,24 +168,112 @@ function boxesVimeo($boxes) {
 			$link = "#".$post->id;
 		}
 		
+		$v_box = new stdClass;
 		
-		$output[$i]['type'] 		= "video";
-		$output[$i]['id'] 		= $post->id;
-		$output[$i]['image_url'] = $post->thumbnail_large;
-		$output[$i]['date'] 		= $date;
-		$output[$i]['title'] 	= $title;
-		$output[$i]['text'] 		= $title;
-		$output[$i]['desc'] 		= $desc[0];
-		$output[$i]['link'] 		= $link;
+		$v_box->type 		= "video";
+		$v_box->id 		= $post->id;
+		$v_box->image_url = $post->thumbnail_large;
+		$v_box->date 		= $date;
+		$v_box->title 	= $title;
+		$v_box->text 		= $title;
+		$v_box->desc 		= $desc[0];
+		$v_box->link 		= $link;
+		
+		
+		$boxes->boxes[$i] = $v_box;
 		
 		if( $i >= $boxes->amount - 1 ) break;
 		
 		$i++;
 	}
 	
+	$output = $boxes;
+	
 	return $output;
 	
 }
+
+
+
+function boxesEvents($boxes) {
+
+	global $ai1ec_registry;
+	$date_system = $ai1ec_registry->get( 'date.system' );
+	$search = $ai1ec_registry->get('model.search');
+
+	// gets localized time
+	$local_date = $ai1ec_registry->get( 'date.time', $date_system->current_time(), 'sys.default' );
+
+	//sets start time to today
+	$start_time = clone $local_date;
+	$start_time->set_time( 0, 0, 0 );
+	
+	//sets end time to a year from today 
+	$end_time = clone $start_time;
+	$end_time->adjust_month( 12 );
+	
+	//$categories = get_the_terms($post->ID, 'ai1ec_event');
+	
+	$filters = array(
+		'cat_ids'  => array(
+			5
+		),
+		//'tag_ids'  => array(),
+		//'post_ids' => array(),
+		//'auth_ids' => array(),
+	);
+		
+	$events_result = $search->get_events_between($start_time, $end_time, $filters, true);
+	
+	if(!empty($events_result)) {
+		$e = '0';
+		$e_names = array();
+		foreach($events_result as $event) { 
+			
+			if($e >= $boxes->amount) break;//end loop
+				
+			//Title
+			$title = $event->get( 'post' )->post_title;
+			if( in_array( $title, $e_names ) ) continue;//If this has already been listed skip
+			array_push($e_names,$title);//Add Name to list
+			
+			//Let's Go
+			$e_box = new stdClass();
+			
+			$id = $event->get( 'post_id' );
+			
+			//Date
+			$date_raw = $ai1ec_registry->get('view.event.time')->get_long_date( $event->get( 'start' ) );
+			
+			$date = date( "F jS" , strtotime( $date_raw ) );
+			
+			$e_box->date				= $date;
+			$e_box->date_unix			= strtotime($date_raw);
+			$e_box->id					= $id;
+			$e_box->title				= $title;
+			$e_box->image_url			= getThumb( $id );
+			$e_box->type				= "event";
+			$e_box->color				= get_field('page_color', $id);
+			$e_box->link				= $boxes->site_url."/?p=".$id;
+			
+			$boxes->boxes[$e] = $e_box;
+			
+			$e++;
+		}
+	}
+	
+	//Sort by date
+	function date_sort($a, $b) {
+	  return strcmp($a->date_unix, $b->date_unix); //only doing string comparison
+	}
+	usort( $boxes->boxes, 'date_sort');
+	
+	$output = $boxes;
+	
+	return $output;
+	
+}
+
 
 
 
@@ -172,7 +303,11 @@ class Boxes {
 		
 		$boxes = new stdClass();
 		
-		foreach ($atts as $key => $value) {$boxes->$key = $value; }//Convert Shortcode attributes to object values
+		$boxes->boxes = false;
+		
+		$boxes->site_url = site_url();
+		
+		foreach ($atts as $key => $value) {$boxes->{$key} = $value; }//Convert Shortcode attributes to object values
 		
 		$parsed_classes = explode(' ', $class);
 		
@@ -194,16 +329,32 @@ class Boxes {
 		        
 		        break;
 		    case "vimeo":
-		        $boxes->boxes = boxesVimeo($boxes);
+		        
+		        //$boxes = boxesVimeo($boxes);
 		        
 		        $vid_url = parse_url($boxes->source);
+		        
+		        $boxes->source = $vid_url['path'];
+		        
 		        $boxes->id = preg_replace('/[^\da-z]/i', '', $vid_url['path'] );
+		        
+		        
+		        $boxes = cacheHandler($boxes, "boxesVimeo");
 		        
 		        $target = "_self";
 		        
 		        break;
 		    case "events":
-		        echo "events!";
+		    	
+		    	$boxes->id = $source;
+				
+				$boxes = cacheHandler($boxes, "boxesEvents");
+				
+				//$boxes->boxes = boxesEvents( $boxes );
+				
+				//$debug = $boxes;
+				
+		        //debug( $query );
 		        break;
 		    case "category":
 		        echo $source;
@@ -222,60 +373,66 @@ class Boxes {
 		
 		ob_start();
 		?>
-			<div id="boxes-<?php echo $type; ?>-<?php echo $boxes->id; ?>" class="boxes boxes-<?php echo $type; ?> <?php echo $class; ?>">
+			<div id="boxes-<?php echo $type; ?>-<?php echo $boxes->id; ?>" class="box-boxes boxes-<?php echo $type; ?> <?php echo $class; ?>">
 
 
 			<div class="frame" data-show="<?php echo $boxes->show; ?>">
 				<ul class="easecubic">
-					<?php foreach($boxes->boxes as $box){ ?>
+					<?php if( $boxes->boxes ): foreach($boxes->boxes as $key => $box){ ?>
 					
 						<?php 
 							if( isset( $props['date-format-human'] ) ){
 								
-								$normal_date = strtotime( $box['date'] );
+								$normal_date = strtotime( $box->date );
 								
-								if( strtotime( $box['text'] ) ) $normal_date = strtotime( $box['text'] );
+								if( strtotime( $box->text ) ) $normal_date = strtotime( $box->text );
 								
-								$box['text'] = ago( $normal_date );
+								$box->text = ago( $normal_date );
 							}
 						?>
 	
 						
-						<li id="box-<?php echo $type; ?>-<?php echo $box['id']; ?>" class="box-<?php echo $box['type']; ?> easecubic">
+						<li id="box-<?php echo $type; ?>-<?php echo $box->id; ?>" class="box-box box-<?php echo $box->type; ?> easecubic" style="<?php 
+							//BG Color Overlay
+							if( isset( $box->color ) ): 
+								?>background: <?php echo $box->color; ?>; <?php //#000000
+							endif; ?>">
 							
-							<a href="<?php echo $box['link']; ?>" target="<?php echo $target; ?>" >
+							<a href="<?php echo $box->link; ?>" target="<?php echo $target; ?>" >
 								<div class="box-image">
-									<img class="easecubic" data-lazy="<?php echo $box['image_url']; ?>" alt="<?php echo $box['text']; ?>" >
+									<img class="easecubic" data-lazy="<?php echo $box->image_url; ?>" alt="<?php echo $box->text; ?>" >
 								</div>
 								
-								<div class="box-header easecubic">
+								<div class="box-header easecubic" style="">
 									
 									<div class="box-header-content">
-										<h3><?php echo parse_title( $box['title'] ); ?></h3>
-										<div class="box-date easecubic"><?php echo $box['date']; ?></div>
+										<h3><?php echo parse_title( $box->title ); ?></h3>
+										<div class="box-date easecubic"><?php echo $box->date; ?></div>
 									</div>
 								</div>
 								
 								
 							
-								<div class="box-caption easecubic"><p><?php echo parse_title( $box['desc'] ); ?></p></div>
+								<div class="box-caption easecubic"><p><?php echo parse_title( $box->desc ); ?></p></div>
 								
 								
 							</a>
 							
 						</li>
 						
-					<?php } ?>
+					<?php } endif; ?>
 				</ul>
 			</div>
 			
 		</div>
 		<?php
 		$content = ob_get_clean();
+		
+		debug( $debug );
 			
 		return $content;
 	}
-
+	
 	static function register_script() {
 		//wp_register_style( 'font-awesome', '//netdna.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css', array(), '4.1.0', 'screen' );
 		//wp_register_script('imagesloaded', '//cdnjs.cloudflare.com/ajax/libs/jquery.imagesloaded/3.0.4/jquery.imagesloaded.js', array('jquery'), '3.0.4', true);
