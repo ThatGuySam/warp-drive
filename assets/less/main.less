@@ -65,9 +65,9 @@ Variables
 
 //@tertiary-dark: #4d4d4d
 
-@lato: "Lato","Helvetica Neue",Helvetica,Arial,sans-serif;
+@primary-font: "Lato","Helvetica Neue",Helvetica,Arial,sans-serif;
 
-@open-sans: "Open Sans","Helvetica Neue",Helvetica,Arial,sans-serif;
+@body-font: "Open Sans","Helvetica Neue",Helvetica,Arial,sans-serif;
 
 
 
@@ -219,12 +219,12 @@ Typography
 
 
 body, h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4 {
-	font-family: @lato;
+	font-family: @primary-font;
 	font-weight: 300;
 }
 
 p {
-	font-family: @open-sans;
+	font-family: @body-font;
 }
 
 ::selection {  /* WebKit/Blink Browsers */
@@ -669,7 +669,7 @@ Organisms
 	}
 	
 	
-	.box-video {
+	.box-box {
 	
 		@anim-dir: left;
 		
@@ -744,7 +744,6 @@ Organisms
 			overflow: hidden;
 			text-shadow: 0 0 4px #000;
 			line-height: 1em;
-			margin-bottom: 5px;
 		}
 		
 		.box-date {
@@ -775,7 +774,7 @@ Organisms
 
 .text-overlay {
 	
-	.box-video {
+	.box-box {
 		
 		.box-image {
 			opacity: 0.3;
@@ -884,7 +883,7 @@ Events
 /* Calendar */
 
 .timely {
-	font-family: @lato;
+	font-family: @primary-font;
 	font-size: 1em;
 	color: @primary-dark;
 	

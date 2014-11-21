@@ -55,11 +55,11 @@ var Roots = {
 				
 				var ratio = 9/16;
 				
-				var heroHeight = wh+"px";//-25;
+				var heroHeight = wh+"px";//-25; 
 				var maxHeroHeight = Math.round( ww*ratio )+"px";
 				
 				if( $("body").hasClass("single-ai1ec_event") ){// if it's an event
-					//maxHeroHeight = 450+"px";
+					maxHeroHeight = 500+"px";
 					heroHeight = "";
 				}
 				 
@@ -157,8 +157,8 @@ var Roots = {
 			}
 			
 			
-			$('.boxes').each(function() {
-				boxize( $(this) );
+			$('.box-boxes').each(function() {
+				boxize( $(this) ); 
 			});
 			
 			
@@ -199,6 +199,8 @@ var Roots = {
 			if( !Modernizr.cssanimations ){
 				$("html").addClass("no-cssanimations");
 			}
+			
+			$('.entry-content').selectionSharer();
 			
 			//console.log("Test");
 			

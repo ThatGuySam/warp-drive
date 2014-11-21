@@ -245,6 +245,8 @@ class Content_Insert {
 			<script type="text/javascript">
 				if ( undefined !== window.jQuery ) { jQuery(function ($) { 'use strict';
 					
+					
+					
 				}); }
 			</script>
 			
