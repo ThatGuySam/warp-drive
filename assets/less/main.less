@@ -144,7 +144,7 @@ Mixins
 
 .ir(@ratio: @ir-ratio, @width: @ir-width, @margin: @ir-margin) {
     position: relative;
-    margin: @margin;
+    //margin: @margin;
     width: unit(@width, ~'%');
     height: 0;
     padding-bottom: unit(@width / @ratio, ~'%');
@@ -661,7 +661,6 @@ Organisms
 	}
 	
 	ul li {
-		margin: 0 1px;
 		position: relative;
 		text-align: center;
 		cursor: pointer;
@@ -670,6 +669,11 @@ Organisms
 	
 	
 	.box-box {
+		
+		position: relative;
+		overflow: hidden;
+		margin: 2px;
+		.ir();
 	
 		@anim-dir: left;
 		
@@ -758,6 +762,19 @@ Organisms
 			z-index: 1;
 			
 			.transition( @anim-dir , 500ms, 150ms );
+		}
+		
+		.box-caption {
+			display: none;
+		}
+		
+		
+		.double-stacked & {
+			
+			.box-header h3 {
+				font-size: 1.2em;
+			}
+			
 		}
 		
 	}

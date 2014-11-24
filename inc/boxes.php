@@ -317,6 +317,8 @@ class Boxes {
 			$props[$prop] = true;
 		}
 		
+		//$debug = $props;
+		
 		$boxes->props = $props;
 		
 		
@@ -373,6 +375,16 @@ class Boxes {
 		
 		ob_start();
 		?>
+		
+		<?php 
+			
+			if( isset( $props['double-stacked'] ) ){
+				
+				$boxes->show = $boxes->show * 2;
+				
+			}
+			
+		?>
 			<div id="boxes-<?php echo $type; ?>-<?php echo $boxes->id; ?>" class="box-boxes boxes-<?php echo $type; ?> <?php echo $class; ?>">
 
 
@@ -388,37 +400,42 @@ class Boxes {
 								if( strtotime( $box->text ) ) $normal_date = strtotime( $box->text );
 								
 								$box->text = ago( $normal_date );
+								
 							}
 						?>
-	
 						
-						<li id="box-<?php echo $type; ?>-<?php echo $box->id; ?>" class="box-box box-<?php echo $box->type; ?> easecubic" style="<?php 
-							//BG Color Overlay
-							if( isset( $box->color ) ): 
-								?>background: <?php echo $box->color; ?>; <?php //#000000
-							endif; ?>">
-							
-							<a href="<?php echo $box->link; ?>" target="<?php echo $target; ?>" >
-								<div class="box-image">
-									<img class="easecubic" data-lazy="<?php echo $box->image_url; ?>" alt="<?php echo $box->text; ?>" >
-								</div>
+						
+							<?php if( !isset( $props['double-stacked'] ) || $key % 2 != 0 || !$key ){ ?><li><?php } ?>
 								
-								<div class="box-header easecubic" style="">
+								<div id="box-<?php echo $type; ?>-<?php echo $box->id; ?>" class="box-box box-<?php echo $box->type; ?> easecubic" style="<?php 
+								//BG Color Overlay
+								if( isset( $box->color ) ): 
+									?>background: <?php echo $box->color; ?>; <?php //#000000
+								endif; ?>">
+								
+									<a href="<?php echo $box->link; ?>" target="<?php echo $target; ?>" >
+										<div class="box-image">
+											<img class="easecubic" data-lazy="<?php echo $box->image_url; ?>" alt="<?php echo $box->text; ?>" >
+										</div>
+										
+										<div class="box-header easecubic" style="">
+											
+											<div class="box-header-content">
+												<h3><?php echo parse_title( $box->title ); ?></h3>
+												<div class="box-date easecubic"><?php echo $box->date; ?></div>
+											</div>
+										</div>
+										
+										
 									
-									<div class="box-header-content">
-										<h3><?php echo parse_title( $box->title ); ?></h3>
-										<div class="box-date easecubic"><?php echo $box->date; ?></div>
-									</div>
+										<div class="box-caption easecubic"><p><?php echo parse_title( $box->desc ); ?></p></div>
+										
+										
+									</a>
 								</div>
 								
-								
-							
-								<div class="box-caption easecubic"><p><?php echo parse_title( $box->desc ); ?></p></div>
-								
-								
-							</a>
-							
-						</li>
+							<?php if( !isset( $props['double-stacked'] ) || $key % 2 == 0 || !$key  ){ ?></li><?php } ?>
+						
 						
 					<?php } endif; ?>
 				</ul>

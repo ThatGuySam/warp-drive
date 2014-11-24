@@ -23107,7 +23107,6 @@ Hero
 .hero-slick .foreground {
   max-width: 1140px;
   position: relative;
-  margin: auto;
   width: 100%;
   height: 0;
   padding-bottom: 56.25%;
@@ -23233,6 +23232,10 @@ Hero
   -o-transition-delay: 500ms;
   transition-delay: 500ms;
 }
+.social-container .social-bar-item {
+  text-align: center;
+  padding: 15px;
+}
 .page-header {
   border-bottom: initial;
 }
@@ -23279,11 +23282,34 @@ Organisms
   transition-timing-function: cubic-bezier(0.23, 1, 0.32, 1);
 }
 .frame ul li {
-  margin: 0 1px;
   position: relative;
   text-align: center;
   cursor: pointer;
   overflow: hidden;
+}
+.frame .box-box {
+  overflow: hidden;
+  margin: 2px;
+  position: relative;
+  width: 100%;
+  height: 0;
+  padding-bottom: 56.25%;
+}
+.frame .box-box > iframe,
+.frame .box-box > video,
+.frame .box-box > img,
+.frame .box-box > div {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+}
+.frame .box-box > iframe,
+.frame .box-box > video,
+.frame .box-box > img,
+.frame .box-box > div {
+  position: absolute;
+  width: 100%;
+  height: 100%;
 }
 .frame .box-box .box-header,
 .frame .box-box .box-caption,
@@ -23370,6 +23396,12 @@ Organisms
   -o-transition-delay: 150ms;
   transition-delay: 150ms;
 }
+.frame .box-box .box-caption {
+  display: none;
+}
+.double-stacked .frame .box-box .box-header h3 {
+  font-size: 1.2em;
+}
 .frame .slick-prev:before,
 .frame .slick-next:before {
   color: #323232;
@@ -23432,7 +23464,6 @@ Organisms
 }
 .thin-promos > .wpb_column .wpb_single_image .wpb_wrapper {
   position: relative;
-  margin: auto;
   width: 100%;
   height: 0;
   padding-bottom: 56.25%;
@@ -23595,7 +23626,6 @@ Cheats
 */
 .ir {
   position: relative;
-  margin: auto;
   width: 100%;
   height: 0;
   padding-bottom: 56.25%;
@@ -23610,7 +23640,6 @@ Cheats
 }
 .ir-hd {
   position: relative;
-  margin: auto;
   width: 100%;
   height: 0;
   padding-bottom: 56.25%;
@@ -23625,7 +23654,6 @@ Cheats
 }
 .ir-square {
   position: relative;
-  margin: auto;
   width: 100%;
   height: 0;
   padding-bottom: 100%;
