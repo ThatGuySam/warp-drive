@@ -94,12 +94,10 @@ var Roots = {
 					
 			}
 			
-			$( window ).resize(function() {
-				sizeHero();
-			});
 			
-			
-			$('.hero-slick .hero-section').slick({
+			var $boxes = $('.hero-slick .hero-section');
+				
+			$boxes.slick({
 				arrows: !Modernizr.touch,
 				autoplay: true,
 				autoplaySpeed: 6000,
@@ -107,6 +105,10 @@ var Roots = {
 				fade: !Modernizr.touch,
 				easing: 'easeOutQuint'
 			});
+			
+			
+			
+			
 			
 			
 			function boxize($boxesContainer){
@@ -130,6 +132,7 @@ var Roots = {
 					slidesToShow: slidesToShow,
 					slidesToScroll: slidesToShow,
 					easing: 'easeOutQuint',
+					variableWidth: $boxesContainer.hasClass("double-stacked"),
 					responsive: [{
 						breakpoint: 768,
 						settings: {
@@ -158,7 +161,35 @@ var Roots = {
 			
 			
 			$('.box-boxes').each(function() {
-				boxize( $(this) ); 
+				boxize( $(this) );
+				
+				if( $(this).hasClass("double-stacked") ){
+					//sizeFirstBox( $(this) );
+					console.log("Has Double");
+				}
+				
+			});
+			
+			
+			function sizeFirstBox( $boxesContainer ) {
+				
+				var $firstItem = $boxesContainer.find(".frame ul li:first-child");
+				
+				var $secondItem = $boxesContainer.find(".frame ul li:nth-child(2)");
+				
+				var secondItemWidth = $secondItem.outerWidth();
+				
+				//$firstItem.css('min-width', (secondItemWidth*2)+4+'px' );
+				
+				console.log( secondItemWidth );
+				
+				
+			}
+			
+			
+			$( window ).resize(function() {
+				sizeHero();
+				//sizeFirstBox();
 			});
 			
 			
@@ -196,13 +227,14 @@ var Roots = {
 			
 			sizeHero();
 			
+			//sizeFirstBox();
+			
 			if( !Modernizr.cssanimations ){
 				$("html").addClass("no-cssanimations");
 			}
 			
 			$('.entry-content').selectionSharer();
 			
-			//console.log("Test");
 			
 /*
 			Modernizr.on('webp', function (result) {
