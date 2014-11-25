@@ -44,6 +44,10 @@ register_nav_menus(array(
 	'expanded_navigation' => __('Expanded Navigation')
 ));
 
+register_nav_menus(array(
+	'footer_navigation' => __('Footer Navigation')
+));
+
 
 function heroOrganism($hero) {
 	
@@ -446,8 +450,8 @@ class Email_Signup {
 			
 			<form class="switch-input mode-closed" action="<?php echo $action; ?>" method="post" name="form_43207844374962" id="43207844374962" accept-charset="utf-8">
 				<input type="hidden" name="formID" value="43207844374962" />
-				<input class="switch-input-box light" type="text" id="input_1" name="q1_email1" size="30" placeholder="name@me.com"/>
-				<span class="front-button" data-message="Email Address"></span>
+				<input class="switch-input-box light" type="text" id="input_1" name="q1_email1" size="30" placeholder="Email Address"/>
+				<span class="front-button btn" data-message="Subscribe"></span>
 			</form>
 
 		<?php

@@ -17799,12 +17799,50 @@ Interface
 .input-group .input-group-btn .btn {
   border-radius: 0;
 }
+.btn {
+  border-radius: 0;
+  margin: 0;
+}
+.dark {
+  background-color: #323232;
+  zoom: 1;
+  background-color: transparent\9;
+  color: #d8d8d8;
+}
+.dark a {
+  color: #ffffff;
+}
+.dark a:hover,
+.dark a:focus {
+  color: #d8d8d8;
+}
+.dark .btn {
+  color: #ffffff;
+}
+.dark .btn:not([class^="btn btn-"]):hover,
+.dark .btn-default:hover {
+  background-color: #323232;
+  color: #d8d8d8;
+}
+.light {
+  background-color: #d8d8d8;
+  zoom: 1;
+  background-color: transparent\9;
+  color: #323232;
+}
+.light a {
+  color: #4d4d4d;
+}
+.light a:hover,
+.light a:focus {
+  color: #323232;
+}
 .switch-input {
   display: block;
   font-size: 1em;
   position: relative;
   width: 220px;
-  height: 2.5em;
+  height: 2.3em;
   -webkit-user-select: none;
   -moz-user-select: none;
   -ms-user-select: none;
@@ -17821,7 +17859,6 @@ Interface
   top: 0;
   width: 75%;
   height: 100%;
-  color: #323232;
   font-size: 1em;
   line-height: 1.75em;
   text-indent: 1em;
@@ -17850,7 +17887,6 @@ Interface
   height: 100%;
   top: 0;
   right: 0;
-  border: 1px solid #d8d8d8;
   background-color: #323232;
   zoom: 1;
   background-color: transparent\9;
@@ -17921,32 +17957,6 @@ body {
   background-color: #d8d8d8;
   font-size: 16px;
 }
-.dark {
-  background-color: #323232;
-  zoom: 1;
-  background-color: transparent\9;
-  color: #d8d8d8;
-}
-.dark a {
-  color: #ffffff;
-}
-.dark a:hover,
-.dark a:focus {
-  color: #d8d8d8;
-}
-.light {
-  background-color: #d8d8d8;
-  zoom: 1;
-  background-color: transparent\9;
-  color: #323232;
-}
-.light a {
-  color: #4d4d4d;
-}
-.light a:hover,
-.light a:focus {
-  color: #323232;
-}
 .wrap {
   padding-top: 3em;
   padding-bottom: 3em;
@@ -17965,6 +17975,11 @@ Menu
   background-color: rgba(50, 50, 50, 0.98);
   zoom: 1;
   background-color: transparent\9;
+}
+.nav > li > a:hover,
+.nav > li > a:focus {
+  text-decoration: none;
+  background-color: transparent;
 }
 .navbar .navbar-nav {
   width: 100%;
@@ -18020,6 +18035,7 @@ Menu
 }
 .expanded-nav {
   opacity: 0;
+  height: 0;
   display: none;
   overflow: hidden;
   -webkit-transition: all opacity 750ms;
@@ -18269,8 +18285,15 @@ Hero
 Footer
 
 */
-.footer {
-  min-height: 300px;
+.footer section {
+  min-height: 220px;
+}
+.footer > .container {
+  margin-bottom: 100px;
+}
+.copyright {
+  text-align: center;
+  padding: 2em;
 }
 /*
 
