@@ -48,7 +48,7 @@ var Roots = {
 			
 			function sizeHero() {
 				
-				var $media = $(".hero-organism > img");
+				var $media = $(".hero-background > img");
 				
 				var wh = window.innerHeight;
 				var ww = window.innerWidth;
@@ -67,24 +67,28 @@ var Roots = {
 					.css("height", heroHeight)
 					.css("max-height", maxHeroHeight);
 					
+				
+				$media.each(function() {
 					
-				if( ( ww*ratio ) > heroHeight ) {
-					
-					var top_offset = Math.round(
-						 (
-						 	( ww*ratio ) - heroHeight 
-						 )/2 
-					);
-					
-					$media.css("margin-top", -top_offset+"px");
+					if( Math.round( ww*ratio ) > wh ) {
 						
-				} else {
-					
-					if( $media.css("margin-top") ) {
-						$media.css("margin-top", "");
+						var top_offset = Math.round(
+							 (
+							 	( ww*ratio ) - wh
+							 )/2 
+						);
+						
+						$(this).css("margin-top", -top_offset+"px");
+							
+					} else {
+						
+						if( $(this).css("margin-top") ) {
+							$(this).css("margin-top", "");
+						}
+						
 					}
 					
-				}
+				});
 					
 					
 			}
@@ -233,40 +237,7 @@ var Roots = {
 				  		.removeClass("opened")
 				  		.addClass("message-"+status);
 				  		
-				  		
 					$(".switch-input").submit();
-					
-					
-					
-				  	
-/*
-				  	var smsRequest = $.post( actionURL, request,
-				  		function(data) {
-					  		 console.log( "Before: "+status );
-					  		 console.log( data );
-					  	})
-						.done(function() {
-							console.log( "Done: "+status );
-							$(".switch-input").removeClass("message-"+status);
-							status = "sent";
-							$(".switch-input").addClass("message-"+status);
-							
-							console.log( "Success" );
-						})
-						.fail(function() {
-							$(".switch-input").removeClass("message-"+status);
-							status = "fail";
-							$(".switch-input").addClass("message-"+status);
-						})
-						.always(function() {
-							console.log( "Always: "+status );
-							setTimeout(function(){
-								$(".switch-input")
-									.removeClass("valid-number message-"+status);
-									status = "closed";
-							}, 1000);
-						});
-*/
 					
 					break;
 				  default:
