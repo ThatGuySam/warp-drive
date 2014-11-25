@@ -68,8 +68,10 @@ function heroOrganism($hero) {
 			ob_start(); ?>
 			
 			<div class="hero-slide" >
-			
-				<img <?php echo $hero->srcType; ?>="<?php echo $hero->src; ?>" alt="">
+				
+				<div class="hero-background">
+					<img <?php echo $hero->srcType; ?>="<?php echo $hero->src; ?>" alt="">
+				</div>
 				
 				<div class="foreground animated fadeIn animated-3s animated-delay-1s" style="<?php //BG Color Overlay
 					if( get_field('page_color') ): 
