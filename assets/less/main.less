@@ -465,6 +465,12 @@ Menu
 		}
 	}
 	
+	> .active > a,
+	> .active > a:hover,
+	> .active > a:focus {
+		color: @primary-dark;
+	}
+	
 }
 
 .menu-item {
@@ -835,7 +841,7 @@ Organisms
 	li img {
 		width: 100%;
 		
-		.transition( opacity , 750ms );
+		
 	}
 	
 	ul li {
@@ -907,6 +913,11 @@ Organisms
 				//height: 80%;
 			}
 			
+		}
+		
+		
+		.box-image {
+			.transition( opacity , 750ms );
 		}
 		
 		
