@@ -170,11 +170,6 @@ function load_google_fonts() {
 }
 add_action( 'wp_head', 'load_google_fonts' , 1);
 
-function load_ivy() { ?>
-  <script data-cfasync="false" type="text/javascript" src="//filamentapp.s3.amazonaws.com/b61aff4f71da85fe905c82ebfa528de0.js" async></script>
-<?php }
-add_action( 'wp_footer', 'load_ivy' , 1);
-
 
 //Custom Admin CSS
 add_action('admin_head', 'my_custom_css');
