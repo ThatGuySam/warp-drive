@@ -298,20 +298,6 @@ var Roots = {
 					//return false;
 					//event.preventDefault();
 				});
-/*
-				$.mask.definitions.e = "[^w+@[a-zA-Z_]+?.[a-zA-Z]{2,3}$]";
-				
-				$(".switch-input-box")
-					.mask("e",{
-					placeholder:" ",
-					completed:function(){
-						$(".switch-input")
-					  		.addClass("valid-number");
-					  		status = "send";
-					}
-				});//.mask for .switch-input-box
-*/
-				
 				
 				
 				$( ".switch-input-box" ).keyup(function() {
