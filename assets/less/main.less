@@ -246,7 +246,6 @@ Interface
 
 .btn {
 	border-radius: 0;
-	margin: 0;
 }
 
 .dark {
@@ -266,8 +265,12 @@ Interface
 		color: #ffffff;
 	}
 	
-	.btn:not([class^="btn btn-"]):hover, .btn-default:hover {
+	.btn:not(.btn-link):not(.btn-flat), .btn-default:not(.btn-link):not(.btn-flat) {
 		background-color: @primary-dark;
+		margin-top: 0;
+	}
+	
+	.btn:not([class^="btn btn-"]):hover, .btn-default:hover {
 		color: @primary-light;
 	}
 	
@@ -840,6 +843,15 @@ Organisms
 		text-align: center;
 		cursor: pointer;
 		overflow: hidden;
+		z-index: 0;
+		
+/*
+		&:hover {
+			-webkit-box-shadow: 0 6px 10px rgba(0, 0, 0, 0.23), 0 10px 30px rgba(0, 0, 0, 0.19);
+			box-shadow: 0 6px 10px rgba(0, 0, 0, 0.23), 0 10px 30px rgba(0, 0, 0, 0.19);
+			z-index: 1;
+		}
+*/
 	}
 	
 	

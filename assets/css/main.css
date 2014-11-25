@@ -18119,7 +18119,7 @@ Interface
 .dark .btn:not(.btn-link):not(.btn-flat),
 .dark .btn-default:not(.btn-link):not(.btn-flat) {
   background-color: #323232;
-  margin: 0;
+  margin-top: 0;
 }
 .dark .btn:not([class^="btn btn-"]):hover,
 .dark .btn-default:hover {
