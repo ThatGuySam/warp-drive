@@ -25,9 +25,9 @@
 
 @import "../vendor/font-awesome/less/font-awesome";		// Font Awesome
 
-@import (inline) "../vendor/slick/slick.css";
+@import (inline) "../vendor/slick.js/slick/slick.css";
 @import (inline) "../vendor/selection-sharer/selection-sharer.css"; 
-@import (inline) "../vendor/animate/animate.css";
+@import (inline) "../vendor/animate.css/animate.min.css";
 
 
 
@@ -386,6 +386,21 @@ body {
 	a:hover,
 	a:focus {
 		color: @primary-light;
+	}
+}
+
+
+.light {
+	.backgroundRGBa( @primary-light );
+	color: @primary-dark;
+	
+	a {
+		color: @secondary-dark;
+	}
+	
+	a:hover,
+	a:focus {
+		color: @primary-dark;
 	}
 }
 
@@ -761,6 +776,8 @@ Widgets
 	}
 	
 }
+
+
 
 
 /*

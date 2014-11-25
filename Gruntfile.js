@@ -18,7 +18,7 @@ module.exports = function(grunt) {
 //    'assets/vendor/bootstrap/js/scrollspy.js',
 //    'assets/vendor/bootstrap/js/tab.js',
 //    'assets/vendor/bootstrap/js/affix.js',
-    'assets/vendor/slick/slick.min.js',
+    'assets/vendor/slick.js/slick/slick.min.js',
     'assets/vendor/selection-sharer/selection-sharer.js',
     'assets/js/plugins/*.js',
     'assets/js/_*.js',
