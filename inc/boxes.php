@@ -404,7 +404,7 @@ class Boxes {
 							}
 							
 							$box->srcType = "data-lazy";
-							if( $key <= $boxes->show ) $box->srcType = "src";//if is showing don't lazyload
+							if( $key < $boxes->show ) $box->srcType = "src";//if is showing don't lazyload
 						?>
 						
 						
