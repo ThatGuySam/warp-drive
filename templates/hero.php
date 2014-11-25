@@ -51,7 +51,7 @@
 				if( get_sub_field('hide_after') && ( get_sub_field('hide_after') / 1000 + (24*60*60) ) < date('U') )//if date is set and it has passed
 					continue;//Skip
 				
-				if( $hero->index ) $hero->srcType = "data-lazy";//if it's anything but the first lazy load it
+				if( $hero->index ) $hero->srcType = 'src="'.get_template_directory_uri().'/assets/img/blank.gif" data-lazy';//if it's anything but the first lazy load it
 				
 				//Setup Image
 				$hero->attachment_id = get_sub_field('image');
