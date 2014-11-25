@@ -404,7 +404,7 @@ class Boxes {
 							}
 							
 							$box->srcType = "data-lazy";
-							if( $key >= $boxes->show ) $box->srcType = "src";//if is showing don't lazyload
+							if( $key <= $boxes->show ) $box->srcType = "src";//if is showing don't lazyload
 						?>
 						
 						
@@ -418,7 +418,7 @@ class Boxes {
 								
 									<a href="<?php echo $box->link; ?>" target="<?php echo $target; ?>" >
 										<div class="box-image">
-											<img class="easecubic" data-lazy="<?php echo $box->image_url; ?>" alt="<?php echo $box->text; ?>" >
+											<img class="easecubic" <?php echo $box->srcType; ?>="<?php echo $box->image_url; ?>" alt="<?php echo $box->text; ?>" >
 										</div>
 										
 										<div class="box-header easecubic" style="">
