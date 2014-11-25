@@ -163,6 +163,56 @@ function heroOrganism($hero) {
 }
 
 
+/*
+
+Static Organisms
+
+*/
+
+function socialBar() {
+
+ob_start(); ?>
+
+<div class="social-container container-fluid dark">
+	
+	<div class="social-bar row">
+		
+		<div class="social-bar-item col-sm-1 col-sm-offset-4 col-xs-2 col-xs-offset-2">
+			<a href="https://www.facebook.com/gutschurch">
+				<i class="fa fa-facebook fa-2x"></i>
+			</a>
+		</div>
+		<div class="social-bar-item col-sm-1 col-xs-2">
+			<a href="https://twitter.com/gutschurch">
+				<i class="fa fa-twitter fa-2x"></i>
+			</a>
+		</div>
+		<div class="social-bar-item col-sm-1 col-xs-2">
+			<a href="http://instagram.com/gutschurch">
+				<i class="fa fa-instagram fa-2x"></i>
+			</a>
+		</div>
+		<div class="social-bar-item col-sm-1 col-xs-2">
+			<a href="http://www.pinterest.com/gutschurch/">
+				<i class="fa fa-pinterest fa-2x"></i>
+			</a>
+		</div>
+				
+	</div>
+	
+</div>
+
+<?php $content = ob_get_clean();
+	
+	return $content;
+}
+
+
+/*
+
+Living Organisms
+
+*/
 
 
 
