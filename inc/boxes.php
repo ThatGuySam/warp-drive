@@ -402,6 +402,9 @@ class Boxes {
 								$box->text = ago( $normal_date );
 								
 							}
+							
+							$box->srcType = "data-lazy";
+							if( $key >= $boxes->show ) $box->srcType = "src";//if is showing don't lazyload
 						?>
 						
 						
