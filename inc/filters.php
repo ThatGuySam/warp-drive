@@ -6,6 +6,8 @@ Filters
 
 */
 
+//Enable Shortcodes in widgets
+add_filter('widget_text', 'do_shortcode');
 
 function insert_luminance_data($post_ID) {
     $image = wp_get_attachment_image_src( $post_ID, 'thumb-hd' );
