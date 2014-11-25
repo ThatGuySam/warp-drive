@@ -246,6 +246,120 @@ Interface
 	border-radius: 0;
 }
 
+.switch-input {
+	display: block;
+	font-size: 1em;
+	position: relative;
+	width: 220px;
+	height: 2.5em;
+	-webkit-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
+	border: 1px solid @primary-dark;
+	
+	&:hover,
+	&:after:hover {
+		cursor: pointer;
+	}
+	
+	
+	.switch-input-box {
+		position: absolute;
+		left: 0;
+		top: 0;
+		width: 75%;
+		height: 100%;
+		color: @primary-dark;
+		font-size: 1em;
+		line-height: 1.75em;
+		text-indent: 1em;
+		margin: 0;
+		padding: 0.17em 0;
+		border: none;
+		outline: none;
+		
+		&::-webkit-input-placeholder {
+			&:extend(&:-moz-placeholder);
+			&:extend(&::-moz-placeholder);
+			&:extend(&:-ms-input-placeholder);
+			color: #ffffff;
+		}
+
+	}
+	
+	span {
+		display: block;
+		position: absolute;
+		cursor: pointer;
+		
+		&.front-button {
+			position: absolute;
+			z-index: 3;
+			padding: 0.4em;
+			color: @primary-light;
+			text-align: center;
+			white-space: nowrap;
+			overflow: hidden;
+			width: 220px;
+			height: 100%;
+			top: 0;
+			right: 0;
+			border: 1px solid @primary-light;
+			
+			.backgroundRGBa();
+			
+			.transition();
+			
+			&:before {
+				content: attr(data-message);
+				/* content: "Share to Phone"; */
+			}
+		}
+	}
+	
+	&.opened {
+		
+		span {
+			display: block;
+			position: absolute;
+			
+			&.inner-button {
+				.transition();
+				width: 70px;
+			}
+			
+			&.front-button {
+				width: 60px;
+				
+				&:before {
+					content: "Close";
+				}
+			}
+		}
+		
+	}
+	
+	&.valid-number span.front-button{
+		border: 1px solid @primary-light;
+		&:hover { border-color: #ffffff; }
+		&:active { background-color: #f1f1f1; }
+		&:before { content: "Send"; }
+	}
+	
+	&.message-sending span.front-button:before {
+		content: "Sending...";
+	}
+	&.message-sent span.front-button:before {
+		content: "Thank You!";
+	}
+	&.message-fail span.front-button:before {
+		content: "Something went wrong";
+		color: #ff0000;
+	}
+
+}
+
 
 
 
@@ -604,6 +718,16 @@ Hero
 		}
 		
 	}
+	
+}
+
+.social-container {
+	
+	.social-bar-item {
+		text-align: center;
+		padding: 15px;
+	}
+	
 	
 }
 

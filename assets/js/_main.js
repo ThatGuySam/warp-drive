@@ -86,11 +86,6 @@ var Roots = {
 					
 				}
 					
-/*
-				$(".foreground")
-					.css("width", Math.round( wh/ratio )+"px");
-*/
-					
 					
 			}
 			
@@ -108,8 +103,11 @@ var Roots = {
 			
 			
 			
+			/*
 			
+			Boxes
 			
+			*/
 			
 			function boxize($boxesContainer){
 					
@@ -189,8 +187,151 @@ var Roots = {
 			
 			$( window ).resize(function() {
 				sizeHero();
-				//sizeFirstBox();
 			});
+			
+			
+			
+			/*
+				
+			Switch Input
+			
+			*/
+			
+			
+			var selectorStart = "mode-";
+					
+			var status = "closed";
+
+			$(".switch-input").on( "click", function() {
+				//var smsKey = $(this).data("key");
+				//var actionURL = $(this).data("action");
+				
+				switch(status) {
+				  case "closed":
+				  	$(this)
+				  		.addClass("opened");
+				  	$(".switch-input-box").focus();
+				  	status = "opened";
+				      break;
+				  case "opened":
+				  	
+				  	$(this)
+				    	.removeClass("opened");
+				    	status = "closed";
+				  	break;
+				  case "send":
+				  	
+				  	status = "sending";
+				  	
+				  	var request = { 
+			  			"mode": "send",
+			  			"toNumber": $(this).find(".switch-input-box").val().replace(/\D/g,'')
+				  	};
+				  	
+				  	console.log(request);
+				  	$(this)
+				  		.removeClass("opened")
+				  		.addClass("message-"+status);
+				  		
+				  		
+					$(".switch-input").submit();
+					
+					
+					
+				  	
+/*
+				  	var smsRequest = $.post( actionURL, request,
+				  		function(data) {
+					  		 console.log( "Before: "+status );
+					  		 console.log( data );
+					  	})
+						.done(function() {
+							console.log( "Done: "+status );
+							$(".switch-input").removeClass("message-"+status);
+							status = "sent";
+							$(".switch-input").addClass("message-"+status);
+							
+							console.log( "Success" );
+						})
+						.fail(function() {
+							$(".switch-input").removeClass("message-"+status);
+							status = "fail";
+							$(".switch-input").addClass("message-"+status);
+						})
+						.always(function() {
+							console.log( "Always: "+status );
+							setTimeout(function(){
+								$(".switch-input")
+									.removeClass("valid-number message-"+status);
+									status = "closed";
+							}, 1000);
+						});
+*/
+					
+					break;
+				  default:
+			     
+				}//switch(mode)
+				
+				
+				$(".switch-input").submit(function( event ) {
+					
+					event.preventDefault();
+				
+					var submitUrl = $(this).attr("action");
+				
+					$.post( submitUrl, $(this).serialize())
+						.always(function() {
+							$(".switch-input").removeClass("message-"+status);
+							status = "sent";
+							$(".switch-input").addClass("message-"+status);
+							console.log( "Always: "+status );
+							setTimeout(function(){
+								$(".switch-input")
+									.removeClass("valid-number message-"+status);
+									status = "closed";
+							}, 1000);
+						});
+					
+					
+					//send();
+					//return false;
+					//event.preventDefault();
+				});
+/*
+				$.mask.definitions.e = "[^w+@[a-zA-Z_]+?.[a-zA-Z]{2,3}$]";
+				
+				$(".switch-input-box")
+					.mask("e",{
+					placeholder:" ",
+					completed:function(){
+						$(".switch-input")
+					  		.addClass("valid-number");
+					  		status = "send";
+					}
+				});//.mask for .switch-input-box
+*/
+				
+				
+				
+				$( ".switch-input-box" ).keyup(function() {
+					
+					var testEmail = /^[A-Z0-9._%+-]+@([A-Z0-9-]+\.)+[A-Z]{2,4}$/i;
+					
+					if (testEmail.test( $(this).val() )) {
+						$(".switch-input")
+					  		.addClass("valid-number");
+					  		status = "send";
+					} else {
+						$(".switch-input")
+					  		.removeClass("valid-number");
+					  		status = "opened";
+					}
+					
+				});
+				
+			
+			});//$(".switch-input").on( "click") 
 			
 			
 			

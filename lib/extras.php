@@ -418,3 +418,87 @@ class Countdown {
 }
 
 Countdown::init();
+
+
+class Email_Signup {
+	static $add_script;
+ 
+	static function init() {
+		add_shortcode('email', array(__CLASS__, 'handle_shortcode'));
+		
+		add_action('init', array(__CLASS__, 'register_script'));
+		add_action('wp_footer', array(__CLASS__, 'print_script'));
+		add_action('wp_footer', array(__CLASS__, 'internal_script'));
+	}
+ 
+	static function handle_shortcode($atts) {
+		//self::$add_script = true;
+		
+		extract( shortcode_atts( array(
+			'class' => false,
+			'action' => 'http://submit.jotform.us/submit.php',
+			'text' => 'Get Updates'
+		), $atts, 'email' ) );
+		
+		ob_start();
+		?>
+			
+			
+			<form class="switch-input mode-closed" action="<?php echo $action; ?>" method="post" name="form_43207844374962" id="43207844374962" accept-charset="utf-8">
+				<input type="hidden" name="formID" value="43207844374962" />
+				<input class="switch-input-box light" type="text" id="input_1" name="q1_email1" size="30" placeholder="name@me.com"/>
+				<span class="front-button" data-message="Email Address"></span>
+			</form>
+
+		<?php
+		$content = ob_get_clean();
+			
+		return $content;
+	}
+ 
+	static function register_script() {
+		//CSS
+		//wp_register_style( 'font-awesome', '//netdna.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css', array(), '4.2.0', 'screen' );
+		
+		//JS
+		//wp_register_script( 'jquery-plugin', get_stylesheet_directory_uri() . '/assets/js/jquery.plugin.js', array('jquery'), '1.0', true);
+		
+	}
+ 
+	static function print_script() {
+		if ( ! self::$add_script )
+			return;
+			
+			//CSS
+			//if( wp_style_is( 'js_composer_front', 'registered' ) ) wp_print_styles('js_composer_front');
+			
+			//JS
+			//wp_print_scripts('jquery-plugin');
+			
+	}
+	
+	static function internal_script() {
+		if ( ! self::$add_script )
+			return;
+			
+			
+						
+		?>
+			
+			<script type="text/javascript">
+				if ( undefined !== window.jQuery ) { jQuery(function ($) { 'use strict';
+					
+					
+					
+				}); }
+			</script>
+			
+			<style>
+				
+								
+			</style>
+		<?php
+	}
+}
+ 
+Email_Signup::init();
