@@ -18267,15 +18267,37 @@ body {
 Menu
 
 */
+.transparent-menu .navbar,
+.transparent-menu .primary-nav .menu-item.active,
+.transparent-menu .primary-nav .menu-item.active:hover {
+  background-color: transparent;
+}
+.transparent-menu .navbar a,
+.transparent-menu .primary-nav .menu-item.active a,
+.transparent-menu .primary-nav .menu-item.active:hover a {
+  color: #d8d8d8;
+  text-shadow: 0 0 1px #323232;
+}
 .navbar,
-.navbar-default {
+.navbar-default,
+.expanded-nav-open header.banner.navbar {
   position: absolute;
+  top: 0;
   left: 0;
   right: 0;
   background-color: #323232;
   background-color: rgba(50, 50, 50, 0.98);
   zoom: 1;
   background-color: transparent\9;
+  -webkit-transition: all 0.2s ease-out;
+  -o-transition: all 0.2s ease-out;
+  transition: all 0.2s ease-out;
+  -webkit-transition: all 500ms cubic-bezier(0.23, 1, 0.32, 1);
+  -o-transition: all 500ms cubic-bezier(0.23, 1, 0.32, 1);
+  transition: all 500ms cubic-bezier(0.23, 1, 0.32, 1);
+  -webkit-transition-timing-function: cubic-bezier(0.23, 1, 0.32, 1);
+  -o-transition-timing-function: cubic-bezier(0.23, 1, 0.32, 1);
+  transition-timing-function: cubic-bezier(0.23, 1, 0.32, 1);
 }
 .nav > li > a:hover,
 .nav > li > a:focus {
@@ -18292,6 +18314,15 @@ Menu
   padding: 20px 0;
   font-size: initial;
   letter-spacing: 0.05em;
+}
+.navbar .navbar-nav > .active > a,
+.navbar .navbar-nav > .active > a:hover,
+.navbar .navbar-nav > .active > a:focus {
+  color: #323232;
+  text-shadow: none;
+}
+.clean-hero header.navbar {
+  top: -100px;
 }
 .menu-item {
   text-align: center;
@@ -18336,7 +18367,6 @@ Menu
 }
 .expanded-nav {
   opacity: 0;
-  height: 0;
   display: none;
   overflow: hidden;
   -webkit-transition: all opacity 750ms;
@@ -18514,7 +18544,7 @@ Hero
   display: inline-block;
   vertical-align: middle;
   color: #ffffff;
-  text-shadow: 0 0 2px #000000;
+  text-shadow: 0 0 1px #000000;
 }
 .hero-container.hero-media .page-header h1 {
   font-size: 3em;
@@ -18574,6 +18604,12 @@ Hero
   -o-transition-delay: 500ms;
   transition-delay: 500ms;
 }
+.clean-hero .hero-container:hover .read-more {
+  bottom: -20%;
+  -webkit-transition-delay: 0;
+  -o-transition-delay: 0;
+  transition-delay: 0;
+}
 .social-container .social-bar-item {
   text-align: center;
   padding: 15px;
@@ -18620,15 +18656,6 @@ Organisms
 }
 .frame li img {
   width: 100%;
-  -webkit-transition: all opacity 750ms;
-  -o-transition: all opacity 750ms;
-  transition: all opacity 750ms;
-  -webkit-transition: opacity 750ms cubic-bezier(0.23, 1, 0.32, 1);
-  -o-transition: opacity 750ms cubic-bezier(0.23, 1, 0.32, 1);
-  transition: opacity 750ms cubic-bezier(0.23, 1, 0.32, 1);
-  -webkit-transition-timing-function: cubic-bezier(0.23, 1, 0.32, 1);
-  -o-transition-timing-function: cubic-bezier(0.23, 1, 0.32, 1);
-  transition-timing-function: cubic-bezier(0.23, 1, 0.32, 1);
 }
 .frame ul li {
   position: relative;
@@ -18704,6 +18731,17 @@ Organisms
 }
 .frame .box-box:hover .box-date {
   left: 0;
+}
+.frame .box-box .box-image {
+  -webkit-transition: all opacity 750ms;
+  -o-transition: all opacity 750ms;
+  transition: all opacity 750ms;
+  -webkit-transition: opacity 750ms cubic-bezier(0.23, 1, 0.32, 1);
+  -o-transition: opacity 750ms cubic-bezier(0.23, 1, 0.32, 1);
+  transition: opacity 750ms cubic-bezier(0.23, 1, 0.32, 1);
+  -webkit-transition-timing-function: cubic-bezier(0.23, 1, 0.32, 1);
+  -o-transition-timing-function: cubic-bezier(0.23, 1, 0.32, 1);
+  transition-timing-function: cubic-bezier(0.23, 1, 0.32, 1);
 }
 .frame .box-box .box-header {
   top: 0;
@@ -18855,6 +18893,10 @@ Organisms
 }
 .thin-promos .wpb_content_element {
   margin-bottom: 2px;
+}
+.vc_separator h4 {
+  font-size: 1.5em;
+  text-transform: uppercase;
 }
 /*
 
@@ -19024,12 +19066,27 @@ Cheats
   width: 100%;
   height: 100%;
 }
+.ease {
+  -webkit-transition: all 0.2s ease-out;
+  -o-transition: all 0.2s ease-out;
+  transition: all 0.2s ease-out;
+  -webkit-transition: all 500ms cubic-bezier(0.23, 1, 0.32, 1);
+  -o-transition: all 500ms cubic-bezier(0.23, 1, 0.32, 1);
+  transition: all 500ms cubic-bezier(0.23, 1, 0.32, 1);
+  -webkit-transition-timing-function: cubic-bezier(0.23, 1, 0.32, 1);
+  -o-transition-timing-function: cubic-bezier(0.23, 1, 0.32, 1);
+  transition-timing-function: cubic-bezier(0.23, 1, 0.32, 1);
+}
 /* Bootstrap No Padding */
 .row > .nopadding,
 .container-fluid.nopadding {
   padding-left: 0 !important;
   padding-right: 0 !important;
   margin: 0 !important;
+}
+.disable-hover,
+.disable-hover * {
+  pointer-events: none !important;
 }
 /* Key Frames
 ---------------------------------------------------- */

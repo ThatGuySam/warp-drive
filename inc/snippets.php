@@ -148,4 +148,3 @@ function ago($time){
 	
 	return $output;
 }
-

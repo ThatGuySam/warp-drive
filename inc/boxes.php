@@ -1,9 +1,10 @@
 <?php
 
-function cacheHandler( $object, $function ) {
+function cacheHandler( $object, $function, $cache_name = false ) {
     // cache files are created like cache/abcdef123456...
     
-    $filename = $function . "-" . preg_replace("/[^\da-z]/i", '', $object->id );
+    $filename = $function . "-" . preg_replace("/[^\da-z]/i", '', $object->id ).".json";
+    if( $cache_name ) $filename = $cache_name."-".$filename;
     $cacheFile = 'cache' . DIRECTORY_SEPARATOR . $filename;
 	
 	if( array_key_exists( 'purge' , $_GET ) ) unlink($cacheFile);
@@ -98,12 +99,11 @@ function boxesInstagram($user_id) {
 	
 	$i=0;
 	foreach ($result->data as $post) {
-		//debug($post);
 		
 		$boxes[$i]['type'] =	$post->type;
 		$boxes[$i]['id'] =		$post->id;
 		$boxes[$i]['image_url'] = $post->images->low_resolution->url;
-		//$boxes[$i]['date'] 		= date( "D n/j" , strtotime( $post->created_time ) );
+		//$boxes[$i]['date'] = date( "D n/j" , strtotime( $post->created_time ) );
 		$boxes[$i]['text'] = 	$post->caption->text;
 		$boxes[$i]['link'] = 	$post->link;
 		
@@ -117,10 +117,13 @@ function boxesInstagram($user_id) {
 
 
 function boxesVimeo($boxes) {
+	
+	global $post;
+    $post_slug=$post->post_name;
 
 	$output = new stdClass();
 	
-	$vid_url = parse_url($boxes->source);
+	//$vid_url = parse_url($boxes->source);
 	
 	$json_url = 'http://vimeo.com/api/v2'.$boxes->source.'/videos.json';
 	
@@ -129,11 +132,11 @@ function boxesVimeo($boxes) {
 	$json = json_decode( file_get_contents($json_url) );
 	
 	$i=0;
-	foreach ($json as $post) {
+	foreach ($json as $video) {
 		
 		$details = new stdClass();
 		
-		$desc = explode('<br />', $post->description);
+		$desc = explode('<br />', $video->description);
 		
 		$d = 0;
 		foreach( $desc as $val ) {
@@ -157,24 +160,24 @@ function boxesVimeo($boxes) {
 		if( isset($details->date) ){
 			$date = date( "F jS" , strtotime( $details->date ) );
 		} else {
-			$date = date( "F jS" , strtotime( $post->upload_date ) );
+			$date = date( "F jS" , strtotime( $video->upload_date ) );
 		}
 		
-		$title = $post->title;
+		$title = $video->title;
 		
-		if( get_page_template_slug() !== "page-watch.php" ) {
-			$link = "/watch/?vid=".$post->id;
+		if( $post_slug !== "watch") {
+			$link = "/watch/?vid=".$video->id;
 		} else {
-			$link = "#".$post->id;
+			$link = "#".$video->id;
 		}
 		
 		$v_box = new stdClass;
 		
 		$v_box->type 		= "video";
-		$v_box->id 		= $post->id;
-		$v_box->image_url = $post->thumbnail_large;
+		$v_box->id			= $video->id;
+		$v_box->image_url	= $video->thumbnail_large;
 		$v_box->date 		= $date;
-		$v_box->title 	= $title;
+		$v_box->title		= $title;
 		$v_box->text 		= $title;
 		$v_box->desc 		= $desc[0];
 		$v_box->link 		= $link;
@@ -191,6 +194,26 @@ function boxesVimeo($boxes) {
 	
 	return $output;
 	
+}
+
+function getLatestVideo($album_id="2238693") {
+	
+	$boxes = new stdClass();
+	
+	$boxes->source = "/album/".$album_id;
+	
+	$boxes->amount = 32;
+	
+	$boxes->id = preg_replace('/[^\da-z]/i', '', $boxes->source );
+    
+    $boxes = cacheHandler($boxes, "boxesVimeo", "firstVideo");
+    
+    $output = $boxes->boxes[0];
+
+	// Let's begin our XHTML webpage code.  The DOCTYPE is supposed to be the very first thing, so we'll keep it on the same line as the closing-PHP tag.
+	//$message_url = "//player.vimeo.com/video/".$url[3]."?title=0&amp;byline=0&amp;portrait=0&amp;color=ffffff&amp;api=1&player_id=frame";
+	
+	return $output;
 }
 
 
@@ -352,11 +375,6 @@ class Boxes {
 				
 				$boxes = cacheHandler($boxes, "boxesEvents");
 				
-				//$boxes->boxes = boxesEvents( $boxes );
-				
-				//$debug = $boxes;
-				
-		        //debug( $query );
 		        break;
 		    case "category":
 		        echo $source;
@@ -371,7 +389,6 @@ class Boxes {
 		       echo "Nothing here";
 		}		
 		
-		//debug( $boxes );
 		
 		ob_start();
 		?>
@@ -397,9 +414,9 @@ class Boxes {
 								
 								$normal_date = strtotime( $box->date );
 								
-								if( strtotime( $box->text ) ) $normal_date = strtotime( $box->text );
+								if( strtotime( $box->title ) ) $normal_date = strtotime( $box->title );
 								
-								$box->text = ago( $normal_date );
+								$box->title = ago( $normal_date );
 								
 							}
 							

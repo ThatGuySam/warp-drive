@@ -41,6 +41,8 @@ var Roots = {
     init: function() {
       // JavaScript to be fired on all pages
       
+      	window.gc = window.gc || {};
+      
 		if ( undefined !== window.jQuery ) { jQuery(function ($) { 'use strict';
 			
 			/* easeOutQuint */
@@ -51,12 +53,40 @@ var Roots = {
 			});
 			
 			
+			/* Generic Functions */
+			
+			gc.scrollTo = function ( $here ) {
+				
+				console.log( $here );
+				
+				//Stop Immediatelly for User Action
+				$("html, body").bind("scroll mousedown DOMMouseScroll mousewheel keyup", function(){
+					$('html, body').stop();
+					$("body").removeClass("disable-hover");
+				});
+				
+				$("body").addClass("disable-hover");//disable hovering for 60fps scolling
+				
+				$('html, body').animate({
+					scrollTop: $here
+				
+				}, 2500, 'easeOutQuint', function() {
+					//Unbind Stop for Scrolling
+					$("html, body").unbind("scroll mousedown DOMMouseScroll mousewheel keyup");
+					$("body").removeClass("disable-hover");
+				});
+				
+				return false;
+				
+			};
+			
+			
 			
 			/* Menu */
 			
 			
 			$(".search-toggle").click( function(){
-				$(".expanded-nav").toggleClass("expanded-nav-open");
+				$(".expanded-nav, html").toggleClass("expanded-nav-open");
 				
 				return false;
 			});
@@ -90,9 +120,9 @@ var Roots = {
 					if( Math.round( ww*ratio ) > wh ) {
 						
 						var top_offset = Math.round(
-							 (
-							 	( ww*ratio ) - wh
-							 )/2 
+							(
+								( ww*ratio ) - wh
+							)/2 
 						);
 						
 						$(this).css("margin-top", -top_offset+"px");
@@ -202,7 +232,6 @@ var Roots = {
 				
 				console.log( secondItemWidth );
 				
-				
 			}
 			
 			
@@ -243,11 +272,6 @@ var Roots = {
 				  case "send":
 				  	
 				  	status = "sending";
-				  	
-				  	var request = { 
-			  			"mode": "send",
-			  			"toNumber": $(this).find(".switch-input-box").val().replace(/\D/g,'')
-				  	};
 				  	
 				  	console.log(request);
 				  	$(this)
@@ -326,23 +350,13 @@ var Roots = {
 			
 			/* Content */
 			
-			$("a.scrollto").each( function() {
-			
-				var $this = $(this);
+			$("a.scrollto").each(function(){
 				
-				$this.click(function() {
+				var selector = $(this).attr('href');
+				
+				$(this).click(function(){
 					
-					//Bind Stop for Scrolling
-					$("html, body").bind("scroll mousedown DOMMouseScroll mousewheel keyup", function(){
-						$('html, body').stop();
-					});
-					
-					$('html, body').animate({
-						scrollTop: $( $this.attr('href') ).offset().top
-					}, 2500, 'easeOutQuint', function() {
-						//Unbind Stop for Scrolling
-						$("html, body").unbind("scroll mousedown DOMMouseScroll mousewheel keyup");
-					});
+					gc.scrollTo( $( selector ).offset().top );
 					
 					return false;
 				});

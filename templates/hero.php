@@ -12,7 +12,13 @@
 	
 	$hero->srcType = "src";
 	
-	if( has_post_thumbnail() ){
+	$hero->heroes = false;
+	
+	$hero->heroesCount = 0;
+	
+	if( get_field('heroes') ) $hero->heroes = get_field('heroes');
+	
+	if( has_post_thumbnail() || $hero->heroes ){
 	
 		$thumbnail_src = wp_get_attachment_image_src( get_post_thumbnail_id( $post->ID ), "full" );
 		
@@ -21,17 +27,41 @@
 		$hero->media = "image";
 		
 		$hero->src = $thumbnail_src[0];
+		
+		if( $hero->heroes ){// if there are any heroes
+			
+			$hero->heroesCount = count( $hero->heroes );
+			
+			if( $hero->heroesCount == 1 ){// if there is only 1
+				
+				$hero->text = trim( $hero->heroes[0]['title'] );
+				
+				if($hero->text[0] == '[' && $hero->text[strlen($hero->text) - 1] == ']') {//if is shortcode
+					//$hero->kind = "shortcode";
+					
+					array_push( $hero->classes, "shortcode" );
+				}
+				
+			}
+			
+		}
 	}
+	
+/*
+	if($hero->text[0] == '[' && $hero->text[strlen($hero->text) - 1] == ']') {
+		    $hero->kind = "shortcode";
+		}
+*/
 	
 	
 	array_push( $hero->classes, $hero->kind );
 	
 	
-	if(get_field('heroes')) array_push( $hero->classes, "slick" );
+	if( $hero->heroesCount > 1 ) array_push( $hero->classes, "slick" );
 	
 	
 ?>
-<div class="hero-container <?php foreach ($hero->classes as &$class) echo "hero-".$class." ";//echo all classes  ?>container-fluid nopadding dark">
+<div id="hero" class="hero-container <?php foreach ($hero->classes as &$class) echo "hero-".$class." ";//echo all classes  ?>container-fluid nopadding dark" data-hero-count="<?php echo $hero->heroesCount; ?>" >
 	
 <!--
 	
@@ -63,7 +93,13 @@
 				$hero->src = $image_attachment[0];
 				
 				//Setup Foreground
-				$hero->text = get_sub_field('title');
+				$hero->text = $hero->title;
+				if( get_sub_field('title') ) $hero->text = get_sub_field('title');
+				$hero->text = trim( $hero->text );
+				
+				if($hero->text[0] == '[' && $hero->text[strlen($hero->text) - 1] == ']') {
+				    $hero->kind = "shortcode";
+				}
 				
 			?>
 			
@@ -100,5 +136,3 @@
 	
 	
 </div>
-
-<?php if( is_front_page() ) { echo socialBar(); } ?>

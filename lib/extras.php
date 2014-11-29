@@ -59,7 +59,7 @@ function heroOrganism($hero) {
 				<div class="container">
 					<div class="page-header">
 						<h1>
-							<?php echo roots_title(); ?>
+							<?php echo $hero->text; ?>
 						</h1>
 					</div>
 				</div>
@@ -114,23 +114,7 @@ function heroOrganism($hero) {
 			
 			<div class="hero-slide" >
 			
-				<img <?php echo $hero->srcType; ?>="<?php echo $hero->src; ?>" alt="">
-				
-				<div class="foreground" style="<?php //BG Color Overlay
-					if( get_field('page_color') ): 
-						?>background: <?php echo get_field('page_color'); ?>; <?php //#000000
-						?>background: rgba(<?php echo hex2rgb( get_field('page_color') ); ?>,0.8); <?php //rgba(0,0,0,0.8)
-					endif; ?>">
-				
-					<div class="container">
-						<div class="page-header">
-							<h1>
-								<?php echo do_shortcode( $hero->text ); ?>
-							</h1>
-						</div>
-					</div>
-					
-				</div>
+				<?php echo do_shortcode( $hero->text ); ?>
 				
 			</div>
 			
@@ -319,6 +303,8 @@ Content_Insert::init();
 
 
 
+
+
 class Countdown {
 	static $add_script;
 
@@ -339,7 +325,6 @@ class Countdown {
 			'class' => false,
 		), $atts, 'countdown' ) );
 		
-			
 			include("static/countdown/local.php");
 			
 			$chop_json = file_get_contents("http://live.gutschurch.com/api/v1/events/current");
@@ -506,3 +491,296 @@ class Email_Signup {
 }
  
 Email_Signup::init();
+
+
+
+
+class Watch {
+	static $add_script;
+ 
+	static function init() {
+		add_shortcode('watch', array(__CLASS__, 'handle_shortcode'));
+		
+		add_action('init', array(__CLASS__, 'register_script'), 110);
+		add_action('wp_footer', array(__CLASS__, 'print_script'), 110);
+		add_action('wp_footer', array(__CLASS__, 'internal_script'), 110);
+	}
+ 
+	static function handle_shortcode($atts) {
+		self::$add_script = true;
+		
+		extract( shortcode_atts( array(
+			'class' => false,
+		), $atts, 'watch' ) );
+		
+		
+		$video = new stdClass();
+		
+		$parameters = new stdClass();
+			$parameters->title = 0;
+			$parameters->byline = 0;
+			$parameters->portrait = 0;
+			$parameters->color = "ffffff";
+			$parameters->api = 1;
+			$parameters->player_id = 'frame';
+			
+		
+		if ( isset($_GET['vid']) ) {
+			
+			$decoded = json_decode( getJson('http://vimeo.com/api/v2/video/'.$_GET['vid'].'.json') );
+			
+			$video = $decoded[0];
+			
+			$og_video_link = "http://gutschurch.com/watch?vid=".$video->id;
+			$og_video_title = $video->title;
+			$og_video_thumb = $video->thumbnail_large;
+			$og_video_desc = strip_tags( $video->description );
+			
+		}
+		
+		if( !isset($_GET['vid']) || $video->user_id !== "955350" ) {
+			$video = getLatestVideo();
+		}
+		
+		$video->query = http_build_query($parameters);
+		
+		ob_start(); ?>
+			
+			<div class="foreground animated fadeIn animated-3s animated-delay-1s" style="<?php //BG Color Overlay
+				if( get_field('page_color') ): 
+					?>background: <?php echo get_field('page_color'); ?>; <?php //#000000
+					?>background: rgba(<?php echo hex2rgb( get_field('page_color') ); ?>,0.8); <?php //rgba(0,0,0,0.8)
+				endif; ?>">
+			
+				<div class="container">
+					<div class="page-header">
+					</div>
+					
+					<div class="hero-content">
+						<?php //echo do_shortcode('[content]'); ?>
+					</div>
+					
+				</div>
+				
+			</div>
+			
+			<div class="hero-background">
+				<div class="ir frame-container">
+					<iframe id="frame" src="//player.vimeo.com/video/<?php echo $video->id; ?>?<?php echo $video->query; ?>" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen ></iframe>
+				</div>
+			</div>
+			
+		<?php
+		$content = ob_get_clean();
+			
+		return $content;
+	}
+ 
+	static function register_script() {
+		//CSS
+		//wp_register_style( 'font-awesome', '//netdna.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css', array(), '4.2.0', 'screen' );
+		
+		//JS
+		wp_register_script( 'jquery-migrate-cdn', '//code.jquery.com/jquery-migrate-1.2.1.min.js', array('jquery'), '1.2.1', true);
+		wp_register_script( 'froogaloop', '//f.vimeocdn.com/js/froogaloop2.min.js', array('jquery'), '2.0', true);
+		wp_register_script( 'hashchange', '//cdnjs.cloudflare.com/ajax/libs/jquery-hashchange/v1.3/jquery.ba-hashchange.min.js', array('jquery'), '1.3', true);
+		
+	}
+ 
+	static function print_script() {
+		if ( ! self::$add_script )
+			return;
+			
+			//CSS
+			//if( wp_style_is( 'js_composer_front', 'registered' ) ) wp_print_styles('js_composer_front');
+			
+			//JS
+			wp_print_scripts('jquery-migrate-cdn');
+			wp_print_scripts('froogaloop');
+			wp_print_scripts('hashchange');
+			
+	}
+	
+	static function internal_script() {
+		if ( ! self::$add_script )
+			return;			
+		?>
+			
+			<script type="text/javascript">
+				if ( undefined !== window.jQuery ) { jQuery(function ($) { 'use strict';
+						
+					
+					var field = 'vid';
+					var vid;
+					var videoTitle;
+					
+					
+					
+					// Vimeo Player API
+					
+					var iframe = $('#frame')[0];
+				    var player = $f(iframe);
+				    var status = $('.status');
+				    var $foreground = $(".hero-shortcode .foreground");
+				    var $menu = $("header.banner");
+				    var lastTimeMouseMoved = "";
+				    var mouseTimeout = "";
+				    var vimeoPlaying = 0;
+				
+				    // When the player is ready, add listeners for pause, finish, and playProgress
+				    player.addEvent('ready', function() {
+				        console.log('ready');
+				        
+				        player.addEvent('pause', onPause);
+				        player.addEvent('play', onPlay);
+				        //player.addEvent('playProgress', onPlayProgress);
+				    });
+				
+				    function onPause(id) {
+				        console.log('paused');
+				        $("html").removeClass("vimeo-playing").addClass("vimeo-paused");
+				        vimeoPlaying = 0;
+				    }
+				    
+				    function onPlay(id) {
+				        console.log('played');
+				        $("html").removeClass("vimeo-paused").addClass("vimeo-playing");
+				        vimeoPlaying = 1;
+				    }
+				    
+				    $("html").addClass("watch-page transparent-menu");
+					
+					$foreground.click(function(){
+						
+						if( vimeoPlaying ){
+							player.api("pause");
+						} else {
+							player.api("play");
+						}
+					});
+					
+					
+					//Wake Up Video on Mouse action
+					$(document).bind("mousemove onmousemove onmousedown mousedown onclick click scroll DOMMouseScroll mousewheel keyup", function(){
+						
+						console.log("Wake Up!");
+						
+						$("html").removeClass("clean-hero");
+						$foreground.addClass("disable-hover");
+						
+						lastTimeMouseMoved = new Date().getTime();
+						
+						$menu.hover(function(){
+							clearTimeout(mouseTimeout);
+						});
+						
+						mouseTimeout=setTimeout(function(){
+							var currentTime = new Date().getTime();
+							if(currentTime - lastTimeMouseMoved > 1000){
+								$("html").addClass("clean-hero");
+								$foreground.removeClass("disable-hover");
+							}
+						},2000);
+					});
+					
+					window.uid = "<?php echo $video->user_id; ?>";
+				
+					function getParameterByName(name) {
+					  name = name.replace(/[\[]/, "\\\[").replace(/[\]]/, "\\\]");
+					  var regexS = "[\\?&]" + name + "=([^&#]*)";
+					  var regex = new RegExp(regexS);
+					  var results = regex.exec(window.location.search);
+					  if(results == null)
+					    return "";
+					  else
+				      return decodeURIComponent(results[1].replace(/\+/g, " "));
+					}
+					
+					function loadVideo(id) {
+						
+						$(".primary").addClass("hideme");
+						$(".videoContainer").removeClass("hideme");
+						var vidHeight = $("#frame").height();
+
+						$(".pageFeatured").css('height', vidHeight + 'px');
+				    	$("#frame").attr('src', 'http://player.vimeo.com/video/' + id + '?byline=0&portrait=0&badge=0&color=a20000&autoplay=1' );
+				    	var title = $("#vid-title-"+id).attr("name");
+				    	window.videoTitle = title;
+				    	window.vid = id;
+			
+			
+						$('#toolbox').removeClass().addClass('fadeInRight animated').one('webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend', function(){
+							//$(this).removeClass();
+						});
+						
+						gc.scrollTo( $("#hero").offset().top );
+					}
+					
+					if( window.location.href.indexOf('?' + field + '=') != -1 && uid == "955350") {
+						$(document).ready(function() {
+						window.vid = getParameterByName('vid')
+						var vid = window.vid;
+							loadVideo(vid);
+						});
+					}
+					
+					//Load Video from Hash
+					if(window.location.hash !== "") {
+						
+						var vid = window.location.hash.split('#')[1]
+						window.vid = vid;
+						
+						$.getJSON('http://vimeo.com/api/v2/video/'+vid+'.json', {format: 'json'}, function(data) {
+						    window.uid = data[0].user_id;
+						    //console.log(window.uid);
+						})
+						.done(function() {
+							if( window.uid == "955350"){
+								loadVideo(vid);
+							}
+						});
+						
+						
+						
+					}
+			
+					//Load Video from Hash Changing(click)
+					jQuery(window).hashchange(function () {
+						var hash = window.location.hash.split('#')[1]
+						loadVideo(hash);
+					});
+					
+					$('.carouselItem').click(function () {
+						window.videoTitle = $(this).children(".carouselItemContent > h3").attr('name');
+					});
+
+					
+				}); }
+			</script>
+			
+			<style>
+				
+				.hero-background {
+					z-index: 0;
+				}
+				
+				.hero-shortcode .foreground {
+					position: absolute;
+					z-index: 1;
+				}
+				
+				.frame-container {
+					padding-bottom: 0;
+					height: 100%;
+					position: absolute;
+				}
+				
+				#frame {
+				}
+				
+			</style>
+		<?php
+	}
+}
+ 
+Watch::init();

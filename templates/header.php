@@ -1,5 +1,5 @@
 <header class="banner navbar navbar-default navbar-static-top" role="banner">
-	<div class="container">
+	<div class="container primary-nav-container">
 	
 		<div class="primary-nav" role="navigation">
 			
@@ -15,7 +15,7 @@
 	
 	</div>
   
-	<div class="container">
+	<div class="container expanded-nav-container">
 		
 		<div class="expanded-nav">
 			

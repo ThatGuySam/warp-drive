@@ -67,6 +67,9 @@ Variables
 @body-font: "Open Sans","Helvetica Neue",Helvetica,Arial,sans-serif;
 
 
+@primary-ease: cubic-bezier(0.230, 1.000, 0.320, 1.000);//easeOutQuint
+
+
 
 
 
@@ -115,15 +118,15 @@ Mixins
 
 
 .transition( @property:all, @duration:500ms, @delay:0 ) {
-	-webkit-transition: @property @duration cubic-bezier(0.230, 1.000, 0.320, 1.000); 
-	   -moz-transition: @property @duration cubic-bezier(0.230, 1.000, 0.320, 1.000); 
-	     -o-transition: @property @duration cubic-bezier(0.230, 1.000, 0.320, 1.000); 
-	        transition: @property @duration cubic-bezier(0.230, 1.000, 0.320, 1.000);
+	-webkit-transition: @property @duration @primary-ease; 
+	   -moz-transition: @property @duration @primary-ease; 
+	     -o-transition: @property @duration @primary-ease; 
+	        transition: @property @duration @primary-ease;
 	
-	-webkit-transition-timing-function: cubic-bezier(0.230, 1.000, 0.320, 1.000); 
-	   -moz-transition-timing-function: cubic-bezier(0.230, 1.000, 0.320, 1.000); 
-	     -o-transition-timing-function: cubic-bezier(0.230, 1.000, 0.320, 1.000); 
-	        transition-timing-function: cubic-bezier(0.230, 1.000, 0.320, 1.000);
+	-webkit-transition-timing-function: @primary-ease; 
+	   -moz-transition-timing-function: @primary-ease; 
+	     -o-transition-timing-function: @primary-ease; 
+	        transition-timing-function: @primary-ease;
 	        
 	
 	& when ( @delay > 0 ) {
@@ -437,13 +440,36 @@ Menu
 */
 
 
-.navbar, .navbar-default {
+.transparent-menu {
+	
+	.navbar,
+	.primary-nav .menu-item.active, 
+	.primary-nav .menu-item.active:hover  {
+		background-color: transparent;
+		
+		a {
+			color: @primary-light;
+			text-shadow: 0 0 1px @primary-dark;
+		}
+		
+	}
+	
+}
+
+
+.navbar, 
+.navbar-default, 
+.expanded-nav-open header.banner.navbar {
 	position: absolute;
+	top: 0;
 	left: 0;
 	right: 0;
 	
+	
+	//&:extend(&:-moz-placeholder);
 	.backgroundRGBa(@primary-dark, 0.98);
 	
+	.transition();
 }
 
 .nav > li > a:hover, .nav > li > a:focus {
@@ -469,8 +495,13 @@ Menu
 	> .active > a:hover,
 	> .active > a:focus {
 		color: @primary-dark;
+		text-shadow: none;
 	}
 	
+}
+
+.clean-hero header.navbar {
+	top: -100px;
 }
 
 .menu-item {
@@ -518,7 +549,7 @@ Menu
 .expanded-nav {
 	
 	opacity: 0;
-	height: 0;
+	//height: 0;
 	display: none;
 	overflow: hidden;
 	
@@ -698,7 +729,7 @@ Hero
 			display: inline-block;
 			vertical-align: middle;
 			color: #ffffff;
-			text-shadow: 0 0 2px rgba(0, 0, 0, 1.0);
+			text-shadow: 0 0 1px #000000;
 			
 			h1 {
 				font-size: 3em;
@@ -742,7 +773,7 @@ Hero
 	}
 	
 	
-	&:hover{
+	&:hover {
 		
 		.slick-prev,.slick-next {
 			.backgroundRGBa(@primary-dark, 0.9);
@@ -761,7 +792,13 @@ Hero
 			
 			.transition-delay( 500ms );
 			
-			//.transition( bottom , 750ms, 500ms );
+			.clean-hero & {
+				//&:extend(.watch-page .hero-container:hover .read-more);
+				bottom: -20%;
+				
+				.transition-delay(0);
+			}
+			
 		}
 		
 	}
@@ -1075,6 +1112,11 @@ Organisms
 	
 }
 
+.vc_separator h4 {
+	font-size: 1.5em;
+	text-transform: uppercase;
+}
+
 
 
 
@@ -1202,8 +1244,8 @@ Media Queries
     
     //EaseOutQuint
     .fadeIn {
-	    -webkit-transition-timing-function:	cubic-bezier(0.230, 1.000, 0.320, 1.000); /* Safari and Chrome */
-		transition-timing-function:			cubic-bezier(0.230, 1.000, 0.320, 1.000);
+	    -webkit-transition-timing-function:	@primary-ease; /* Safari and Chrome */
+		transition-timing-function:			@primary-ease;
     }
 
 
@@ -1254,6 +1296,13 @@ Cheats
 .ir-hd { .ir(16/9); }
 .ir-square { .ir(1/1); }
 
+.ease {
+	.transition();
+}
+
+.ease-opacity {
+	
+}
 
 /* Bootstrap No Padding */
 .row > .nopadding,
@@ -1261,6 +1310,11 @@ Cheats
    padding-left: 0 !important;
    padding-right: 0 !important;
    margin: 0 !important;
+}
+
+.disable-hover,
+.disable-hover * {
+  pointer-events: none !important;
 }
 
 
