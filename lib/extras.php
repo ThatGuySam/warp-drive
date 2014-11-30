@@ -49,6 +49,8 @@ register_nav_menus(array(
 ));
 
 
+$hero = new stdClass();
+
 function heroOrganism($hero) {
 	
 	switch ($hero->kind) {
@@ -113,6 +115,8 @@ function heroOrganism($hero) {
 			ob_start(); ?>
 			
 			<div class="hero-slide" >
+				
+				<?php //debug( $hero ); ?>
 			
 				<?php echo do_shortcode( $hero->text ); ?>
 				
@@ -523,7 +527,7 @@ class Watch {
 			$parameters->color = "ffffff";
 			$parameters->api = 1;
 			$parameters->player_id = 'frame';
-			
+		
 		
 		if ( isset($_GET['vid']) ) {
 			
@@ -531,14 +535,12 @@ class Watch {
 			
 			$video = $decoded[0];
 			
-			$og_video_link = "http://gutschurch.com/watch?vid=".$video->id;
-			$og_video_title = $video->title;
-			$og_video_thumb = $video->thumbnail_large;
-			$og_video_desc = strip_tags( $video->description );
-			
+			$parameters->autoplay = 1;
 		}
 		
-		if( !isset($_GET['vid']) || $video->user_id !== "955350" ) {
+		$video->guts_id = "955350";
+		
+		if( !isset($_GET['vid']) || $video->user_id != $video->guts_id ) {
 			$video = getLatestVideo();
 		}
 		
@@ -566,7 +568,7 @@ class Watch {
 			
 			<div class="hero-background">
 				<div class="ir frame-container">
-					<iframe id="frame" src="//player.vimeo.com/video/<?php echo $video->id; ?>?<?php echo $video->query; ?>" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen ></iframe>
+					<iframe id="frame" src="//player.vimeo.com/video/<?php echo $video->id; ?>?<?php echo $video->query; ?>" data-gc-id="<?php echo $video->guts_id; ?>" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen ></iframe>
 				</div>
 			</div>
 			
@@ -621,6 +623,7 @@ class Watch {
 					var iframe = $('#frame')[0];
 				    var player = $f(iframe);
 				    var status = $('.status');
+				    var gcID = $('#frame').data("gc-id");
 				    var $foreground = $(".hero-shortcode .foreground");
 				    var $menu = $("header.banner");
 				    var lastTimeMouseMoved = "";
@@ -683,7 +686,7 @@ class Watch {
 						},2000);
 					});
 					
-					window.uid = "<?php echo $video->user_id; ?>";
+					window.uid = "<?php echo $video->guts_id; ?>";
 				
 					function getParameterByName(name) {
 					  name = name.replace(/[\[]/, "\\\[").replace(/[\]]/, "\\\]");
@@ -698,24 +701,21 @@ class Watch {
 					
 					function loadVideo(id) {
 						
-						$(".primary").addClass("hideme");
-						$(".videoContainer").removeClass("hideme");
-						var vidHeight = $("#frame").height();
-
-						$(".pageFeatured").css('height', vidHeight + 'px');
 				    	$("#frame").attr('src', 'http://player.vimeo.com/video/' + id + '?byline=0&portrait=0&badge=0&color=a20000&autoplay=1' );
-				    	var title = $("#vid-title-"+id).attr("name");
-				    	window.videoTitle = title;
-				    	window.vid = id;
+				    	//window.videoTitle = title;
+				    	//window.vid = id;
 			
 			
+/*
 						$('#toolbox').removeClass().addClass('fadeInRight animated').one('webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend', function(){
 							//$(this).removeClass();
 						});
+*/
 						
 						gc.scrollTo( $("#hero").offset().top );
 					}
 					
+/*
 					if( window.location.href.indexOf('?' + field + '=') != -1 && uid == "955350") {
 						$(document).ready(function() {
 						window.vid = getParameterByName('vid')
@@ -723,6 +723,7 @@ class Watch {
 							loadVideo(vid);
 						});
 					}
+*/
 					
 					//Load Video from Hash
 					if(window.location.hash !== "") {
@@ -735,12 +736,10 @@ class Watch {
 						    //console.log(window.uid);
 						})
 						.done(function() {
-							if( window.uid == "955350"){
+							if( window.uid == gcID){
 								loadVideo(vid);
 							}
 						});
-						
-						
 						
 					}
 			
@@ -748,10 +747,6 @@ class Watch {
 					jQuery(window).hashchange(function () {
 						var hash = window.location.hash.split('#')[1]
 						loadVideo(hash);
-					});
-					
-					$('.carouselItem').click(function () {
-						window.videoTitle = $(this).children(".carouselItemContent > h3").attr('name');
 					});
 
 					
@@ -784,3 +779,339 @@ class Watch {
 }
  
 Watch::init();
+
+
+
+
+class Bars {
+	static $add_script;
+	
+	
+ 
+	static function init() {
+		add_shortcode('bars', array(__CLASS__, 'handle_shortcode'));
+		
+		add_action('init', array(__CLASS__, 'register_script'), 110);
+		add_action('wp_footer', array(__CLASS__, 'print_script'), 110);
+		add_action('wp_footer', array(__CLASS__, 'internal_script'), 110);
+		
+		//debug( $hero );
+	}
+ 
+	static function handle_shortcode($atts) {
+		self::$add_script = true;
+		
+		extract( shortcode_atts( array(
+			'class' => false,
+			'pages' => false
+		), $atts, 'bars' ) );
+		
+		//global $hero;
+		
+		//$hero->section_class = "row";
+		
+		//debug( $hero );
+		
+		
+		// WP_Query arguments
+		$args = array (
+			'post_type'				=> 'page',
+			'post__in'				=> array( 91,89,95,97,101 ),//Youth Pages
+			'orderby'				=> 'date',
+		);
+		
+		// The Query
+		$query = new WP_Query( $args );
+		
+		//$query->post_count
+		
+		$last_post = $query->posts[$query->post_count-1];
+		
+		$hero_color = get_field('page_color',$last_post->ID);
+		
+		ob_start(); ?>
+			
+	        <div class="container-fluid">
+
+				<div class="row youth-programs" style="<?php if( $hero_color ) echo "background:".$hero_color.";"; ?>">
+				            
+				  
+				            <?php $p=0; if ( $query->have_posts() ): while ( $query->have_posts() ): $query->the_post();  ?>
+				            	
+				            	<?php  
+					            	
+					            	$options = custom_options();
+					            	
+				            	?>
+				            	
+				            	<?php if( $p == 0 ): ?>
+				            	
+						            <div class="filler bar-bar col-md-1 hidden-sm hidden-xs ease-width" rel="" style="<?php //BG Color Overlay
+									if( get_field('page_color') ): 
+										?>background: <?php echo get_field('page_color'); ?>; <?php //#000000
+									endif; ?>">
+						            </div>
+						            
+					            <?php endif; ?>
+								
+								
+								
+					            <!-- bar-bar - Safari -->
+					            <div class="youth-program bar-bar col-md-2 ease-width bar-<?php echo $p; ?>" rel="" style="<?php //BG Color Overlay
+									if( get_field('page_color') ): 
+										?>background: <?php echo get_field('page_color'); ?>; <?php //#000000
+									endif; ?>">
+										
+					                <div class="center">
+					                	<a href="<?php the_permalink(); ?>" title="<?php the_title(); ?>">
+						                    <span><img src="<?php echo getThumb( get_the_ID(), 'full'); ?>"></span>
+						                    <h2><?php the_title(); ?></h2>
+						                    <div class="hover-info">
+							                    <p></p>
+						                    </div>
+					                	</a>
+					                	
+					                	
+										<div class="social-icons">
+											<?php if( isset( $options->facebook ) ): ?><a href="<?php echo $options->facebook; ?>"><i class="fa fa-facebook"></i></a><?php endif; ?>
+											<?php if( isset( $options->twitter ) ): ?><a href="<?php echo $options->twitter; ?>"><i class="fa fa-twitter"></i></a><?php endif; ?>
+											<?php if( isset( $options->instagram ) ): ?><a href="<?php echo $options->instagram; ?>"><i class="fa fa-instagram"></i></a><?php endif; ?>
+										</div>
+					                </div>
+					            </div>
+				            
+				            <?php $p++; endwhile; endif; ?>
+				            
+				            
+				
+				            
+				        <!-- end SECTION -->
+				        </div>
+				
+				</div>
+
+		<?php
+		$content = ob_get_clean();
+			
+		return $content;
+	}
+ 
+	static function register_script() {
+		//CSS
+		//wp_register_style( 'font-awesome', '//netdna.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css', array(), '4.2.0', 'screen' );
+		
+		//JS
+		//wp_register_script( 'jquery-migrate-cdn', '//code.jquery.com/jquery-migrate-1.2.1.min.js', array('jquery'), '1.2.1', true);		
+	}
+ 
+	static function print_script() {
+		if ( ! self::$add_script )
+			return;
+			
+			//CSS
+			//wp_print_styles('font-awesome');
+			
+			//JS
+			//wp_print_scripts('jquery-migrate-cdn');
+			
+	}
+	
+	static function internal_script() {
+		if ( ! self::$add_script )
+			return;			
+		?>
+			
+			<script type="text/javascript">
+				if ( undefined !== window.jQuery ) { jQuery(function ($) { 'use strict';
+						
+					  //$(".youth-programs").css("height", window.innerHeight+"px" );
+  
+					  $(".youth-program").each( function( index ){
+					    
+					    var $this = $(this);
+					    
+					    $this.hover( function(){ //mouseover
+							event.stopPropagation();
+							
+							$this
+								.addClass("col-md-4 program-hovering")
+								.removeClass("col-md-2");
+							
+								$(".youth-programs").addClass("hovering");
+							}, 
+							function(){ //mouseout
+								
+								event.stopPropagation();
+							
+								$this
+									.addClass("col-md-2")
+									.removeClass("col-md-4 program-hovering")
+									.siblings()
+									.addClass("")
+									.removeClass("");
+									
+									$(".youth-programs").removeClass("hovering");
+								}
+						);//$this.hover
+					    
+					  });
+					  
+						function sizeBars() {
+						
+							var $media = $(".bar-bar");
+							
+							var wh = window.innerHeight;
+							var ww = window.innerWidth;
+							
+							
+							
+								$media.each(function() {
+									
+									if( ww > 992 ){
+										$(this)
+											.css("height", wh+"px");
+									} else {
+										$(this)
+											.css("height", "");
+									}
+									
+								});
+							
+							
+						}
+						
+						$( window ).resize(function() {
+							sizeBars();
+						});
+						
+						sizeBars();
+
+					
+				}); }
+			</script>
+			
+			<style>
+				
+/*
+				.hero-background {
+					z-index: 0;
+				}
+				
+				.hero-shortcode .foreground {
+					position: absolute;
+					z-index: 1;
+				}
+				
+				.frame-container {
+					padding-bottom: 0;
+					height: 100%;
+					position: absolute;
+				}
+				
+				#frame {
+				}
+*/
+				.scrollto,
+				.wrap.container {
+					display: none;
+				}
+				
+				
+				/* section-000 */
+
+
+				/* section-400 */
+				
+				.youth-programs {
+					
+				}
+				
+				.bar-bar {
+				  /*position: relative;*/
+				  /*width: 24.5%;*/
+				  /*display: inline-block;*/
+				  margin: 0;
+				  padding: 0;
+				  border: none;
+				  /* display: inline-block; */
+				  /* height: 100%; */
+				  height: 300px;
+				  text-align: center;
+				}
+				
+				.bar-bar:before {
+					content: '';
+					display: inline-block;
+					height: 100%; 
+					vertical-align: middle;
+					margin-right: -0.25em; /* Adjusts for spacing */
+					
+					/* For visualization 
+					background: #808080; width: 5px;
+					*/
+				}
+				
+				.bar-bar .center {
+				    display: inline-block;
+					vertical-align: middle;
+				}
+				
+				
+				.bar-bar a {
+				  color: #fff;
+				}
+				
+				.bar-bar h2 {
+				    text-align: center;
+				    font-size: 1.25em;
+				    font-weight: 700;
+				    text-transform: uppercase;
+				}
+				
+				.bar-bar h2 span {
+				    display: block;
+				}
+				
+				
+				.bar-bar .center img {
+					max-width: 120px;
+				}
+				
+				.bar-bar .hover-info {
+				  /* width: 250px; */
+				  padding: 1em;
+				  opacity: 0;
+				}
+				
+				
+				.program-hovering .bar-bar .hover-info {
+				  opacity: 1;
+				}
+				
+				
+				.hovering .filler {
+				  width: 0;
+				}
+				
+				.bar-bar .social-icons {
+				  text-align: center;
+				  vertical-align: bottom;
+				  color: #fff;
+				  font-size: 1.5em;
+				  letter-spacing: 0.15em;
+				}
+				/* section-450 */
+				
+				
+				/* section-500 */
+				
+				
+				
+				/* section-500 */
+								
+			</style>
+		<?php
+	}
+}
+ 
+Bars::init();

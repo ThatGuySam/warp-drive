@@ -92,7 +92,7 @@ function roots_google_analytics() { ?>
     r.parentNode.insertBefore(e,r)}(window,document,'script','ga'));
   <?php else : ?>
     function ga() {
-      console.log('GoogleAnalytics: ' + [].slice.call(arguments));
+      //console.log('GoogleAnalytics: ' + [].slice.call(arguments));
     }
   <?php endif; ?>
   ga('create','<?php echo GOOGLE_ANALYTICS_ID; ?>','auto');ga('send','pageview');

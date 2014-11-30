@@ -704,7 +704,10 @@ Hero
 	h1, h2, h3 {
 		text-transform: uppercase;
 		font-weight: 600;
-		letter-spacing: 0.1em;
+		
+		@media (min-width:768px) {
+	    	letter-spacing: 0.2em;
+	    }
 	}
 	
 	&.hero-media {
@@ -1199,7 +1202,7 @@ Media Queries
 
 /* Large Devices, Wide Screens */
 @media only screen and (max-width : 1200px) {
-
+	
 }
 
 /* Medium Devices, Desktops */
@@ -1212,6 +1215,7 @@ Media Queries
 		position: relative;
 		margin-bottom: 0;
 	}
+	
 }
 
 /* Small Devices, Tablets */
@@ -1301,7 +1305,11 @@ Cheats
 }
 
 .ease-opacity {
-	
+	.transition( opacity );
+}
+
+.ease-width {
+	.transition( width );
 }
 
 /* Bootstrap No Padding */

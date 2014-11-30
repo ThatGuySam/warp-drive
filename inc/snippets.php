@@ -16,8 +16,11 @@ function debug( $thing ) {
 	
 }
 
+//$current_id = get_the_ID();
 
-function getThumb($id = "", $size = 'thumb-hd') {
+function getThumb($id = false, $size = 'thumb-hd') {
+	
+	if( !$id ) $id = get_the_ID();
 	
 	$thumb_id = get_post_thumbnail_id($id);
 	$thumb_url_array = wp_get_attachment_image_src($thumb_id, $size, true);
@@ -105,6 +108,47 @@ function get_avg_luminance($filename, $num_samples=10) {
     // assume a medium gray is the threshold, #acacac or RGB(172, 172, 172)
     // this equates to a luminance of 170
 }
+
+
+function parse_shortcode( $string ){
+	
+	$shortcode = new stdClass();
+	
+	$naked_shortcode = trim($string,"[]");
+	if( !$naked_shortcode ) return false;
+	$parts = explode(' ', $naked_shortcode);
+	
+	foreach( $parts as $key => $part ){
+		if( $key == 0 ){
+			$shortcode->name = $part;
+			continue;//skip iteration
+		}
+		$attribute = explode('=', $part);
+		$shortcode->{$attribute[0]} = trim($attribute[1],'"');
+	}
+	
+	return $shortcode;
+}
+
+function custom_options() {
+	
+	$output = new stdClass();
+	
+	$options = get_field('custom_options');
+	
+	foreach( $options as $option ){
+		
+		if( $option['option'] == "" ) continue;
+		
+		$output->{$option['option']} = $option['value'];
+
+	}
+	
+	return $output;
+	
+}
+
+
 
 
 //Function to count the total number of top level menus. Useful for menus with sub menus

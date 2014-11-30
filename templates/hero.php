@@ -1,8 +1,12 @@
 <?php
 	
-	$hero = new stdClass();
+	global $hero;
+	
+	if( !isset( $hero ) ) $hero = new stdClass();
 	
 	$hero->classes = array();
+	
+	//debug( $hero );
 	
 	$hero->kind = "text";
 	
@@ -16,7 +20,10 @@
 	
 	$hero->heroesCount = 0;
 	
-	if( get_field('heroes') ) $hero->heroes = get_field('heroes');
+	if( get_field('heroes') ) {
+		$hero->heroes = new stdClass();
+		$hero->heroes = get_field('heroes');
+	}
 	
 	if( has_post_thumbnail() || $hero->heroes ){
 	
@@ -32,14 +39,15 @@
 			
 			$hero->heroesCount = count( $hero->heroes );
 			
-			if( $hero->heroesCount == 1 ){// if there is only 1
+			$hero->shortcode = parse_shortcode( trim( $hero->heroes[0]['title'] ) );
+			
+			if( $hero->shortcode ){// if it's a shortcode
+			
+				$hero->kind = "shortcode";
 				
-				$hero->text = trim( $hero->heroes[0]['title'] );
-				
-				if($hero->text[0] == '[' && $hero->text[strlen($hero->text) - 1] == ']') {//if is shortcode
-					//$hero->kind = "shortcode";
-					
-					array_push( $hero->classes, "shortcode" );
+				if( isset($hero->shortcode->class) ){
+				foreach( explode(' ', $hero->shortcode->class) as $name )
+					array_push( $hero->classes, $name );
 				}
 				
 			}
@@ -47,21 +55,15 @@
 		}
 	}
 	
-/*
-	if($hero->text[0] == '[' && $hero->text[strlen($hero->text) - 1] == ']') {
-		    $hero->kind = "shortcode";
-		}
-*/
-	
 	
 	array_push( $hero->classes, $hero->kind );
 	
 	
-	if( $hero->heroesCount > 1 ) array_push( $hero->classes, "slick" );
+	if( $hero->heroesCount > 1 && $hero->kind !== "shortcode" ) array_push( $hero->classes, "slick" );
 	
 	
 ?>
-<div id="hero" class="hero-container <?php foreach ($hero->classes as &$class) echo "hero-".$class." ";//echo all classes  ?>container-fluid nopadding dark" data-hero-count="<?php echo $hero->heroesCount; ?>" >
+<div id="hero" class="hero-container <?php foreach ($hero->classes as &$class) if($class !== "") echo "hero-".$class." ";//echo all classes  ?>container-fluid nopadding dark" data-hero-count="<?php echo $hero->heroesCount; ?>" >
 	
 <!--
 	
@@ -71,7 +73,7 @@
 	
 -->
 	
-	<div class="hero-section">
+	<div class="hero-section row">
 	
 	<?php if(get_field('heroes')): while(has_sub_field('heroes')): ?>
 		
@@ -97,8 +99,10 @@
 				if( get_sub_field('title') ) $hero->text = get_sub_field('title');
 				$hero->text = trim( $hero->text );
 				
-				if($hero->text[0] == '[' && $hero->text[strlen($hero->text) - 1] == ']') {
-				    $hero->kind = "shortcode";
+				$hero->heroes[$hero->index]['shortcode'] = parse_shortcode( $hero->text );
+				
+				if($hero->heroes[$hero->index]['shortcode']) {
+				    $hero->heroes[$hero->index]['kind'] = "shortcode";
 				}
 				
 			?>
