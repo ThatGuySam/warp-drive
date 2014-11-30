@@ -43,6 +43,7 @@ function cacheHandler( $object, $function, $cache_name = false ) {
     return $output;
 }
 
+/*
 function getJson($url) {
     // cache files are created like cache/abcdef123456...
     $cacheFile = 'cache' . DIRECTORY_SEPARATOR . "json-" . md5($url);
@@ -79,6 +80,7 @@ function getJson($url) {
 
     return $json;
 }
+*/
 
 function boxesInstagram($user_id) {
 
@@ -120,6 +122,8 @@ function boxesVimeo($boxes) {
 	
 	global $post;
     $post_slug=$post->post_name;
+    
+    $logo = $boxes->site_logo;
 
 	$output = new stdClass();
 	
@@ -329,6 +333,8 @@ class Boxes {
 		$boxes->boxes = false;
 		
 		$boxes->site_url = site_url();
+		
+		$boxes->site_logo = site_url();
 		
 		foreach ($atts as $key => $value) {$boxes->{$key} = $value; }//Convert Shortcode attributes to object values
 		

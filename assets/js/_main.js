@@ -92,6 +92,13 @@ var Roots = {
 					maxHeroHeight = 500+"px";
 					heroHeight = "";
 				}
+				
+				if( $(".page-header .hero-content").text().length > 0 ){
+					heroHeight = "";
+					if( ww < 900 ) {
+						maxHeroHeight = "";
+					}
+				}
 				 
 				$(".hero-media .hero-section")
 					.css("height", heroHeight)
@@ -146,10 +153,6 @@ var Roots = {
 			function boxize($boxesContainer){
 					
 				var $frame = $boxesContainer.find('.frame'); window.frr = $frame;
-				
-				$boxesContainer.css("display", "none");
-					
-				$boxesContainer.css("display", "");
 				
 				var slidesToShow = $frame.data("show");
 				

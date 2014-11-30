@@ -18532,7 +18532,7 @@ Hero
   position: relative;
   height: 100%;
 }
-.hero-container.hero-media .hero-organism img {
+.hero-container.hero-media .hero-organism .hero-background img {
   width: 100%;
   position: absolute;
   -webkit-transition: all margin 750ms;
@@ -18622,6 +18622,16 @@ Hero
 }
 .page-header {
   border-bottom: initial;
+  padding: 1em;
+}
+.page-header .hero-logo img {
+  max-width: 150px;
+}
+.hero-content {
+  max-width: 600px;
+  padding: 2em;
+  margin: 0 auto;
+  font-weight: 400;
 }
 /*
 
@@ -18917,6 +18927,9 @@ Pages
 Events
 
 */
+.single-ai1ec_event .p-description {
+  display: none;
+}
 /* Calendar */
 .timely {
   font-family: "Lato", "Helvetica Neue", Helvetica, Arial, sans-serif;

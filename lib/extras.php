@@ -14,6 +14,8 @@ include get_theme_root().'/'.get_template().'/inc/filters.php';
 
 include get_theme_root().'/'.get_template().'/inc/boxes.php';
 
+include get_theme_root().'/'.get_template().'/inc/heroes.php';
+
 //include get_theme_root().'/'.get_template().'/inc/sms.php';
 
 
@@ -82,7 +84,7 @@ function heroOrganism($hero) {
 				<div class="foreground animated fadeIn animated-3s animated-delay-1s" style="<?php //BG Color Overlay
 					if( get_field('page_color') ): 
 						?>background: <?php echo get_field('page_color'); ?>; <?php //#000000
-						?>background: rgba(<?php echo hex2rgb( get_field('page_color') ); ?>,0.8); <?php //rgba(0,0,0,0.8)
+						?>background: rgba(<?php echo hex2rgb( get_field('page_color') ); ?>,0.95); <?php //rgba(0,0,0,0.8)
 					endif; ?>">
 				
 					<div class="container">
@@ -91,9 +93,40 @@ function heroOrganism($hero) {
 								<?php echo parse_title( $hero->text ); ?>
 							</h1>
 						</div>
-						
-						<div class="hero-content">
-							<?php //echo do_shortcode('[content]'); ?>
+					</div>
+					
+				</div>
+				
+			</div>
+			
+			<?php $hero->output = ob_get_clean();
+			
+		break;
+		case "event":
+		
+			ob_start(); ?>
+			
+			<div class="hero-slide" >
+				
+				<div class="hero-background">
+					<img <?php echo $hero->srcType; ?>="<?php echo $hero->src; ?>" alt="">
+				</div>
+				
+				<div class="foreground animated fadeIn animated-3s animated-delay-1s" style="<?php //BG Color Overlay
+					if( get_field('page_color') ): 
+						?>background: <?php echo get_field('page_color'); ?>; <?php //#000000
+						?>background: rgba(<?php echo hex2rgb( get_field('page_color') ); ?>,0.95); <?php //rgba(0,0,0,0.8)
+					endif; ?>">
+				
+					<div class="container">
+						<div class="page-header">
+							<h1>
+								<?php echo parse_title( $hero->text ); ?>
+							</h1>
+							
+							<div class="hero-content">
+								<?php echo get_the_content(); ?>
+							</div>
 						</div>
 						
 					</div>
@@ -1115,3 +1148,153 @@ class Bars {
 }
  
 Bars::init();
+
+
+
+
+class Content_Hero {
+	static $add_script;
+	
+	
+ 
+	static function init() {
+		add_shortcode('content_hero', array(__CLASS__, 'handle_shortcode'));
+		
+		add_action('init', array(__CLASS__, 'register_script'), 110);
+		add_action('wp_footer', array(__CLASS__, 'print_script'), 110);
+		add_action('wp_footer', array(__CLASS__, 'internal_script'), 110);
+		
+		//debug( $hero );
+	}
+ 
+	static function handle_shortcode($atts) {
+		self::$add_script = true;
+		
+		extract( shortcode_atts( array(
+			'class' => false
+		), $atts, 'content_hero' ) );
+		
+		global $hero;
+		
+		//$hero->section_class = "row";
+		
+		//debug( $hero );
+		
+		
+/*
+		// WP_Query arguments
+		$args = array (
+			'post_type'				=> 'page',
+			'post__in'				=> array( 91,89,95,97,101 ),//Youth Pages
+			'orderby'				=> 'date',
+		);
+		
+		// The Query
+		$query = new WP_Query( $args );
+		
+		//$query->post_count
+		
+		$last_post = $query->posts[$query->post_count-1];
+		
+		$hero_color = get_field('page_color',$last_post->ID);
+*/
+		
+/*
+		$hero->heroes = get_field('heroes');
+		
+		$hero->attachment_id = $hero->heroes[0]['image'];
+		
+		$image_attachment = wp_get_attachment_image_src($hero->attachment_id, '720');
+		
+		$hero->src = $image_attachment[0];
+*/
+		
+		
+		$featured_image = getThumb( false, 'full');
+		
+				
+		ob_start(); ?>
+			
+			
+			<div class="hero-slide" >
+				
+				<div class="hero-background">
+					<img src="<?php echo $hero->src; ?>" alt="">
+				</div>
+				
+				<div class="foreground animated fadeIn animated-3s animated-delay-1s" style="<?php //BG Color Overlay
+					if( get_field('page_color') ): 
+						?>background: <?php echo get_field('page_color'); ?>; <?php //#000000
+						?>background: rgba(<?php echo hex2rgb( get_field('page_color') ); ?>,0.8); <?php //rgba(0,0,0,0.8)
+					endif; ?>">
+				
+					<div class="container">
+						<div class="page-header">
+							<div class="hero-logo">
+								<img src="<?php echo $featured_image; ?>"> 
+							</div>
+							<h1>
+								<?php the_title(); ?>
+							</h1>
+							
+							<div class="hero-content">
+								<?php the_excerpt(); ?>
+							</div>
+						</div>
+						
+					</div>
+					
+				</div>
+				
+			</div>
+	        
+
+		<?php
+		$content = ob_get_clean();
+			
+		return $content;
+	}
+ 
+	static function register_script() {
+		//CSS
+		//wp_register_style( 'font-awesome', '//netdna.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css', array(), '4.2.0', 'screen' );
+		
+		//JS
+		//wp_register_script( 'jquery-migrate-cdn', '//code.jquery.com/jquery-migrate-1.2.1.min.js', array('jquery'), '1.2.1', true);		
+	}
+ 
+	static function print_script() {
+		if ( ! self::$add_script )
+			return;
+			
+			//CSS
+			//wp_print_styles('font-awesome');
+			
+			//JS
+			//wp_print_scripts('jquery-migrate-cdn');
+			
+	}
+	
+	static function internal_script() {
+		if ( ! self::$add_script )
+			return;			
+		?>
+			
+			<script type="text/javascript">
+				if ( undefined !== window.jQuery ) { jQuery(function ($) { 'use strict';
+					
+					
+					
+				}); }
+			</script>
+			
+			<style>
+				
+				
+				
+			</style>
+		<?php
+	}
+}
+ 
+Content_Hero::init();

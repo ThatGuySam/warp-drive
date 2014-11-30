@@ -25,6 +25,8 @@
 		$hero->heroes = get_field('heroes');
 	}
 	
+	array_push( $hero->classes, get_post_type() );
+	
 	if( has_post_thumbnail() || $hero->heroes ){
 	
 		$thumbnail_src = wp_get_attachment_image_src( get_post_thumbnail_id( $post->ID ), "full" );
@@ -35,9 +37,30 @@
 		
 		$hero->src = $thumbnail_src[0];
 		
+		
+		if( isset( $hero->heroes[0]['image'] ) ){
+
+			$hero->attachment_id = $hero->heroes[0]['image'];
+			
+			$image_attachment = wp_get_attachment_image_src($hero->attachment_id, '720');
+			
+			$hero->src = $image_attachment[0];
+		}
+		
+		
+		if( get_post_type() == "ai1ec_event" ){// if it's a shortcode
+		
+			$hero->kind = "event";
+			
+			array_push( $hero->classes, "media" );
+			
+		}
+		
 		if( $hero->heroes ){// if there are any heroes
 			
 			$hero->heroesCount = count( $hero->heroes );
+			
+			
 			
 			$hero->shortcode = parse_shortcode( trim( $hero->heroes[0]['title'] ) );
 			
@@ -63,7 +86,7 @@
 	
 	
 ?>
-<div id="hero" class="hero-container <?php foreach ($hero->classes as &$class) if($class !== "") echo "hero-".$class." ";//echo all classes  ?>container-fluid nopadding dark" data-hero-count="<?php echo $hero->heroesCount; ?>" >
+<div id="hero" class="hero-container <?php foreach ($hero->classes as &$class) if($class !== "") echo "hero-".$class." ";//echo all classes ?>container-fluid nopadding dark" data-hero-count="<?php echo $hero->heroesCount; ?>" >
 	
 <!--
 	
@@ -88,11 +111,12 @@
 				//Setup Image
 				$hero->attachment_id = get_sub_field('image');
 				
-				$hero->link = get_sub_field('link');
-				
 				$image_attachment = wp_get_attachment_image_src($hero->attachment_id, '720');
 				
 				$hero->src = $image_attachment[0];
+				
+				
+				$hero->link = get_sub_field('link');
 				
 				//Setup Foreground
 				$hero->text = $hero->title;
