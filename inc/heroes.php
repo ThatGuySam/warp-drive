@@ -102,23 +102,15 @@ function heroOrganism($hero) {
 	
 	
 	//Link Wrapper
-	if( $hero->link && $hero->link !== "" ): ob_start(); ?>
+	if( $hero->link && $hero->link !== "" ){ 
 		
-		<a href="<?php echo $hero->link; ?>" >
+		$hero->output = "<a href=".$hero->link." >".$hero->output."</a>";
 		
-			<?php echo $hero->output; ?>
-			
-		</a>
-		
-	<?php $hero->output = ob_get_clean(); endif;
+	}
 	
 	
 	//Organism Wrapper
-	ob_start(); ?>
-		<div class="hero-organism">
-			<?php echo $hero->output; ?>
-		</div>
-	<?php $hero->output = ob_get_clean();
+	$hero->output = '<div class="hero-organism">'.$hero->output.'</div>';
 	
 	
 	return $hero->output;
@@ -131,7 +123,6 @@ class Watch {
  
 	static function init() {
 		add_shortcode('watch', array(__CLASS__, 'handle_shortcode'));
-		
 		add_action('init', array(__CLASS__, 'register_script'), 110);
 		add_action('wp_footer', array(__CLASS__, 'print_script'), 110);
 		add_action('wp_footer', array(__CLASS__, 'internal_script'), 110);
@@ -467,7 +458,7 @@ class Bars {
 				            	
 				            	<?php  
 					            	
-					            	$options = custom_options();
+					            	$options = $hero->page_options;
 					            	
 				            	?>
 				            	
@@ -802,8 +793,6 @@ class Content_Hero {
 */
 		
 		
-		$featured_image = getThumb( false, 'full');
-		
 				
 		ob_start(); ?>
 			
@@ -823,7 +812,7 @@ class Content_Hero {
 					<div class="container">
 						<div class="page-header">
 							<div class="hero-logo">
-								<img src="<?php echo $featured_image; ?>"> 
+								<img src="<?php echo $hero->logo; ?>"> 
 							</div>
 							<h1>
 								<?php the_title(); ?>
@@ -913,6 +902,8 @@ ob_start();
 	$hero->heroes = false;
 	
 	$hero->heroesCount = 0;
+	
+	$hero->page_options = custom_options();
 	
 	if( get_field('heroes') ) {
 		$hero->heroes = new stdClass();
@@ -1027,6 +1018,10 @@ ob_start();
 				$image_attachment = wp_get_attachment_image_src($hero->attachment_id, '720');
 				
 				$hero->src = $image_attachment[0];
+				
+				$hero->logo = "";
+				
+				//if() $hero->logo = 
 				
 				
 				$hero->link = get_sub_field('link');
