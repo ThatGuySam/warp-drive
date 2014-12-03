@@ -447,7 +447,7 @@ class Boxes {
 								
 									<a href="<?php echo $box->link; ?>" target="<?php echo $target; ?>" >
 										<div class="box-image">
-											<img class="easecubic" <?php echo $box->srcType; ?>="<?php echo $box->image_url; ?>" alt="<?php echo $box->text; ?>" >
+											<img class="easecubic" <?php echo $box->srcType; ?>="<?php echo $box->image_url; ?>" alt="<?php echo $box->title." - ".$box->date; ?>" >
 										</div>
 										
 										<div class="box-header easecubic" style="">
