@@ -55,15 +55,17 @@ var Roots = {
 			
 			/* Generic Functions */
 			
+			//UX Friendly scroll
 			gc.scrollTo = function ( $here ) {
 				
 				console.log( $here );
 				
-				//Stop Immediatelly for User Action
+				//Stop Immediatelly for Scrolling
 				$("html, body").bind("scroll mousedown DOMMouseScroll mousewheel keyup", function(){
 					$('html, body').stop();
 					$("body").removeClass("disable-hover");
 				});
+				
 				
 				$("body").addClass("disable-hover");//disable hovering for 60fps scolling
 				
