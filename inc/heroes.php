@@ -1,7 +1,5 @@
 <?php
 	
-	
-	
 $hero = new stdClass();
 
 function heroOrganism($hero) {
@@ -17,13 +15,13 @@ function heroOrganism($hero) {
 			<div class="hero-slide" >
 				
 				<div class="hero-background">
-					<img <?php echo $hero->srcType; ?>="<?php echo $hero->src; ?>" alt="">
+					<img <?php echo $hero->srcType; ?>="<?php echo $hero->src; ?>" alt="<?php echo $hero->text; ?>">
 				</div>
 				
 				<div class="foreground animated fadeIn animated-3s animated-delay-1s" style="<?php //BG Color Overlay
 					if( get_field('page_color') ): 
 						?>background: <?php echo get_field('page_color'); ?>; <?php //#000000
-						?>background: rgba(<?php echo hex2rgb( get_field('page_color') ); ?>,0.95); <?php //rgba(0,0,0,0.8)
+						?>background: rgba(<?php echo hex2rgb( get_field('page_color') ); ?>,0.85); <?php //rgba(0,0,0,0.8)
 					endif; ?>">
 				
 					<div class="container">
@@ -48,13 +46,13 @@ function heroOrganism($hero) {
 			<div class="hero-slide" >
 				
 				<div class="hero-background">
-					<img <?php echo $hero->srcType; ?>="<?php echo $hero->src; ?>" alt="">
+					<img <?php echo $hero->srcType; ?>="<?php echo $hero->src; ?>" alt="<?php echo $hero->text; ?>">
 				</div>
 				
 				<div class="foreground animated fadeIn animated-3s animated-delay-1s" style="<?php //BG Color Overlay
 					if( get_field('page_color') ): 
 						?>background: <?php echo get_field('page_color'); ?>; <?php //#000000
-						?>background: rgba(<?php echo hex2rgb( get_field('page_color') ); ?>,0.95); <?php //rgba(0,0,0,0.8)
+						?>background: rgba(<?php echo hex2rgb( get_field('page_color') ); ?>,0.85); <?php //rgba(0,0,0,0.8)
 					endif; ?>">
 				
 					<div class="container">
@@ -180,7 +178,7 @@ class Watch {
 			<div class="foreground animated fadeIn animated-3s animated-delay-1s" style="<?php //BG Color Overlay
 				if( get_field('page_color') ): 
 					?>background: <?php echo get_field('page_color'); ?>; <?php //#000000
-					?>background: rgba(<?php echo hex2rgb( get_field('page_color') ); ?>,0.8); <?php //rgba(0,0,0,0.8)
+					?>background: rgba(<?php echo hex2rgb( get_field('page_color') ); ?>,0.85); <?php //rgba(0,0,0,0.8)
 				endif; ?>">
 			
 				<div class="container">
@@ -507,7 +505,7 @@ class Bars {
 					                </div>
 					            </div>
 				            
-				            <?php $p++; endwhile; endif; ?>
+				            <?php $p++; endwhile; endif; wp_reset_query();//Clear query so nothing weird shows up after loop  ?>
 				            
 				            
 				
@@ -813,13 +811,13 @@ class Content_Hero {
 			<div class="hero-slide" >
 				
 				<div class="hero-background">
-					<img src="<?php echo $hero->src; ?>" alt="">
+					<img src="<?php echo $hero->src; ?>" alt="<?php the_title(); ?>">
 				</div>
 				
 				<div class="foreground animated fadeIn animated-3s animated-delay-1s" style="<?php //BG Color Overlay
 					if( get_field('page_color') ): 
 						?>background: <?php echo get_field('page_color'); ?>; <?php //#000000
-						?>background: rgba(<?php echo hex2rgb( get_field('page_color') ); ?>,0.8); <?php //rgba(0,0,0,0.8)
+						?>background: rgba(<?php echo hex2rgb( get_field('page_color') ); ?>,0.85); <?php //rgba(0,0,0,0.8)
 					endif; ?>">
 				
 					<div class="container">
@@ -903,8 +901,6 @@ ob_start();
 	if( !isset( $hero ) ) $hero = new stdClass();
 	
 	$hero->classes = array();
-	
-	//debug( $hero );
 	
 	$hero->kind = "text";
 	
