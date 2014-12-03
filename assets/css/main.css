@@ -18046,6 +18046,9 @@ Icons
   font-family: FontAwesome;
   content: "\f104";
 }
+.fa-email:before {
+  content: "\f0e0";
+}
 /*
 
 Typography
@@ -18282,7 +18285,6 @@ Menu
 .navbar-default,
 .expanded-nav-open header.banner.navbar {
   position: absolute;
-  top: 0;
   left: 0;
   right: 0;
   background-color: #323232;
@@ -18298,6 +18300,11 @@ Menu
   -webkit-transition-timing-function: cubic-bezier(0.23, 1, 0.32, 1);
   -o-transition-timing-function: cubic-bezier(0.23, 1, 0.32, 1);
   transition-timing-function: cubic-bezier(0.23, 1, 0.32, 1);
+}
+.watch-page .navbar,
+.watch-page .navbar-default,
+.watch-page .expanded-nav-open header.banner.navbar {
+  top: 0;
 }
 .nav > li > a:hover,
 .nav > li > a:focus {
@@ -18616,9 +18623,13 @@ Hero
   -o-transition-delay: 0;
   transition-delay: 0;
 }
-.social-container .social-bar-item {
+.social-bar-item {
   text-align: center;
+  display: inline-block;
+}
+.social-container .social-bar-item {
   padding: 15px;
+  font-size: 1.8em;
 }
 .page-header {
   border-bottom: initial;
@@ -19120,6 +19131,20 @@ Cheats
   -webkit-transition: width 500ms cubic-bezier(0.23, 1, 0.32, 1);
   -o-transition: width 500ms cubic-bezier(0.23, 1, 0.32, 1);
   transition: width 500ms cubic-bezier(0.23, 1, 0.32, 1);
+  -webkit-transition-timing-function: cubic-bezier(0.23, 1, 0.32, 1);
+  -o-transition-timing-function: cubic-bezier(0.23, 1, 0.32, 1);
+  transition-timing-function: cubic-bezier(0.23, 1, 0.32, 1);
+}
+.ease-height {
+  -webkit-transition: height;
+  -o-transition: height;
+  transition: height;
+  -webkit-transition: all height ease-out;
+  -o-transition: all height ease-out;
+  transition: all height ease-out;
+  -webkit-transition: height 500ms cubic-bezier(0.23, 1, 0.32, 1);
+  -o-transition: height 500ms cubic-bezier(0.23, 1, 0.32, 1);
+  transition: height 500ms cubic-bezier(0.23, 1, 0.32, 1);
   -webkit-transition-timing-function: cubic-bezier(0.23, 1, 0.32, 1);
   -o-transition-timing-function: cubic-bezier(0.23, 1, 0.32, 1);
   transition-timing-function: cubic-bezier(0.23, 1, 0.32, 1);

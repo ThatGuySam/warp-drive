@@ -466,9 +466,12 @@ Menu
 .navbar-default, 
 .expanded-nav-open header.banner.navbar {
 	position: absolute;
-	top: 0;
 	left: 0;
 	right: 0;
+	
+	.watch-page & {
+		top: 0;
+	}
 	
 	
 	//&:extend(&:-moz-placeholder);
@@ -1332,6 +1335,10 @@ Cheats
 
 .ease-width {
 	.transition( width );
+}
+
+.ease-height {
+	.transition( height );
 }
 
 /* Bootstrap No Padding */

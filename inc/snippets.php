@@ -4,13 +4,7 @@ function debug( $thing ) {
 	
 	if( $thing == null || $thing == false ) return;
 	
-	ob_start(); ?>
-	
-		<pre>
-			<?php print_r($thing); ?>
-		</pre>
-	
-	<?php $output = ob_get_clean();
+	ob_start(); ?><pre><?php print_r($thing); ?></pre><?php $output = ob_get_clean();
 	
 	echo $output;
 	
