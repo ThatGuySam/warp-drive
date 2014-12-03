@@ -1,13 +1,20 @@
 <?php
+	
+	
+function date_sort_objects($a, $b) {
+	return strcmp($a->date_unix, $b->date_unix); //only doing string comparison
+}
 
 function cacheHandler( $object, $function, $cache_name = false ) {
     // cache files are created like cache/abcdef123456...
     
+    //echo get_home_path();
+    
     $filename = $function . "-" . preg_replace("/[^\da-z]/i", '', $object->id ).".json";
     if( $cache_name ) $filename = $cache_name."-".$filename;
-    $cacheFile = 'cache' . DIRECTORY_SEPARATOR . $filename;
+    $cacheFile = get_home_path().'cache' . DIRECTORY_SEPARATOR . $filename;
 	
-	if( array_key_exists( 'purge' , $_GET ) ) unlink($cacheFile);
+	if( array_key_exists( 'purge' , $_GET ) || $object->purge == true ) unlink($cacheFile);
 	
     if (file_exists($cacheFile)) {
         $fh = fopen($cacheFile, 'r');
@@ -32,6 +39,8 @@ function cacheHandler( $object, $function, $cache_name = false ) {
 
     
     $output = $function($object);
+    
+    //debug( $output );
     
     $new_object_json = json_encode( $output );
 	
@@ -121,11 +130,8 @@ function boxesInstagram($user_id) {
 function boxesVimeo($boxes) {
 	
 	global $post;
-    $post_slug = $post->post_name;
-    
-    $logo = $boxes->site_logo;
 
-	$output = new stdClass();
+	$videos = $output = new stdClass();
 	
 	//$vid_url = parse_url($boxes->source);
 	
@@ -169,15 +175,13 @@ function boxesVimeo($boxes) {
 		
 		$title = $video->title;
 		
-		echo "post is ".$post_slug;
-		
-		if( $post_slug !== "watch" ) {
+		if( $boxes->page_slug != "watch" ) {
 			$link = "/watch/?vid=".$video->id;
 		} else {
 			$link = "#".$video->id;
 		}
 		
-		$v_box = new stdClass;
+		$v_box = new stdClass();
 		
 		$v_box->type 		= "video";
 		$v_box->id			= $video->id;
@@ -187,16 +191,17 @@ function boxesVimeo($boxes) {
 		$v_box->text 		= $title;
 		$v_box->desc 		= $desc[0];
 		$v_box->link 		= $link;
+		$v_box->index		= $i;
 		
 		
-		$boxes->boxes[$i] = $v_box;
+		$videos->{"video_".$i} = $v_box;
 		
 		if( $i >= $boxes->amount - 1 ) break;
 		
 		$i++;
 	}
 	
-	$output = $boxes;
+	$output = $videos;
 	
 	return $output;
 	
@@ -204,24 +209,20 @@ function boxesVimeo($boxes) {
 
 function getLatestVideo($album_id="2238693") {
 	
-	$boxes = new stdClass();
+	$output = $boxes = new stdClass();
 	
 	$boxes->source = "/album/".$album_id;
 	
-	$boxes->amount = 32;
+	$boxes->amount = 1;
 	
 	$boxes->id = preg_replace('/[^\da-z]/i', '', $boxes->source );
     
-    $boxes = cacheHandler($boxes, "boxesVimeo", "firstVideo");
+    $boxes->objects = cacheHandler($boxes, "boxesVimeo", "firstVideo");
     
-    $output = $boxes->boxes[0];
-
-	// Let's begin our XHTML webpage code.  The DOCTYPE is supposed to be the very first thing, so we'll keep it on the same line as the closing-PHP tag.
-	//$message_url = "//player.vimeo.com/video/".$url[3]."?title=0&amp;byline=0&amp;portrait=0&amp;color=ffffff&amp;api=1&player_id=frame";
+    $output = $boxes->objects->video_0;
 	
 	return $output;
 }
-
 
 
 function boxesEvents($boxes) {
@@ -243,10 +244,14 @@ function boxesEvents($boxes) {
 	
 	//$categories = get_the_terms($post->ID, 'ai1ec_event');
 	
+	$source = array( 5 );
+	
+	if( $boxes->source != "" && is_numeric( $boxes->source ) ){
+		$source = array( $boxes->source );
+	}
+	
 	$filters = array(
-		'cat_ids'  => array(
-			5
-		),
+		'cat_ids'  => $source,
 		//'tag_ids'  => array(),
 		//'post_ids' => array(),
 		//'auth_ids' => array(),
@@ -285,19 +290,17 @@ function boxesEvents($boxes) {
 			$e_box->color				= get_field('page_color', $id);
 			$e_box->link				= $boxes->site_url."/?p=".$id;
 			
-			$boxes->boxes[$e] = $e_box;
+			$boxes->objects[$e] = $e_box;
 			
 			$e++;
 		}
 	}
 	
 	//Sort by date
-	function date_sort($a, $b) {
-	  return strcmp($a->date_unix, $b->date_unix); //only doing string comparison
-	}
-	usort( $boxes->boxes, 'date_sort');
 	
-	$output = $boxes;
+	usort( $boxes->objects, 'date_sort_objects');
+	
+	$output = $boxes->objects;
 	
 	return $output;
 	
@@ -332,11 +335,13 @@ class Boxes {
 		
 		$boxes = new stdClass();
 		
-		$boxes->boxes = false;
+		$boxes->objects = false;
 		
 		$boxes->site_url = site_url();
 		
-		$boxes->site_logo = site_url();
+		global $post;
+		
+		$boxes->post = $post;
 		
 		foreach ($atts as $key => $value) {$boxes->{$key} = $value; }//Convert Shortcode attributes to object values
 		
@@ -356,14 +361,12 @@ class Boxes {
 		//Feed Type
 		switch ($type) {
 		    case "instagram":
-		        $boxes->boxes = boxesInstagram($boxes);
+		        $boxes->objects = boxesInstagram($boxes);
 		        
 		        $target = "_blank";
 		        
 		        break;
 		    case "vimeo":
-		        
-		        //$boxes = boxesVimeo($boxes);
 		        
 		        $vid_url = parse_url($boxes->source);
 		        
@@ -371,17 +374,20 @@ class Boxes {
 		        
 		        $boxes->id = preg_replace('/[^\da-z]/i', '', $vid_url['path'] );
 		        
-		        
-		        $boxes = cacheHandler($boxes, "boxesVimeo");
+		        $boxes->objects = cacheHandler($boxes, "boxesVimeo", "vimeo");
 		        
 		        $target = "_self";
 		        
 		        break;
 		    case "events":
 		    	
+		    	$boxes->purge = true;
+		    	
 		    	$boxes->id = $source;
+		    	
+		    	//$boxes->source = $source;
 				
-				$boxes = cacheHandler($boxes, "boxesEvents");
+				$boxes->objects = cacheHandler($boxes, "boxesEvents", "events");
 				
 		        break;
 		    case "category":
@@ -404,18 +410,16 @@ class Boxes {
 		<?php 
 			
 			if( isset( $props['double-stacked'] ) ){
-				
 				$boxes->show = $boxes->show * 2;
-				
 			}
-			
+			//debug( $boxes->post );
 		?>
 			<div id="boxes-<?php echo $type; ?>-<?php echo $boxes->id; ?>" class="box-boxes boxes-<?php echo $type; ?> <?php echo $class; ?>">
 
 
 			<div class="frame" data-show="<?php echo $boxes->show; ?>">
 				<ul class="easecubic">
-					<?php if( $boxes->boxes ): foreach($boxes->boxes as $key => $box){ ?>
+					<?php if( $boxes->objects ): foreach($boxes->objects as $key => $box){ ?>
 					
 						<?php 
 							if( isset( $props['date-format-human'] ) ){
@@ -433,7 +437,7 @@ class Boxes {
 						?>
 						
 						
-							<?php if( !isset( $props['double-stacked'] ) || $key % 2 != 0 || !$key ){ ?><li><?php } ?>
+							<?php if( !isset( $props['double-stacked'] ) || $box->index % 2 != 0 || !$box->index ){ ?><li><?php } ?>
 								
 								<div id="box-<?php echo $type; ?>-<?php echo $box->id; ?>" class="box-box box-<?php echo $box->type; ?> easecubic" style="<?php 
 								//BG Color Overlay
@@ -447,7 +451,6 @@ class Boxes {
 										</div>
 										
 										<div class="box-header easecubic" style="">
-											
 											<div class="box-header-content">
 												<h3><?php echo parse_title( $box->title ); ?></h3>
 												<div class="box-date easecubic"><?php echo $box->date; ?></div>
@@ -462,8 +465,7 @@ class Boxes {
 									</a>
 								</div>
 								
-							<?php if( !isset( $props['double-stacked'] ) || $key % 2 == 0 || !$key  ){ ?></li><?php } ?>
-						
+							<?php if( !isset( $props['double-stacked'] ) || $box->index % 2 == 0 || !$box->index  ){ ?></li><?php } ?>
 						
 					<?php } endif; ?>
 				</ul>
