@@ -136,6 +136,8 @@ function custom_options() {
 	
 	$options = get_field('custom_options');
 	
+	if( empty( $options ) ) return false;
+	
 	foreach( $options as $option ){
 		
 		if( $option['option'] == "" ) continue;
@@ -146,6 +148,85 @@ function custom_options() {
 	
 	return $output;
 	
+}
+
+
+function social_media_profiles($strapped=0) {
+	
+	//HTML Output
+	$output = "";
+	
+	//Current Pages Fields
+	$options = custom_options();
+	
+	//Option check
+	if( empty( $options ) ) return false;
+	
+	//Types of Profiles and Order
+	$profiles_list = array(
+		"facebook",
+		"twitter",
+		"instagram",
+		"email",
+		"pinterest"
+	);
+	
+	
+	//Filter Profiles for current page
+	$profiles = array();
+	
+	foreach( $profiles_list as $profile ){
+		//if it isn't set skip
+		if( empty( $options->{$profile} ) ) continue;
+		array_push( $profiles, $profile );
+	}
+	
+	//Profiles check
+	if( empty( $profiles ) ) return false;
+	
+	$profiles_count = count($profiles);
+	
+	
+	//Loop
+	$p=0;
+	foreach( $profiles as $profile ){
+		
+		//12
+		
+		if ($profiles_count & 1) {//if even
+			
+			$po = ( 12 - ( $profiles_count * 2 ) ) / 2;
+			
+			$pos = $po;
+			
+			$pw = 2;
+			
+		} else {//if odd
+			
+			$po = ( 12 - $profiles_count ) / 2;
+			
+			$pos = ( 12 - ($profiles_count * 2 ) ) / 2;
+			
+			$pw = 1;
+			
+		}
+		
+		$classes = "social-bar-item";
+		
+		if( $strapped ) $classes .= " col-sm-".$pw." col-xs-2";
+		
+		//Add offset to first
+		if( $strapped && !$p ) $classes .= " col-sm-offset-".$po." col-xs-offset-".$pos;
+		
+		$output .= '<div class="'.$classes.'"><a href="'.$options->{$profile}.'"><i class="fa fa-'.$profile.'"></i></a></div>';
+		
+	$p++;
+	}
+	
+	//If $p is still 0
+	if( !$p ) return false;
+	
+	return $output;
 }
 
 

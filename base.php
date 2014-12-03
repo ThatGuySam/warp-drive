@@ -11,7 +11,7 @@
     do_action('get_header');
     get_template_part('templates/header');
     get_template_part('templates/hero');
-    if( is_front_page() ) { echo socialBar(); }
+    echo socialBar();
   ?>
 
   <div class="wrap container" role="document">

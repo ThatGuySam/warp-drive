@@ -121,7 +121,7 @@ function boxesInstagram($user_id) {
 function boxesVimeo($boxes) {
 	
 	global $post;
-    $post_slug=$post->post_name;
+    $post_slug = $post->post_name;
     
     $logo = $boxes->site_logo;
 
@@ -169,7 +169,9 @@ function boxesVimeo($boxes) {
 		
 		$title = $video->title;
 		
-		if( $post_slug !== "watch") {
+		echo "post is ".$post_slug;
+		
+		if( $post_slug !== "watch" ) {
 			$link = "/watch/?vid=".$video->id;
 		} else {
 			$link = "#".$video->id;
