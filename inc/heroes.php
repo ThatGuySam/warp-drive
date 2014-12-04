@@ -655,7 +655,7 @@ class Bars {
 				  border: none;
 				  /* display: inline-block; */
 				  /* height: 100%; */
-				  height: 300px;
+				  height: 400px;
 				  text-align: center;
 				}
 				
@@ -678,7 +678,11 @@ class Bars {
 				
 				
 				.bar-bar a {
-				  color: #fff;
+					color: #fff;
+				}
+				
+				.bar-bar a:hover {
+					text-decoration: none;
 				}
 				
 				.bar-bar h2 {
