@@ -2,11 +2,16 @@
 
 date_default_timezone_set('America/Chicago');
 
+
 require get_theme_root().'/'.get_template().'/lib/vendor/autoload.php';
+
 
 use League\ColorExtractor\Client as ColorExtractor;
 
 $client = new ColorExtractor;
+
+$detect = new Mobile_Detect;
+
 
 include get_theme_root().'/'.get_template().'/inc/snippets.php';
 
@@ -17,6 +22,15 @@ include get_theme_root().'/'.get_template().'/inc/heroes.php';
 include get_theme_root().'/'.get_template().'/inc/boxes.php';
 
 //include get_theme_root().'/'.get_template().'/inc/sms.php';
+
+
+/*
+if ( $detect->isMobile() ) {
+	echo "Mobile!";
+} else {
+	debug( $detect );
+}
+*/
 
 
 add_image_size( '1080', 1920, 1080, true );

@@ -7,4 +7,5 @@ $baseDir = dirname($vendorDir);
 
 return array(
     'League\\ColorExtractor' => array($vendorDir . '/league/color-extractor/src', $vendorDir . '/league/color-extractor/tests'),
+    'Detection' => array($vendorDir . '/mobiledetect/mobiledetectlib/namespaced'),
 );

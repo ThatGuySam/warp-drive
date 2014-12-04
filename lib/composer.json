@@ -1,5 +1,6 @@
 {
     "require": {
-        "league/color-extractor": "0.1.*"
+        "league/color-extractor": "0.1.*",
+        "mobiledetect/mobiledetectlib": "2.8.11"
     }
 }
