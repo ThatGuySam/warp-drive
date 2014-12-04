@@ -434,7 +434,7 @@ class Bars {
 		// WP_Query arguments
 		$args = array (
 			'post_type'				=> 'page',
-			'post__in'				=> array( 91,89,95,97,101 ),//Youth Pages
+			'post__in'				=> array( 91 , 89 ,95 ,97 ,101 ),//Youth Pages
 			'orderby'				=> 'date',
 		);
 		
@@ -458,7 +458,11 @@ class Bars {
 				            	
 				            	<?php  
 					            	
-					            	$options = $hero->page_options;
+					            	$options = custom_options();
+					            	
+					            	$logo = getThumb( get_the_ID(), 'full');
+					            	
+					            	if( !empty( $options->logo ) ) $logo = $options->logo;
 					            	
 				            	?>
 				            	
@@ -482,7 +486,7 @@ class Bars {
 										
 					                <div class="center">
 					                	<a href="<?php the_permalink(); ?>" title="<?php the_title(); ?>">
-						                    <span><img src="<?php echo getThumb( get_the_ID(), 'full'); ?>"></span>
+						                    <span><img src="<?php echo $logo; ?>"></span>
 						                    <h2><?php the_title(); ?></h2>
 						                    <div class="hover-info">
 							                    <p></p>
@@ -694,14 +698,13 @@ class Bars {
 				}
 				
 				.bar-bar .hover-info {
-				  /* width: 250px; */
 				  padding: 1em;
 				  opacity: 0;
 				}
 				
 				
 				.program-hovering .bar-bar .hover-info {
-				  opacity: 1;
+					opacity: 1;
 				}
 				
 				
@@ -763,36 +766,9 @@ class Content_Hero {
 		
 		//debug( $hero );
 		
-		
-/*
-		// WP_Query arguments
-		$args = array (
-			'post_type'				=> 'page',
-			'post__in'				=> array( 91,89,95,97,101 ),//Youth Pages
-			'orderby'				=> 'date',
-		);
-		
-		// The Query
-		$query = new WP_Query( $args );
-		
-		//$query->post_count
-		
-		$last_post = $query->posts[$query->post_count-1];
-		
-		$hero_color = get_field('page_color',$last_post->ID);
-*/
-		
-/*
-		$hero->heroes = get_field('heroes');
-		
-		$hero->attachment_id = $hero->heroes[0]['image'];
-		
-		$image_attachment = wp_get_attachment_image_src($hero->attachment_id, '720');
-		
-		$hero->src = $image_attachment[0];
-*/
-		
-		
+		$hero->logo = "";
+				
+		if( !empty( $hero->page_options->logo ) ) $hero->logo = $hero->page_options->logo;
 				
 		ob_start(); ?>
 			
@@ -895,8 +871,6 @@ ob_start();
 	
 	$hero->text = get_the_title();
 	
-	$hero->index = 0;
-	
 	$hero->srcType = "src";
 	
 	$hero->heroes = false;
@@ -954,8 +928,8 @@ ob_start();
 				$hero->kind = "shortcode";
 				
 				if( isset($hero->shortcode->class) ){
-				foreach( explode(' ', $hero->shortcode->class) as $name )
-					array_push( $hero->classes, $name );
+					foreach( explode(' ', $hero->shortcode->class) as $name )
+						array_push( $hero->classes, $name );
 				}
 				
 			}
@@ -978,7 +952,7 @@ ob_start();
 	Hero Priorities
 	
 	Text < Image < Video < Organism
-	
+		
 -->
 	
 	<div class="hero-section row">
@@ -1000,9 +974,12 @@ ob_start();
 			
 		}
 		
-	?>
-	
-	<?php if(get_field('heroes')): while(has_sub_field('heroes')): ?>
+		
+		$hero->index = 0;
+		
+		
+		
+		if(get_field('heroes')): while(has_sub_field('heroes')): ?>
 		
 			<?php
 				
@@ -1018,11 +995,6 @@ ob_start();
 				$image_attachment = wp_get_attachment_image_src($hero->attachment_id, '720');
 				
 				$hero->src = $image_attachment[0];
-				
-				$hero->logo = "";
-				
-				//if() $hero->logo = 
-				
 				
 				$hero->link = get_sub_field('link');
 				

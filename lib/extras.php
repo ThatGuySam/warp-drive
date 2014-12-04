@@ -12,9 +12,9 @@ include get_theme_root().'/'.get_template().'/inc/snippets.php';
 
 include get_theme_root().'/'.get_template().'/inc/filters.php';
 
-include get_theme_root().'/'.get_template().'/inc/boxes.php';
-
 include get_theme_root().'/'.get_template().'/inc/heroes.php';
+
+include get_theme_root().'/'.get_template().'/inc/boxes.php';
 
 //include get_theme_root().'/'.get_template().'/inc/sms.php';
 

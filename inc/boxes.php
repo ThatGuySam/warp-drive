@@ -129,6 +129,8 @@ function boxesInstagram($user_id) {
 
 function boxesVimeo($boxes) {
 	
+	global $hero;
+	
 	global $post;
 
 	$videos = $output = new stdClass();
