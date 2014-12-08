@@ -20,6 +20,7 @@ module.exports = function(grunt) {
 //    'assets/vendor/bootstrap/js/affix.js',
     'assets/vendor/slick.js/slick/slick.min.js',
     'assets/vendor/selection-sharer/dist/selection-sharer.js',
+    'assets/vendor/masonry/dist/masonry.pkgd.min.js',
     'assets/js/plugins/*.js',
     'assets/js/_*.js',
     '../../plugins/js_composer/assets/js/js_composer_front.js'

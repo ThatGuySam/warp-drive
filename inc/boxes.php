@@ -139,8 +139,6 @@ function boxesVimeo($boxes) {
 	
 	$json_url = 'http://vimeo.com/api/v2'.$boxes->source.'/videos.json';
 	
-	//$json = json_decode( getJson($json_url) );
-	
 	$json = json_decode( file_get_contents($json_url) );
 	
 	$i=0;
@@ -177,7 +175,7 @@ function boxesVimeo($boxes) {
 		
 		$title = $video->title;
 		
-		if( $boxes->page_slug != "watch" ) {
+		if( $boxes->post->post_name != "watch" ) {
 			$link = "/watch/?vid=".$video->id;
 		} else {
 			$link = "#".$video->id;
@@ -382,8 +380,6 @@ class Boxes {
 		        
 		        break;
 		    case "events":
-		    	
-		    	$boxes->purge = true;
 		    	
 		    	$boxes->id = $source;
 		    	

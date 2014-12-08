@@ -18288,7 +18288,7 @@ Menu
   left: 0;
   right: 0;
   background-color: #323232;
-  background-color: rgba(50, 50, 50, 0.98);
+  background-color: rgba(50, 50, 50, 0.9);
   zoom: 1;
   background-color: transparent\9;
   -webkit-transition: all 0.2s ease-out;
@@ -18475,7 +18475,7 @@ Hero
 .hero-section .hero-slide {
   height: 100%;
 }
-.foreground {
+.hero-foreground {
   position: relative;
   top: 0;
   bottom: 0;
@@ -18483,35 +18483,35 @@ Hero
   right: 0;
   height: 100%;
 }
-.hero-slick .foreground {
+.hero-slick .hero-foreground {
   max-width: 1140px;
   position: relative;
   width: 100%;
   height: 0;
   padding-bottom: 56.25%;
 }
-.hero-slick .foreground > iframe,
-.hero-slick .foreground > video,
-.hero-slick .foreground > img,
-.hero-slick .foreground > div {
+.hero-slick .hero-foreground > iframe,
+.hero-slick .hero-foreground > video,
+.hero-slick .hero-foreground > img,
+.hero-slick .hero-foreground > div {
   position: absolute;
   width: 100%;
   height: 100%;
 }
-.hero-slick .foreground > iframe,
-.hero-slick .foreground > video,
-.hero-slick .foreground > img,
-.hero-slick .foreground > div {
+.hero-slick .hero-foreground > iframe,
+.hero-slick .hero-foreground > video,
+.hero-slick .hero-foreground > img,
+.hero-slick .hero-foreground > div {
   position: absolute;
   width: 100%;
   height: 100%;
 }
-.foreground .container {
+.hero-foreground .container {
   padding: 10% 0;
   text-align: center;
   height: 100%;
 }
-.foreground .container:before {
+.hero-foreground .container:before {
   content: '';
   display: inline-block;
   height: 100%;

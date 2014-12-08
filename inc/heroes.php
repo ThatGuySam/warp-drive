@@ -194,9 +194,9 @@ class Watch {
 			$parameters->autoplay = 1;
 		}
 		
-		$video->guts_id = "955350";
+		$guts_id = "955350";
 		
-		if( !isset($_GET['vid']) || $video->user_id != $video->guts_id ) {
+		if( !isset($_GET['vid']) || $video->user_id != $guts_id) {
 			$video = getLatestVideo();
 		}
 		
@@ -224,7 +224,7 @@ class Watch {
 			
 			<div class="hero-background">
 				<div class="ir frame-container">
-					<iframe id="frame" src="//player.vimeo.com/video/<?php echo $video->id; ?>?<?php echo $video->query; ?>" data-gc-id="<?php echo $video->guts_id; ?>" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen ></iframe>
+					<iframe id="frame" src="//player.vimeo.com/video/<?php echo $video->id; ?>?<?php echo $video->query; ?>" data-gc-id="<?php echo $guts_id; ?>" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen ></iframe>
 				</div>
 			</div>
 			
@@ -285,10 +285,13 @@ class Watch {
 				    var lastTimeMouseMoved = "";
 				    var mouseTimeout = "";
 				    var vimeoPlaying = 0;
+				    
+				    
+				    $("html").addClass("vimeo-paused")
 				
 				    // When the player is ready, add listeners for pause, finish, and playProgress
 				    player.addEvent('ready', function() {
-				        console.log('ready');
+				        console.log('vimeo api ready');
 				        
 				        player.addEvent('pause', onPause);
 				        player.addEvent('play', onPlay);
@@ -310,7 +313,6 @@ class Watch {
 				    $("html").addClass("watch-page");
 					
 					$foreground.click(function(){
-						
 						if( vimeoPlaying ){
 							player.api("pause");
 						} else {
@@ -342,7 +344,7 @@ class Watch {
 						},2000);
 					});
 					
-					window.uid = "<?php echo $video->guts_id; ?>";
+					window.uid = "<?php echo $guts_id; ?>";
 				
 					function getParameterByName(name) {
 					  name = name.replace(/[\[]/, "\\\[").replace(/[\]]/, "\\\]");
@@ -358,15 +360,6 @@ class Watch {
 					function loadVideo(id) {
 						
 				    	$("#frame").attr('src', 'http://player.vimeo.com/video/' + id + '?byline=0&portrait=0&badge=0&color=a20000&autoplay=1' );
-				    	//window.videoTitle = title;
-				    	//window.vid = id;
-			
-			
-/*
-						$('#toolbox').removeClass().addClass('fadeInRight animated').one('webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend', function(){
-							//$(this).removeClass();
-						});
-*/
 						
 						gc.scrollTo( $("#hero").offset().top );
 					}
@@ -389,7 +382,6 @@ class Watch {
 						
 						$.getJSON('http://vimeo.com/api/v2/video/'+vid+'.json', {format: 'json'}, function(data) {
 						    window.uid = data[0].user_id;
-						    //console.log(window.uid);
 						})
 						.done(function() {
 							if( window.uid == gcID){
