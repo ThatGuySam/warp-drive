@@ -18,7 +18,7 @@ function heroOrganism($hero) {
 					<img <?php echo $hero->srcType; ?>="<?php echo $hero->src; ?>" alt="<?php echo $hero->text; ?>">
 				</div>
 				
-				<div class="foreground animated fadeIn animated-3s animated-delay-1s" style="<?php //BG Color Overlay
+				<div class="hero-foreground animated fadeIn animated-3s animated-delay-1s" style="<?php //BG Color Overlay
 					if( get_field('page_color') ): 
 						?>background: <?php echo get_field('page_color'); ?>; <?php //#000000
 						?>background: rgba(<?php echo hex2rgb( get_field('page_color') ); ?>,0.85); <?php //rgba(0,0,0,0.8)
@@ -49,7 +49,45 @@ function heroOrganism($hero) {
 					<img <?php echo $hero->srcType; ?>="<?php echo $hero->src; ?>" alt="<?php echo $hero->text; ?>">
 				</div>
 				
-				<div class="foreground animated fadeIn animated-3s animated-delay-1s" style="<?php //BG Color Overlay
+				<div class="hero-foreground animated fadeIn animated-3s animated-delay-1s" style="<?php //BG Color Overlay
+					if( get_field('page_color') ): 
+						?>background: <?php echo get_field('page_color'); ?>; <?php //#000000
+						?>background: rgba(<?php echo hex2rgb( get_field('page_color') ); ?>,0.85); <?php //rgba(0,0,0,0.8)
+					endif; ?>">
+				
+					<div class="container">
+						<div class="page-header">
+							<h1>
+								<?php echo parse_title( $hero->text ); ?>
+							</h1>
+							
+							<div class="hero-content">
+								<?php echo get_the_content(); ?>
+							</div>
+						</div>
+						
+					</div>
+					
+				</div>
+				
+			</div>
+			
+			<?php $hero->output = ob_get_clean();
+			
+
+			
+		break;
+		case "ministry":
+		
+			ob_start(); ?>
+			
+			<div class="hero-slide" >
+				
+				<div class="hero-background">
+					<img <?php echo $hero->srcType; ?>="<?php echo $hero->src; ?>" alt="<?php echo $hero->text; ?>">
+				</div>
+				
+				<div class="hero-foreground animated fadeIn animated-3s animated-delay-1s" style="<?php //BG Color Overlay
 					if( get_field('page_color') ): 
 						?>background: <?php echo get_field('page_color'); ?>; <?php //#000000
 						?>background: rgba(<?php echo hex2rgb( get_field('page_color') ); ?>,0.85); <?php //rgba(0,0,0,0.8)
@@ -166,7 +204,7 @@ class Watch {
 		
 		ob_start(); ?>
 			
-			<div class="foreground animated fadeIn animated-3s animated-delay-1s" style="<?php //BG Color Overlay
+			<div class="hero-foreground animated fadeIn animated-3s animated-delay-1s" style="<?php //BG Color Overlay
 				if( get_field('page_color') ): 
 					?>background: <?php echo get_field('page_color'); ?>; <?php //#000000
 					?>background: rgba(<?php echo hex2rgb( get_field('page_color') ); ?>,0.85); <?php //rgba(0,0,0,0.8)
@@ -242,7 +280,7 @@ class Watch {
 				    var player = $f(iframe);
 				    var status = $('.status');
 				    var gcID = $('#frame').data("gc-id");
-				    var $foreground = $(".hero-shortcode .foreground");
+				    var $foreground = $(".hero-shortcode .hero-foreground");
 				    var $menu = $("header.banner");
 				    var lastTimeMouseMoved = "";
 				    var mouseTimeout = "";
@@ -377,7 +415,7 @@ class Watch {
 					z-index: 0;
 				}
 				
-				.hero-shortcode .foreground {
+				.hero-shortcode .hero-foreground {
 					position: absolute;
 					z-index: 1;
 				}
@@ -617,7 +655,7 @@ class Bars {
 					z-index: 0;
 				}
 				
-				.hero-shortcode .foreground {
+				.hero-shortcode .hero-foreground {
 					position: absolute;
 					z-index: 1;
 				}
@@ -783,7 +821,7 @@ class Content_Hero {
 					<img src="<?php echo $hero->src; ?>" alt="<?php the_title(); ?>">
 				</div>
 				
-				<div class="foreground animated fadeIn animated-3s animated-delay-1s" style="<?php //BG Color Overlay
+				<div class="hero-foreground animated fadeIn animated-3s animated-delay-1s" style="<?php //BG Color Overlay
 					if( get_field('page_color') ): 
 						?>background: <?php echo get_field('page_color'); ?>; <?php //#000000
 						?>background: rgba(<?php echo hex2rgb( get_field('page_color') ); ?>,0.85); <?php //rgba(0,0,0,0.8)

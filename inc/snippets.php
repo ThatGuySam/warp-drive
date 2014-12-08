@@ -2,7 +2,9 @@
 
 function debug( $thing ) {
 	
-	if( $thing == null || $thing == false ) return;
+	if( !isset( $thing ) ) return "That's not a set value";
+	
+	if( $thing == null ) return "He's Null Jim";
 	
 	ob_start(); ?><pre><?php print_r($thing); ?></pre><?php $output = ob_get_clean();
 	
