@@ -148,26 +148,33 @@ function boxesVimeo($boxes) {
 		
 		$desc = explode('<br />', $video->description);
 		
+		//$details->strdate = strtotime( $desc[0] );
+		
 		$d = 0;
 		foreach( $desc as $val ) {
 			
 			//if is not first line and contains dash
-			
 			if( $d && strpos($val,'|') !== false ) {
 				
 				$vals = explode('|', $val);
 				
 				$dkey = strtolower( trim( $vals[0] ) );
 				
-				$dval = trim( $vals[1] ); 
+				$dval = trim( $vals[1] );
 				
-				$details->$dkey = $dval;
+				debug( $vals );
+				
+				if( empty( $dkey ) || empty( $dval ) ) continue;
+				
+				$details->{$dkey} = $dval;
 			}
 			
 			$d++;
 		}
 		
-		if( isset($details->date) ){
+		//debug( $details );
+		
+		if( !empty($details->date) ){
 			$date = date( "F jS" , strtotime( $details->date ) );
 		} else {
 			$date = date( "F jS" , strtotime( $video->upload_date ) );
