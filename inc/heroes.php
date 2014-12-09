@@ -359,7 +359,7 @@ class Watch {
 					
 					function loadVideo(id) {
 						
-				    	$("#frame").attr('src', 'http://player.vimeo.com/video/' + id + '?byline=0&portrait=0&badge=0&color=a20000&autoplay=1' );
+				    	$("#frame").attr('src', 'http://player.vimeo.com/video/' + id + '?byline=0&portrait=0&badge=0&color=d8d8d8&autoplay=1' );
 						
 						gc.scrollTo( $("#hero").offset().top );
 					}
