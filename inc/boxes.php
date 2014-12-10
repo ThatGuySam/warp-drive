@@ -162,8 +162,6 @@ function boxesVimeo($boxes) {
 				
 				$dval = trim( $vals[1] );
 				
-				debug( $vals );
-				
 				if( empty( $dkey ) || empty( $dval ) ) continue;
 				
 				$details->{$dkey} = $dval;
