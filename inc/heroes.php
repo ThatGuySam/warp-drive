@@ -516,7 +516,7 @@ class Bars {
 										
 					                <div class="center">
 					                	<a href="<?php the_permalink(); ?>" title="<?php the_title(); ?>">
-						                    <span><img src="<?php echo $logo; ?>"></span>
+						                    <span class="bar-logo"><img src="<?php echo $logo; ?>"></span>
 						                    <h2><?php the_title(); ?></h2>
 						                    <div class="hover-info">
 							                    <p></p>
@@ -728,7 +728,11 @@ class Bars {
 				
 				
 				.bar-bar .center img {
-					max-width: 120px;
+					max-height: 100px;
+				}
+				
+				.social-bar-item {
+					padding: 0.25em;
 				}
 				
 				.bar-bar .hover-info {
