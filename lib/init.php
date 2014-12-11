@@ -50,7 +50,7 @@ function roots_widgets_init() {
     'id'            => 'sidebar-footer',
     'before_widget' => '<section class="widget col-md-3 col-sm-6 %1$s %2$s">',
     'after_widget'  => '</section>',
-    'before_title'  => '<h3>',
+    'before_title'  => '<h3 class="spaced">',
     'after_title'   => '</h3>',
   ));
 }

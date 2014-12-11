@@ -52,45 +52,6 @@ function cacheHandler( $object, $function, $cache_name = false ) {
     return $output;
 }
 
-/*
-function getJson($url) {
-    // cache files are created like cache/abcdef123456...
-    $cacheFile = 'cache' . DIRECTORY_SEPARATOR . "json-" . md5($url);
-	
-	if( array_key_exists( 'purge' , $_GET ) ) unlink($cacheFile);
-	
-    if (file_exists($cacheFile)) {
-        $fh = fopen($cacheFile, 'r');
-        $cacheTime = trim(fgets($fh));
-        
-        //$cacheTime = filemtime($cacheFile);//We'll meet again
-
-        // if data was cached recently, return cached data
-        if ($cacheTime > strtotime('-60 minutes')) {
-        	//echo $fh;
-        	//echo file_get_contents($cacheFile);
-            //return fread($fh);
-            $json_cached = file_get_contents($cacheFile);
-			
-            return preg_replace('/^.+\n/', '', $json_cached);
-        }
-
-        // else delete cache file
-        fclose($fh);
-        unlink($cacheFile);
-    }
-
-    $json = file_get_contents($url);
-	
-    $fh = fopen($cacheFile, 'w');
-    fwrite($fh, time() . "\n");
-    fwrite($fh, $json);
-    fclose($fh);
-
-    return $json;
-}
-*/
-
 function boxesInstagram($user_id) {
 
 	$boxes = array();
@@ -122,8 +83,6 @@ function boxesInstagram($user_id) {
 	}
 	
 	return $boxes;
-	
-	
 }
 
 
@@ -331,6 +290,7 @@ class Boxes {
 		self::$add_script = true;
 		
 		extract( shortcode_atts( array(
+			'header'	=> false,
 			'type'		=> false,
 			'source'	=> false,
 			'class'		=> false,
@@ -417,8 +377,15 @@ class Boxes {
 			}
 			//debug( $boxes->post );
 		?>
+			
 			<div id="boxes-<?php echo $type; ?>-<?php echo $boxes->id; ?>" class="box-boxes boxes-<?php echo $type; ?> <?php echo $class; ?>">
-
+			
+			<?php if( !empty( $boxes->header ) ): ?>
+				<div class="boxes-header">
+					<h3 class="spaced"><?php echo $boxes->header; ?></h3>
+					<hr>
+				</div>
+			<?php endif; ?>
 
 			<div class="frame" data-show="<?php echo $boxes->show; ?>">
 				<ul class="easecubic">
