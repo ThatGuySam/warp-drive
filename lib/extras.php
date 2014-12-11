@@ -231,13 +231,18 @@ class Countdown {
 				
 				$countdownSecs = strtotime( $chop_json->response->item->eventStartTime ) - time();//D n/j ga
 				
+				$until = strtotime( $chop_json->response->item->eventStartTime );
+				
+				
+				$until_js = date( 'Y/m/d H:i:00', $until );
+				
 				//debug( $chop_json->response->item );
 			}
 
 		
 		ob_start();
 		?>
-			<span class="countdown" data-until="2020/10/10 12:34:56" ></span>
+			<span class="countdown" data-until="<?php echo $until_js; ?>" ></span>
 		<?php
 		$content = ob_get_clean();
 			
@@ -276,6 +281,10 @@ class Countdown {
 				
 				.countdown a {
 					text-decoration: none;
+				}
+				
+				.countdown .live {
+					text-shadow: 0 0 3px #ff0000;
 				}
 				
 			</style>

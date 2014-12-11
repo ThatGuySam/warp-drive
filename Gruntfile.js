@@ -1,4 +1,4 @@
-'use strict';
+"use strict";
 module.exports = function(grunt) {
   // Load all tasks
   require('load-grunt-tasks')(grunt);
@@ -18,9 +18,12 @@ module.exports = function(grunt) {
 //    'assets/vendor/bootstrap/js/scrollspy.js',
 //    'assets/vendor/bootstrap/js/tab.js',
 //    'assets/vendor/bootstrap/js/affix.js',
-    'assets/vendor/slick.js/slick/slick.min.js',
+    'assets/vendor/slick.js/slick/slick.js',
     'assets/vendor/selection-sharer/dist/selection-sharer.js',
-    'assets/vendor/masonry/dist/masonry.pkgd.min.js',
+    'assets/vendor/jquery.countdown/dist/jquery.countdown.js',
+    'assets/vendor/masonry/dist/masonry.pkgd.js',
+    'assets/vendor/bootstrap-material-design/dist/js/material.js',
+    'assets/vendor/bootstrap-material-design/dist/js/ripples.js',
     'assets/js/plugins/*.js',
     'assets/js/_*.js',
     '../../plugins/js_composer/assets/js/js_composer_front.js'
@@ -89,12 +92,12 @@ module.exports = function(grunt) {
     },
     concat: {
       options: {
-        separator: ';',
+        separator: ';'
       },
       dist: {
         src: [jsFileList],
-        dest: 'assets/js/scripts.js',
-      },
+        dest: 'assets/js/scripts.js'
+      }
     },
     uglify: {
       dist: {
@@ -144,7 +147,7 @@ module.exports = function(grunt) {
           ignore       : [/expanded/,/js/,/wp-/,/align/,/admin-bar/],
           stylesheets  : ['assets/css/main.min.css'],
           ignoreSheets : [/fonts.googleapis/],
-          urls         : [], //Overwritten in load_sitemap_and_uncss task
+          urls         : [] //Overwritten in load_sitemap_and_uncss task
         },
         files: {
           'assets/css/main.min.css': ['**/*.php']

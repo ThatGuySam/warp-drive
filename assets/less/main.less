@@ -47,6 +47,8 @@ Variables
 */
 
 
+// Color
+
 @guts-red: #a20000;
 
 @primary-light: #d8d8d8;
@@ -62,12 +64,20 @@ Variables
 
 //@tertiary-dark: #4d4d4d
 
+
+// Easing
+
+@primary-ease: cubic-bezier(0.230, 1.000, 0.320, 1.000);//easeOutQuint
+
+
+
+// Type
+
 @primary-font: "Lato","Helvetica Neue",Helvetica,Arial,sans-serif;
 
 @body-font: "Open Sans","Helvetica Neue",Helvetica,Arial,sans-serif;
 
-
-@primary-ease: cubic-bezier(0.230, 1.000, 0.320, 1.000);//easeOutQuint
+@letter-spacing: 0.1em;
 
 
 
@@ -155,6 +165,12 @@ Mixins
     }
 }
 
+.spaced( @spacing: @letter-spacing ){
+	letter-spacing: @spacing;
+}
+
+
+
 
 /*
 
@@ -218,11 +234,6 @@ Typography
 */
 
 
-
-
-
-
-
 body, h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4 {
 	font-family: @primary-font;
 	font-weight: 300;
@@ -249,6 +260,10 @@ Interface
 
 .input-group .input-group-btn .btn {
 	border-radius: 0;
+}
+
+hr {
+	border-top: 1px solid @primary-dark;
 }
 
 
@@ -495,7 +510,7 @@ Menu
 		> a {	
 			padding: 20px 0;
 			font-size: initial;
-			letter-spacing: 0.05em;
+			letter-spacing: 0.12em;
 		}
 	}
 	
@@ -678,6 +693,7 @@ Hero
 	
 	.hero-slick & {
 		max-width: 1140px;
+		margin: 0 auto;
     	.ir();
     }
 	
@@ -877,6 +893,7 @@ Widgets
 	
 	> h3 {
 		text-transform: uppercase;
+		
 	}
 	
 }
@@ -889,6 +906,16 @@ Widgets
 Organisms
 
 */
+
+.boxes-header {
+	text-align: center;
+	text-transform: uppercase;
+	
+	hr {
+		margin-bottom: 0.5em;
+	}
+	
+}
 
 .frame {
 	
@@ -1331,6 +1358,10 @@ Cheats
 
 .ease {
 	.transition();
+}
+
+.spaced {
+	.spaced();
 }
 
 .ease-opacity {

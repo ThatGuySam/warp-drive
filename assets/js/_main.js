@@ -29,7 +29,7 @@ var Roots = {
 		if ( undefined !== window.jQuery ) { jQuery(function ($) { 'use strict';
 			
 			/* easeOutQuint */
-			jQuery.extend( jQuery.easing, {
+			$.extend( jQuery.easing, {
 				easeOutQuint: function (x, t, b, c, d) {
 					return c*((t=t/d-1)*t*t*t*t + 1) + b;
 				}
@@ -62,7 +62,6 @@ var Roots = {
 				});
 				
 				return false;
-				
 			};
 			
 			
@@ -72,7 +71,6 @@ var Roots = {
 			
 			$(".search-toggle").click( function(){
 				$(".expanded-nav, html").toggleClass("expanded-nav-open");
-				
 				return false;
 			});
 			
@@ -133,6 +131,14 @@ var Roots = {
 			}
 			
 			
+			
+			/*
+			
+			Boxes
+			
+			*/
+			
+			
 			var $boxes = $('.hero-slick .hero-section');
 				
 			$boxes.slick({
@@ -145,12 +151,6 @@ var Roots = {
 			});
 			
 			
-			
-			/*
-			
-			Boxes
-			
-			*/
 			
 			function boxize($boxesContainer){
 					
@@ -228,6 +228,49 @@ var Roots = {
 			});
 			
 			
+			$('.countdown').each( function(){
+				
+				var until = $(this).data("until");
+				
+				$(this).countdown( until )
+					.on('update.countdown', function(event) {
+						
+						var timeUnits = [
+							['d','day'],
+							['H','hour'],
+							['M','minute'],
+						];
+						
+						var count_text = 'Live in ';
+						
+						for (var i=0; i < timeUnits.length; ++i) {//Add timeUnits if they aren't 0
+							
+							var unit = timeUnits[i][1];
+							
+							var u = timeUnits[i][0];
+							
+							if( event.offset[(unit+"s")] ){
+								count_text += '<span>%-'+u+'</span> <small>'+unit+'%!'+u+'</small> ';
+							}
+								
+						}
+						
+						
+						count_text += '<span>%-S</span> <small>second%!S</small> ';//Add Seconds
+						
+						var $this = $(this).html(event.strftime( count_text ));
+					})
+					.on('finish.countdown', function(event) {
+						
+						console.log( "Finished" );
+						
+						var $this = $(this).html( '<span class="live">Live Now</span>' );
+						
+					});
+				
+			});
+			
+			
 			
 			/*
 				
@@ -293,26 +336,7 @@ var Roots = {
 							}, 1000);
 						});
 					
-					
-					//send();
-					//return false;
-					//event.preventDefault();
 				});
-/*
-				$.mask.definitions.e = "[^w+@[a-zA-Z_]+?.[a-zA-Z]{2,3}$]";
-				
-				$(".switch-input-box")
-					.mask("e",{
-					placeholder:" ",
-					completed:function(){
-						$(".switch-input")
-					  		.addClass("valid-number");
-					  		status = "send";
-					}
-				});//.mask for .switch-input-box
-*/
-				
-				
 				
 				$( ".switch-input-box" ).keyup(function() {
 					
@@ -330,7 +354,6 @@ var Roots = {
 					
 				});
 				
-			
 			});//$(".switch-input").on( "click") 
 			
 			
@@ -351,6 +374,8 @@ var Roots = {
 				
 			});
 			
+			$('.entry-content').selectionSharer();
+			
 			
 			
 			
@@ -358,13 +383,13 @@ var Roots = {
 			
 			sizeHero();
 			
+			$.material.init();
+			
 			//sizeFirstBox();
 			
 			if( !Modernizr.cssanimations ){
 				$("html").addClass("no-cssanimations");
 			}
-			
-			$('.entry-content').selectionSharer();
 			
 			
 /*

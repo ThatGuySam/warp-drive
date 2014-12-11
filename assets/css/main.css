@@ -18100,6 +18100,9 @@ Interface
 .input-group .input-group-btn .btn {
   border-radius: 0;
 }
+hr {
+  border-top: 1px solid #323232;
+}
 .btn {
   border-radius: 0;
 }
@@ -18320,7 +18323,7 @@ Menu
 .navbar .navbar-nav#menu-primary-navigation > li > a {
   padding: 20px 0;
   font-size: initial;
-  letter-spacing: 0.05em;
+  letter-spacing: 0.12em;
 }
 .navbar .navbar-nav > .active > a,
 .navbar .navbar-nav > .active > a:hover,
@@ -18485,6 +18488,7 @@ Hero
 }
 .hero-slick .hero-foreground {
   max-width: 1140px;
+  margin: 0 auto;
   position: relative;
   width: 100%;
   height: 0;
@@ -18673,6 +18677,13 @@ Widgets
 Organisms
 
 */
+.boxes-header {
+  text-align: center;
+  text-transform: uppercase;
+}
+.boxes-header hr {
+  margin-bottom: 0.5em;
+}
 .frame {
   /* Boxes */
   /* Controls */
@@ -18913,9 +18924,12 @@ Organisms
 .thin-promos > .wpb_column .wpb_text_column {
   position: absolute;
   top: 30%;
-  left: 10%;
-  text-transform: uppercase;
+  left: 5%;
   color: #fff;
+}
+.thin-promos > .wpb_column .wpb_text_column h2 {
+  text-transform: uppercase;
+  margin-bottom: 0;
   pointer-events: none;
 }
 .thin-promos .wpb_content_element {
@@ -19106,6 +19120,9 @@ Cheats
   -webkit-transition-timing-function: cubic-bezier(0.23, 1, 0.32, 1);
   -o-transition-timing-function: cubic-bezier(0.23, 1, 0.32, 1);
   transition-timing-function: cubic-bezier(0.23, 1, 0.32, 1);
+}
+.spaced {
+  letter-spacing: 0.1em;
 }
 .ease-opacity {
   -webkit-transition: opacity;
