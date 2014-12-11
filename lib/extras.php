@@ -221,7 +221,7 @@ class Countdown {
 			'class' => false,
 		), $atts, 'countdown' ) );
 		
-			include("static/countdown/local.php");
+			//include("static/countdown/local.php");
 			
 			$chop_json = file_get_contents("http://live.gutschurch.com/api/v1/events/current");
 			
@@ -237,9 +237,7 @@ class Countdown {
 		
 		ob_start();
 		?>
-			<div id="liveCountdown" class="countdown" data-seconds="<?php echo $countdownSecs; ?>" >
-				
-			</div>
+			<span class="countdown" data-until="2020/10/10 12:34:56" ></span>
 		<?php
 		$content = ob_get_clean();
 			
@@ -258,31 +256,14 @@ class Countdown {
 			return;
 			
 			//JS
-			wp_print_scripts('inheritance');
-			wp_print_scripts('countdown');
+			//wp_print_scripts('inheritance');
+			//wp_print_scripts('countdown');
 	}
 	
 	static function internal_script() {
 		if ( ! self::$add_script )
 			return;
 		?>
-			
-			<script type="text/javascript">
-				if ( undefined !== window.jQuery ) { jQuery(function ($) { 'use strict';
-					jQuery.noConflict();
-					
-					var eventEnd = $("#liveCountdown").data("seconds");
-				
-					$("#liveCountdown").countdown({
-						format: 'HMS',
-						until: +eventEnd,
-						alwaysExpire: true,
-						layout: '<h2><a href="/live" >Live&nbsp;&nbsp;Online&nbsp;&nbsp;in: {hn} <small>{hl}</small> {mn} <small>{ml}</small> {snn} <small>{sl}</small></a></h2>',
-						expiryText: '<h2><a href="/live" style="color: red;">Watch Now | live.gutschurch.com</a></h2>'
-					});
-
-				}); }
-			</script>
 			
 			<style>
 				
