@@ -445,6 +445,11 @@ class Boxes {
 								
 							}
 							
+							//Hash Links
+							if( $boxes->links_type == "hash" ){
+								$box->link = "#".$box->id;
+							}
+							
 							$box->srcType = 'src="'.get_template_directory_uri().'/assets/img/blank.gif" data-lazy';
 							//if( $key < $boxes->show ) $box->srcType = "src";//if is showing don't lazyload
 						?>
