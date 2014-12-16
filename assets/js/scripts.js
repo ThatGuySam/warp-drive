@@ -5853,27 +5853,27 @@ var Roots = {
 					.on('update.countdown', function(event) {
 						
 						var timeUnits = [
-							['d','day'],
-							['H','hour'],
-							['M','minute'],
+							['d','day','day'],
+							['H','hour','hr'],
+							['M','minute','min'],
 						];
 						
 						var count_text = 'Live in ';
 						
 						for (var i=0; i < timeUnits.length; ++i) {//Add timeUnits if they aren't 0
 							
-							var unit = timeUnits[i][1];
-							
-							var u = timeUnits[i][0];
+							var shorthand =	timeUnits[i][2];
+							var unit =		timeUnits[i][1];
+							var u =			timeUnits[i][0];
 							
 							if( event.offset[(unit+"s")] ){
-								count_text += '<span>%-'+u+'</span> <small>'+unit+'%!'+u+'</small> ';
+								count_text += '<span>%-'+u+'</span> <small>'+shorthand+'%!'+u+'</small> ';
 							}
 								
 						}
 						
 						
-						count_text += '<span>%-S</span> <small>second%!S</small> ';//Add Seconds
+						count_text += '<span>%-S</span> <small>sec%!S</small> ';//Add Seconds
 						
 						var $this = $(this).html(event.strftime( count_text ));
 					})

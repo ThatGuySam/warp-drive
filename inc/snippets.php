@@ -139,10 +139,84 @@ function custom_options() {
 		if( $option['option'] == "" ) continue;
 		
 		$output->{$option['option']} = $option['value'];
-
 	}
 	
 	return $output;
+}
+
+
+function countdownEvents( $object=false ) {
+	
+	$object = new stdClass();//Argument parsing can go here
+	
+	$events = array();
+	
+	$until = false;
+	
+	$chop_json = @file_get_contents("http://live.gutschurch.com/api/v1/events/current");//Get contents and supress warnings to allow for fallback
+	
+	if( $chop_json ) {
+		
+		$chop_json = json_decode( $chop_json );
+		
+		$countdownSecs = strtotime( $chop_json->response->item->eventStartTime ) - time();//D n/j ga
+		
+		$until = strtotime( $chop_json->response->item->eventStartTime );
+		
+		//$until_js = date( 'Y/m/d H:i:00', $until );
+		
+		//debug( $chop_json->response->item );
+		
+	} else {//Fallback to default service times
+		
+		$eventTime = 4500;
+	
+		$firstTue = strtotime('first Tuesday of this month 10am');
+		
+		$schedule = array(
+		    'this Sunday 9am',
+		    'this Sunday 11am',
+		//	'this Sunday 6pm',
+		    'this Wednesday 7pm'
+		    );
+		    
+/*
+		if(strtotime("now") > strtotime("-3 days", $firstTue)  && strtotime("now") < strtotime("+3 days", $firstTue) ) {
+		
+			$schedule = array(
+		    	'this Sunday 9am',
+			    'this Sunday 11am',
+		//	    'this Sunday 6pm',
+			    'this Tuesday 10am',
+			    'this Wednesday 7pm'
+		    	);
+		    	
+		}
+*/
+		
+		
+		$current_time = strtotime('now');
+		foreach ($schedule as &$val) {
+		    $val = strtotime($val);
+		    // 5400 = 1.5hrs | Time until ends of next service
+		    //$val = $val + $eventTime;
+		    // fix schedule to next week if time resolved to the past
+		    if ($val - $current_time < 0) $val += 604800;
+		    }
+		sort($schedule);
+		//$until = $schedule[0] - $current_time;
+		
+		$until = $schedule[0];
+		
+	}
+	
+	$event = new stdClass();
+	
+	$event->start_time = $until;
+	
+	$events[0] = $event;
+	
+	return $events;
 	
 }
 

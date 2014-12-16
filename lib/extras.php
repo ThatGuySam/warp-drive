@@ -220,25 +220,20 @@ class Countdown {
 		extract( shortcode_atts( array(
 			'class' => false,
 		), $atts, 'countdown' ) );
-		
-			//include("static/countdown/local.php");
 			
-			$chop_json = file_get_contents("http://live.gutschurch.com/api/v1/events/current");
+			$countdown = new stdClass();
+			$countdown->cache = new stdClass();
 			
-			if( $chop_json ) {
-				
-				$chop_json = json_decode( $chop_json );
-				
-				$countdownSecs = strtotime( $chop_json->response->item->eventStartTime ) - time();//D n/j ga
-				
-				$until = strtotime( $chop_json->response->item->eventStartTime );
-				
-				
-				$until_js = date( 'Y/m/d H:i:00', $until );
-				
-				//debug( $chop_json->response->item );
-			}
-
+			//Define countdown options
+			$countdown->cache->function_name =	"countdownEvents";
+			$countdown->cache->cache_time =		'-15 minutes';
+			$countdown->cache->cache_name =		"countdown";
+		    
+		    //Get any events
+		    $countdown->objects = cacheHandler( $countdown );
+		    
+		    //Parse next event date into js friendly date
+		    $until_js = date( 'Y/m/d H:i:00', $countdown->objects[0]->start_time );
 		
 		ob_start();
 		?>
@@ -252,8 +247,8 @@ class Countdown {
 	static function register_script() {
 		
 		//JS
-		wp_register_script('inheritance', '//gutslibraries.s3.amazonaws.com/inheritance/1.0.0/jquery.plugin.min.js', array('jquery'), '1.0.0', true);
-		wp_register_script('countdown', '//cdnjs.cloudflare.com/ajax/libs/jquery-countdown/2.0.0/jquery.countdown.min.js', array('jquery'), '2.0.0', true);
+		//wp_register_script('inheritance', '//gutslibraries.s3.amazonaws.com/inheritance/1.0.0/jquery.plugin.min.js', array('jquery'), '1.0.0', true);
+		//wp_register_script('countdown', '//cdnjs.cloudflare.com/ajax/libs/jquery-countdown/2.0.0/jquery.countdown.min.js', array('jquery'), '2.0.0', true);
 	}
 
 	static function print_script() {

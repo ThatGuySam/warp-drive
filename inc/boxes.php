@@ -5,13 +5,16 @@ function date_sort_objects($a, $b) {
 	return strcmp($a->date_unix, $b->date_unix); //only doing string comparison
 }
 
-function cacheHandler( $object, $function, $cache_name = false ) {
+function cacheHandler( $object ) {
     // cache files are created like cache/abcdef123456...
     
-    //echo get_home_path();
+    //if no cache_time is set: 1 hour
+    if( empty( $object->cache->cache_time ) ) $object->cache->cache_time = '-60 minutes';
     
-    $filename = $function . "-" . preg_replace("/[^\da-z]/i", '', $object->id ).".json";
-    if( $cache_name ) $filename = $cache_name."-".$filename;
+    $function = $object->cache->function_name;
+    
+    $filename = $object->cache->function_name . "-" . preg_replace("/[^\da-z]/i", '', $object->id ).".json";
+    if( $object->cache->cache_name ) $filename = $object->cache->cache_name."-".$filename;
     $cacheFile = get_home_path().'cache' . DIRECTORY_SEPARATOR . $filename;
 	
 	if( array_key_exists( 'purge' , $_GET ) || $object->purge == true ) unlink($cacheFile);
@@ -23,8 +26,8 @@ function cacheHandler( $object, $function, $cache_name = false ) {
         $cacheTime = filemtime($cacheFile);
 
         // if data was cached recently, return cached data
-        if ($cacheTime > strtotime('-60 minutes')) {
-            $object_cached = file_get_contents($cacheFile);
+        if ($cacheTime > strtotime( $object->cache->cache_time )) {
+            $object_cached = @file_get_contents($cacheFile);
             
             $output = json_decode( $object_cached );
             
@@ -92,13 +95,15 @@ function boxesVimeo($boxes) {
 	
 	global $post;
 
-	$videos = $output = new stdClass();
+	$videos =
+	$output =
+		new stdClass();
 	
 	//$vid_url = parse_url($boxes->source);
 	
 	$json_url = 'http://vimeo.com/api/v2'.$boxes->source.'/videos.json';
 	
-	$json = json_decode( file_get_contents($json_url) );
+	$json = json_decode( @file_get_contents($json_url) );
 	
 	$i=0;
 	foreach ($json as $video) {
@@ -139,11 +144,8 @@ function boxesVimeo($boxes) {
 		
 		$title = $video->title;
 		
-		if( $boxes->post->post_name != "watch" ) {
-			$link = "/watch/?vid=".$video->id;
-		} else {
-			$link = "#".$video->id;
-		}
+		$link = $boxes->site_url."/watch/?vid=".$video->id;
+		
 		
 		$v_box = new stdClass();
 		
@@ -168,20 +170,49 @@ function boxesVimeo($boxes) {
 	$output = $videos;
 	
 	return $output;
-	
 }
+
+
+function boxVimeo($object) {
+	
+	global $hero;
+	
+	global $post;
+
+	$videos = $output = new stdClass();
+	
+	$json_url = 'http://vimeo.com/api/v2/video/'.$object->id.'.json';
+	
+	$video = json_decode( @file_get_contents($json_url) );
+	
+	$v_box = new stdClass();
+
+	$videos->video_0 = $video;
+	
+	$output = $videos;
+	
+	return $output;
+}
+
 
 function getLatestVideo($album_id="2238693") {
 	
-	$output = $boxes = new stdClass();
+	$output =
+	$boxes = 
+		new stdClass();
+		
+	$boxes->cache = new stdClass();
 	
 	$boxes->source = "/album/".$album_id;
 	
 	$boxes->amount = 1;
 	
 	$boxes->id = preg_replace('/[^\da-z]/i', '', $boxes->source );
+	
+	$boxes->cache->function_name = "boxesVimeo";
+	$boxes->cache->cache_name = "firstVideo";
     
-    $boxes->objects = cacheHandler($boxes, "boxesVimeo", "firstVideo");
+    $boxes->objects = cacheHandler( $boxes );
     
     $output = $boxes->objects->video_0;
 	
@@ -299,10 +330,14 @@ class Boxes {
 		), $atts, 'boxes' ) );
 		
 		$boxes = new stdClass();
+			
+		$boxes->cache = new stdClass();
 		
 		$boxes->objects = false;
 		
 		$boxes->site_url = site_url();
+		
+		$boxes->links_type = "normal";
 		
 		global $post;
 		
@@ -339,7 +374,14 @@ class Boxes {
 		        
 		        $boxes->id = preg_replace('/[^\da-z]/i', '', $vid_url['path'] );
 		        
-		        $boxes->objects = cacheHandler($boxes, "boxesVimeo", "vimeo");
+		        $boxes->cache->function_name = "boxesVimeo";
+		        $boxes->cache->cache_name = "vimeo";
+		        
+		        $boxes->objects = cacheHandler( $boxes );
+		        
+		        if( $boxes->post->post_name == "watch" ) {
+					$boxes->links_type = "hash";
+				}
 		        
 		        $target = "_self";
 		        
@@ -348,9 +390,10 @@ class Boxes {
 		    	
 		    	$boxes->id = $source;
 		    	
-		    	//$boxes->source = $source;
+		    	$boxes->cache->function_name = "boxesEvents";
+		        $boxes->cache->cache_name = "events";
 				
-				$boxes->objects = cacheHandler($boxes, "boxesEvents", "events");
+				$boxes->objects = cacheHandler( $boxes );
 				
 		        break;
 		    case "category":

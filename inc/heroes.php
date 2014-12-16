@@ -187,9 +187,15 @@ class Watch {
 		
 		if ( isset($_GET['vid']) ) {
 			
-			$decoded = json_decode( getJson('http://vimeo.com/api/v2/video/'.$_GET['vid'].'.json') );
+			$video->id = $_GET['vid'];
 			
-			$video = $decoded[0];
+			$videos = new stdClass();
+			
+			$videos = boxVimeo( $video );
+			
+			$video = (object) array_merge((array) $video, (array) $videos->video_0);
+			
+			//debug( $video );
 			
 			$parameters->autoplay = 1;
 		}
