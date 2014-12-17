@@ -18338,8 +18338,10 @@ Menu
   color: #323232;
   text-shadow: none;
 }
-.clean-hero header.navbar {
-  top: -100px;
+@media only screen and (min-width: 992px) {
+  .clean-hero header.navbar {
+    top: -100px;
+  }
 }
 .menu-item {
   text-align: center;
@@ -18564,6 +18566,12 @@ Hero
   -o-transition-timing-function: cubic-bezier(0.23, 1, 0.32, 1);
   transition-timing-function: cubic-bezier(0.23, 1, 0.32, 1);
 }
+@media (max-width: 992px) {
+  .hero-container.hero-media .hero-organism .hero-background img {
+    width: auto;
+    height: 100%;
+  }
+}
 .hero-container.hero-media .page-header {
   text-align: center;
   display: inline-block;
@@ -18574,6 +18582,12 @@ Hero
 .hero-container.hero-media .page-header h1 {
   font-size: 3em;
   font-weight: 700;
+}
+.hero-container.hero-program .page-header {
+  margin: 0;
+}
+.hero-container.hero-program .page-header h1 {
+  font-size: 2em;
 }
 .hero-container.hero-text {
   padding-top: 60px;
@@ -18649,6 +18663,7 @@ Hero
 }
 .page-header .hero-logo img {
   max-width: 150px;
+  max-height: 125px;
 }
 .hero-content {
   max-width: 600px;

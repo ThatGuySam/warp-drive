@@ -77,8 +77,10 @@ function heroOrganism($hero) {
 
 			
 		break;
-		case "ministry":
-		
+		case "program":
+			
+			//debug( $hero );
+			
 			ob_start(); ?>
 			
 			<div class="hero-slide" >
@@ -95,12 +97,15 @@ function heroOrganism($hero) {
 				
 					<div class="container">
 						<div class="page-header">
+							<div class="hero-logo">
+								<img src="<?php echo $hero->logo; ?>"> 
+							</div>
 							<h1>
 								<?php echo parse_title( $hero->text ); ?>
 							</h1>
 							
 							<div class="hero-content">
-								<?php echo get_the_content(); ?>
+								<?php the_excerpt(); ?>
 							</div>
 						</div>
 						
@@ -579,118 +584,80 @@ class Bars {
 			
 			<script type="text/javascript">
 				if ( undefined !== window.jQuery ) { jQuery(function ($) { 'use strict';
-						
-					  //$(".youth-programs").css("height", window.innerHeight+"px" );
   
-					  $(".youth-program").each( function( index ){
+					$(".youth-program").each( function( index ){
 					    
 					    var $this = $(this);
 					    
 					    $this.hover( function(){ //mouseover
 							event.stopPropagation();
 							
+							//Make wider
 							$this
 								.addClass("col-md-4 program-hovering")
 								.removeClass("col-md-2");
 							
-								$(".youth-programs").addClass("hovering");
-							}, 
-							function(){ //mouseout
+							$(".youth-programs").addClass("hovering");
+							
+							//On mouseout
+							}, function(){ 
 								
 								event.stopPropagation();
-							
+								
+								//Make normal width
 								$this
 									.addClass("col-md-2")
-									.removeClass("col-md-4 program-hovering")
-									.siblings()
-									.addClass("")
-									.removeClass("");
+									.removeClass("col-md-4 program-hovering");
 									
-									$(".youth-programs").removeClass("hovering");
-								}
+								$(".youth-programs").removeClass("hovering");
+							}
 						);//$this.hover
 					    
-					  });
+					});
 					  
-						function sizeBars() {
+					function sizeBars() {
+					
+						var $media = $(".bar-bar");
 						
-							var $media = $(".bar-bar");
+						var wh = window.innerHeight;
+						var ww = window.innerWidth;
 							
-							var wh = window.innerHeight;
-							var ww = window.innerWidth;
+						$media.each(function() {
 							
+							if( ww > 992 ){
+								$(this).css("height", wh+"px");
+							} else {
+								$(this).css("height", "");
+							}
 							
-							
-								$media.each(function() {
-									
-									if( ww > 992 ){
-										$(this)
-											.css("height", wh+"px");
-									} else {
-										$(this)
-											.css("height", "");
-									}
-									
-								});
-							
-							
-						}
-						
-						$( window ).resize(function() {
-							sizeBars();
 						});
 						
+					}
+					
+					$( window ).resize(function() {
 						sizeBars();
-
+					});
+					
+					sizeBars();
 					
 				}); }
 			</script>
 			
 			<style>
-				
-/*
-				.hero-background {
-					z-index: 0;
-				}
-				
-				.hero-shortcode .hero-foreground {
-					position: absolute;
-					z-index: 1;
-				}
-				
-				.frame-container {
-					padding-bottom: 0;
-					height: 100%;
-					position: absolute;
-				}
-				
-				#frame {
-				}
-*/
+
 				.scrollto,
 				.wrap.container {
 					display: none;
 				}
-				
-				
-				/* section-000 */
-
-
-				/* section-400 */
 				
 				.youth-programs {
 					
 				}
 				
 				.bar-bar {
-				  /*position: relative;*/
-				  /*width: 24.5%;*/
-				  /*display: inline-block;*/
 				  margin: 0;
 				  padding: 0;
 				  border: none;
-				  /* display: inline-block; */
-				  /* height: 100%; */
 				  height: 400px;
 				  text-align: center;
 				}
@@ -701,17 +668,12 @@ class Bars {
 					height: 100%; 
 					vertical-align: middle;
 					margin-right: -0.25em; /* Adjusts for spacing */
-					
-					/* For visualization 
-					background: #808080; width: 5px;
-					*/
 				}
 				
 				.bar-bar .center {
 				    display: inline-block;
 					vertical-align: middle;
 				}
-				
 				
 				.bar-bar a {
 					color: #fff;
@@ -746,14 +708,13 @@ class Bars {
 				  opacity: 0;
 				}
 				
-				
 				.program-hovering .bar-bar .hover-info {
 					opacity: 1;
 				}
 				
 				
 				.hovering .filler {
-				  width: 0;
+					width: 0;
 				}
 				
 				.bar-bar .social-icons {
@@ -782,6 +743,7 @@ Bars::init();
 
 
 
+/*
 class Content_Hero {
 	static $add_script;
 	
@@ -805,10 +767,6 @@ class Content_Hero {
 		), $atts, 'content_hero' ) );
 		
 		global $hero;
-		
-		//$hero->section_class = "row";
-		
-		//debug( $hero );
 		
 		$hero->logo = "";
 				
@@ -899,19 +857,23 @@ class Content_Hero {
 }
  
 Content_Hero::init();
+*/
 
 
 function hero() {
-
-ob_start();
-
+	
+	
 	global $hero;
+	
+	global $post;
 	
 	if( !isset( $hero ) ) $hero = new stdClass();
 	
 	$hero->classes = array();
 	
 	$hero->kind = "text";
+	
+	$hero->template = basename( get_post_meta( get_the_ID(), '_wp_page_template', TRUE ), '.php');
 	
 	$hero->text = get_the_title();
 	
@@ -922,6 +884,8 @@ ob_start();
 	$hero->heroesCount = 0;
 	
 	$hero->page_options = custom_options();
+	
+	if( !empty( $hero->page_options->logo ) ) $hero->logo = $hero->page_options->logo;
 	
 	if( get_field('heroes') ) {
 		$hero->heroes = new stdClass();
@@ -942,11 +906,8 @@ ob_start();
 		
 		
 		if( isset( $hero->heroes[0]['image'] ) ){
-
 			$hero->attachment_id = $hero->heroes[0]['image'];
-			
 			$image_attachment = wp_get_attachment_image_src($hero->attachment_id, '720');
-			
 			$hero->src = $image_attachment[0];
 		}
 		
@@ -959,11 +920,20 @@ ob_start();
 			
 		}
 		
+		//If is program
+		if( is_page_template( 'template-program.php' ) ){// if it's a progarm
+		
+			$hero->kind = "program";
+			
+			array_push( $hero->classes, "media" );
+			
+		}
+		
+		
+		
 		if( $hero->heroes ){// if there are any heroes
 			
 			$hero->heroesCount = count( $hero->heroes );
-			
-			
 			
 			$hero->shortcode = parse_shortcode( trim( $hero->heroes[0]['title'] ) );
 			
@@ -981,13 +951,13 @@ ob_start();
 		}
 	}
 	
-	
 	array_push( $hero->classes, $hero->kind );
 	
-	
 	if( $hero->heroesCount > 1 && $hero->kind !== "shortcode" ) array_push( $hero->classes, "slick" );
+
 	
 	
+	ob_start();
 ?>
 <div id="hero" class="hero-container <?php foreach ($hero->classes as &$class) if($class !== "") echo "hero-".$class." ";//echo all classes ?>container-fluid nopadding dark" data-hero-count="<?php echo $hero->heroesCount; ?>" >
 	

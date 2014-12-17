@@ -1,6 +1,6 @@
 <?php
 /*
-Template Name: Verticals
+Template Name: Program
 */
 ?>
 

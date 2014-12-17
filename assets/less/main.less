@@ -502,7 +502,8 @@ Menu
 	.transition();
 }
 
-.nav > li > a:hover, .nav > li > a:focus {
+.nav > li > a:hover,
+.nav > li > a:focus {
 	text-decoration: none;
 	background-color: transparent;
 }
@@ -747,6 +748,10 @@ Hero
 			height: 100%;
 			.hero-background img {
 				width: 100%;
+				@media (max-width:992px) {
+			    	width: auto;
+			    	height: 100%;
+			    }
 				position: absolute;
 				
 				.transition( margin, 750ms);
@@ -769,6 +774,19 @@ Hero
 				font-weight: 700;
 			}
 		}
+	}
+	
+	&.hero-program {
+		
+		.page-header {
+			margin: 0;
+			
+			h1 {
+				font-size: 2em;
+			}
+			
+		}
+		
 	}
 	
 	&.hero-text {
@@ -855,6 +873,7 @@ Hero
 	
 	.hero-logo img {
 		max-width: 150px;
+		max-height: 125px;
 	}
 }
 
