@@ -43,17 +43,36 @@ add_image_size( 'thumb-hd', 400, 225, true );
 add_action('wp_print_styles', 'deregister_styles', 100);
 
 function deregister_styles() {
-	//Visual Composer
-	if( wp_style_is( 'js_composer_front', 'registered' ) )		wp_deregister_style('js_composer_front');
-	if( wp_style_is( 'js_composer_custom_css', 'registered' ) )	wp_deregister_style('js_composer_custom_css');
-	if( wp_script_is( 'wpb_composer_front_js', 'registered' ) )	wp_deregister_script('wpb_composer_front_js');
 	
+	$scripts = array(
+		// Visual Composer
+		['js_composer_front', 'css'],
+		['js_composer_custom_css','css'],
+		['wpb_composer_front_js','js'],
+		// All-in-one Events
+		['ai1ec_requirejs','js'],
+		['ai1ec-general','css'],
+		['ai1ec-event','css'],
+		['ai1ec-calendar','css'],
+		//['ai1ec_style','css']
+	);
 	
-	wp_deregister_script('ai1ec_requirejs');
-	
-	wp_deregister_style('ai1ec-general');
-	wp_deregister_style('ai1ec-event');
-	wp_deregister_style('ai1ec-calendar');
+	foreach($scripts as $script){
+		
+		$slug = $script[0];
+		$type = $script[1];
+		
+		switch ($type) {
+		    case "js":
+		        if( wp_script_is( $slug, 'registered' ) ) wp_deregister_script($slug);
+		        break;
+		    case "css":
+		        if( wp_style_is( $slug, 'registered' ) ) wp_deregister_style($slug);
+		        break;
+		}	
+		
+			
+	}
 }
 
 /*
