@@ -47,8 +47,14 @@ function deregister_styles() {
 	if( wp_style_is( 'js_composer_front', 'registered' ) )		wp_deregister_style('js_composer_front');
 	if( wp_style_is( 'js_composer_custom_css', 'registered' ) )	wp_deregister_style('js_composer_custom_css');
 	if( wp_script_is( 'wpb_composer_front_js', 'registered' ) )	wp_deregister_script('wpb_composer_front_js');
+	
+	
+	wp_deregister_script('ai1ec_requirejs');
+	
+	wp_deregister_style('ai1ec-general');
+	wp_deregister_style('ai1ec-event');
+	wp_deregister_style('ai1ec-calendar');
 }
-
 
 /*
 
