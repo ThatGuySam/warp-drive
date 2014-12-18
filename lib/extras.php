@@ -45,13 +45,11 @@ add_action('wp_print_styles', 'deregister_styles', 100);
 function deregister_styles() {
 	
 	$scripts = array(
-		// Visual Composer
-		['js_composer_front', 'css'],
+		['js_composer_front', 'css'],// Visual Composer
 		['js_composer_custom_css','css'],
 		['wpb_composer_front_js','js'],
-		// All-in-one Events
 		['ai1ec_requirejs','js'],
-		['ai1ec-general','css'],
+		['ai1ec-general','css'],// All-in-one Events
 		['ai1ec-event','css'],
 		['ai1ec-calendar','css'],
 		//['ai1ec_style','css']
