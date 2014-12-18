@@ -14392,7 +14392,7 @@ Copyright (c) 2013 Daniel Eden
     A set of useful LESS mixins
     More info at: http://lesselements.com
   ---------------------------------------------------*/
-/* Import Visual Composer Styles */
+/* Visual Composer Styles */
 /*!
  * Visual Composer v4.3.4 (http://vc.wpbakery.com)
  * Copyright 2011-2014 Michael M - WPBakery.com
@@ -17993,6 +17993,7 @@ body .wpb_gallery_slides ul li,
   }
 }
 
+/* All-in-one Calendar */
 /*
 
 Variables
