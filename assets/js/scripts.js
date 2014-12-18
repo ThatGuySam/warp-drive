@@ -5684,6 +5684,8 @@ var Roots = {
 			
 			
 			/* Menu */
+			
+			
 			$(".search-toggle").click( function(){
 				$(".expanded-nav, html").toggleClass("expanded-nav-open");
 				return false;
@@ -5714,7 +5716,7 @@ var Roots = {
 						maxHeroHeight = "";
 					}
 				}
-				
+				 
 				$(".hero-media .hero-section")
 					.css("height", heroHeight)
 					.css("max-height", maxHeroHeight);
@@ -5727,11 +5729,11 @@ var Roots = {
 						var top_offset = Math.round(
 							(
 								( ww*ratio ) - wh
-							)/2
+							)/2 
 						);
 						
 						$(this).css("margin-top", -top_offset+"px");
-						
+							
 					} else {
 						
 						if( $(this).css("margin-top") ) {
