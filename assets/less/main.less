@@ -440,6 +440,47 @@ hr {
 }
 
 
+/*
+
+Bootstrap Modifications
+
+*/
+
+
+.col-xs-15,
+.col-sm-15,
+.col-md-15,
+.col-lg-15 {
+    position: relative;
+    min-height: 1px;
+    padding-right: 10px;
+    padding-left: 10px;
+}
+
+
+.col-xs-15 {
+    width: 20%;
+    float: left;
+}
+@media (min-width: 768px) {
+.col-sm-15 {
+        width: 20%;
+        float: left;
+    }
+}
+@media (min-width: 992px) {
+    .col-md-15 {
+        width: 20%;
+        float: left;
+    }
+}
+@media (min-width: 1200px) {
+    .col-lg-15 {
+        width: 20%;
+        float: left;
+    }
+}
+
 
 
 /*
@@ -505,6 +546,11 @@ Menu
 	
 	//&:extend(&:-moz-placeholder);
 	.backgroundRGBa(@primary-dark, 0.9);
+	
+	@media only screen and (max-width: 992px) {
+		position: relative;
+		background-color: @primary-dark;
+	}
 	
 	.transition();
 }
@@ -588,12 +634,17 @@ Menu
 
 .expanded-nav {
 	
-	opacity: 0;
-	//height: 0;
-	display: none;
+	//opacity: 0;
+	height: 0;
+	//display: none;
 	overflow: hidden;
+	max-width: 950px;
 	
-	.transition( opacity, 750ms);
+	.transition( all, 750ms);
+	
+	#menu-expanded-navigation {
+		
+	}
 	
 	&.expanded-nav-open {
 		opacity: 1;
@@ -613,7 +664,7 @@ Menu
 	
 	li {
 		position: relative;
-		padding: 0 1em;
+		padding: 1em;
 		cursor: pointer;
 		li li {
 			padding: 0;
@@ -622,7 +673,7 @@ Menu
 	}
 	
 	
-	>ul {//#menu-expanded-navigation
+	>ul.navbar-nav {//#menu-expanded-navigation
 		padding-bottom: 2em;
 		>li {
 			>a { //Column headers
@@ -630,6 +681,17 @@ Menu
 				font-weight: 500;
 				text-transform: uppercase;
 				text-align: center;
+				
+				padding-left: 0;
+				padding-right: 0;
+				border: 1px solid @primary-light;
+				color: @primary-light;
+			}
+			
+			&.active >a,
+			&:hover >a:hover {
+				color: @primary-dark;
+				background: @primary-light;
 			}
 			
 			>ul {

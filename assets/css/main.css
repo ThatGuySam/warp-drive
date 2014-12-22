@@ -18258,6 +18258,42 @@ hr {
 }
 /*
 
+Bootstrap Modifications
+
+*/
+.col-xs-15,
+.col-sm-15,
+.col-md-15,
+.col-lg-15 {
+  position: relative;
+  min-height: 1px;
+  padding-right: 10px;
+  padding-left: 10px;
+}
+.col-xs-15 {
+  width: 20%;
+  float: left;
+}
+@media (min-width: 768px) {
+  .col-sm-15 {
+    width: 20%;
+    float: left;
+  }
+}
+@media (min-width: 992px) {
+  .col-md-15 {
+    width: 20%;
+    float: left;
+  }
+}
+@media (min-width: 1200px) {
+  .col-lg-15 {
+    width: 20%;
+    float: left;
+  }
+}
+/*
+
 Body
 
 */
@@ -18316,6 +18352,14 @@ Menu
 .watch-page .navbar-default,
 .watch-page .expanded-nav-open header.banner.navbar {
   top: 0;
+}
+@media only screen and (max-width: 992px) {
+  .navbar,
+  .navbar-default,
+  .expanded-nav-open header.banner.navbar {
+    position: relative;
+    background-color: #323232;
+  }
 }
 .nav > li > a:hover,
 .nav > li > a:focus {
@@ -18386,15 +18430,15 @@ Menu
   text-align: center;
 }
 .expanded-nav {
-  opacity: 0;
-  display: none;
+  height: 0;
   overflow: hidden;
-  -webkit-transition: all opacity 750ms;
-  -o-transition: all opacity 750ms;
-  transition: all opacity 750ms;
-  -webkit-transition: opacity 750ms cubic-bezier(0.23, 1, 0.32, 1);
-  -o-transition: opacity 750ms cubic-bezier(0.23, 1, 0.32, 1);
-  transition: opacity 750ms cubic-bezier(0.23, 1, 0.32, 1);
+  max-width: 950px;
+  -webkit-transition: all all 750ms;
+  -o-transition: all all 750ms;
+  transition: all all 750ms;
+  -webkit-transition: all 750ms cubic-bezier(0.23, 1, 0.32, 1);
+  -o-transition: all 750ms cubic-bezier(0.23, 1, 0.32, 1);
+  transition: all 750ms cubic-bezier(0.23, 1, 0.32, 1);
   -webkit-transition-timing-function: cubic-bezier(0.23, 1, 0.32, 1);
   -o-transition-timing-function: cubic-bezier(0.23, 1, 0.32, 1);
   transition-timing-function: cubic-bezier(0.23, 1, 0.32, 1);
@@ -18416,49 +18460,58 @@ Menu
 }
 .expanded-nav li {
   position: relative;
-  padding: 0 1em;
+  padding: 1em;
   cursor: pointer;
 }
 .expanded-nav li li li {
   padding: 0;
   font-size: 0.85em;
 }
-.expanded-nav > ul {
+.expanded-nav > ul.navbar-nav {
   padding-bottom: 2em;
 }
-.expanded-nav > ul > li > a {
+.expanded-nav > ul.navbar-nav > li > a {
   font-size: 0.7em;
   font-weight: 500;
   text-transform: uppercase;
   text-align: center;
+  padding-left: 0;
+  padding-right: 0;
+  border: 1px solid #d8d8d8;
+  color: #d8d8d8;
 }
-.expanded-nav > ul > li > ul {
+.expanded-nav > ul.navbar-nav > li.active > a,
+.expanded-nav > ul.navbar-nav > li:hover > a:hover {
+  color: #323232;
+  background: #d8d8d8;
+}
+.expanded-nav > ul.navbar-nav > li > ul {
   font-size: 1.2em;
 }
-.expanded-nav > ul > li > ul > li {
+.expanded-nav > ul.navbar-nav > li > ul > li {
   padding-top: 1em;
   padding-bottom: 1.5em;
   border-left: 1px solid;
   border-bottom: 1px solid;
   border-color: #4d4d4d;
 }
-.expanded-nav > ul > li > ul > li:hover {
+.expanded-nav > ul.navbar-nav > li > ul > li:hover {
   border-color: #ffffff;
 }
-.expanded-nav > ul > li > ul > li > a {
+.expanded-nav > ul.navbar-nav > li > ul > li > a {
   font-size: 1.2em;
 }
-.expanded-nav > ul > li > ul > li > ul {
+.expanded-nav > ul.navbar-nav > li > ul > li > ul {
   padding-left: 1em;
 }
-.expanded-nav > ul > li > ul > li > ul a {
+.expanded-nav > ul.navbar-nav > li > ul > li > ul a {
   font-weight: 200;
 }
-.expanded-nav > ul > li > ul > li > ul li:hover > a {
+.expanded-nav > ul.navbar-nav > li > ul > li > ul li:hover > a {
   color: #fff;
   font-weight: 300;
 }
-.expanded-nav > ul > li > ul > li > ul > li {
+.expanded-nav > ul.navbar-nav > li > ul > li > ul > li {
   padding: 0.4em 0;
 }
 .expanded-nav .sub-menu {

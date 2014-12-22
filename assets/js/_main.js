@@ -69,14 +69,75 @@ var Roots = {
 			/* Menu */
 			
 			
+			function toggleExMenu( action ) {
+				
+				var actions = ['close','open'];
+				var closed = $("html").hasClass("expanded-nav-open") ? 0 : 1;
+				var exMenuHeight = $('#menu-expanded-navigation').outerHeight();
+				
+				if(typeof(action)==='undefined'){ action = actions[closed]; }
+				
+				//$(".expanded-nav, html").toggleClass("expanded-nav-open");
+				
+				
+				
+				switch (action) {
+					case 'open':
+						
+						$("html").addClass("expanded-nav-open");
+						$(".expanded-nav").css( 'height' , exMenuHeight+'px' );
+						$(".search-toggle .fa").removeClass("fa-search").addClass("fa-times");
+						
+						console.log( "Opening Menu!" );
+						
+						break;
+					case 'close':
+						
+						$("html").removeClass("expanded-nav-open");
+						$(".expanded-nav").css( 'height' , '' );
+						$(".search-toggle .fa").removeClass("fa-times").addClass("fa-search");
+						
+						console.log( "Closing Menu!" );
+						
+						break;
+				}
+				
+			}
+			
+			
 			$(".search-toggle").click( function(){
-				$(".expanded-nav, html").toggleClass("expanded-nav-open");
+				
+				toggleExMenu();
+				
 				return false;
 			});
 			
+			
+			// Takes the gutter width from the bottom margin of .post
+			var firstItem =		'#menu-expanded-navigation > li.menu-item-first';
+			var itemSelector =	'#menu-expanded-navigation > li';
+			var gutter =		parseInt($(itemSelector).css('marginBottom'));
+			var container =		$('#menu-expanded-navigation');
+		 
+		 
+		 
+			// Creates an instance of Masonry on #posts
+		 
+			container.masonry({
+				gutter: gutter,
+				itemSelector: itemSelector,
+				columnWidth: firstItem
+			});
+			
+			
+			
+			// This code fires every time a user resizes the screen and only affects .post elements
+			// whose parent class isn't .container. Triggers resize first so nothing looks weird.
+			
+			
 			/* Header */
 			
-			function sizeHero() {
+			$(window).on('resize', function() {
 				
 				var $media = $(".hero-background > img");
 				
@@ -126,9 +187,36 @@ var Roots = {
 					}
 					
 				});
+				
+				
+				//Expanded Nav Masonry
+				if (!$('#menu-expanded-navigation').parent().hasClass('container')) {
+					
+					// Resets all widths to 'auto' to sterilize calculations
+					var post_width = $(firstItem).width() + gutter;
+					$('#menu-expanded-navigation, .expanded-nav').css('width', 'auto');
 					
 					
-			}
+					
+					// Calculates how many .post elements will actually fit per row. Could this code be cleaner?
+					var posts_per_row = $('#menu-expanded-navigation').innerWidth() / post_width;
+					var floor_posts_width = (Math.floor(posts_per_row) * post_width) - gutter;
+					var ceil_posts_width = (Math.ceil(posts_per_row) * post_width) - gutter;
+					var posts_width = (ceil_posts_width > $('#menu-expanded-navigation').innerWidth()) ? floor_posts_width : ceil_posts_width;
+					if (posts_width === $(itemSelector).width()) {
+						posts_width = '100%';
+					}
+					
+					
+					
+					// Ensures that all top-level elements have equal width and stay centered
+					$('#menu-expanded-navigation, .expanded-nav').css('width', posts_width);
+					$('.expanded-nav').css({'margin': '0 auto'});
+		        
+				}
+					
+					
+			}).trigger('resize');
 			
 			
 			
@@ -220,12 +308,8 @@ var Roots = {
 				
 				console.log( secondItemWidth );
 				
-			}
+			}	
 			
-			
-			$( window ).resize(function() {
-				sizeHero();
-			});
 			
 			
 			$('.countdown').each( function(){
@@ -380,8 +464,6 @@ var Roots = {
 			
 			
 			/* Init */
-			
-			sizeHero();
 			
 			$.material.init();
 			

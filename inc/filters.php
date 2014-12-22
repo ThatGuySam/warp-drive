@@ -82,11 +82,11 @@ function expanded_nav_menu_css_class( $classes = array(), $item, $args ) {
             $main_nav = wp_get_nav_menu_object( $locations[ $location_name ] );
 				
 			if( $item->menu_item_parent==0 ){
-				$classes[] = 'col-lg-2 col-md-3 col-sm-4 col-xs-6';
+				$classes[] = 'col-lg-15 col-md-3 col-sm-4 col-xs-6';
 			}
 			
             if ($item->menu_order == 1) {
-                $classes[] = 'col-lg-offset-1 menu-item-first'; //First menu item
+                $classes[] = 'menu-item menu-item-first'; //First menu item
             }
             if($top_level_count==count_top_level_menu_items($main_nav->term_id)){
                 $classes[] = 'menu-item-last'; //Last top level menu item
@@ -99,11 +99,17 @@ function expanded_nav_menu_css_class( $classes = array(), $item, $args ) {
 add_filter( 'nav_menu_css_class', 'expanded_nav_menu_css_class', 10, 3 );
 
 
-
-
 /* Outer Menu Buttons */
 
 function add_outer_menu($items, $args) {
+	
+/*
+ if( ($args->theme_location == 'expanded_navigation') ){
+	$before = '<li class="menu-outer-item menu-item col-lg-1"></li>';
+	
+	return $before . $items;
+ }
+*/
  
  // If this isn't the main navbar menu, do nothing
  if( !($args->theme_location == 'primary_navigation') )
