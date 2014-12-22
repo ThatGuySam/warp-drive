@@ -46,7 +46,7 @@ function heroOrganism($hero) {
 			<div class="hero-slide" >
 				
 				<div class="hero-background">
-					<img <?php echo $hero->srcType; ?>="<?php echo $hero->src; ?>" alt="<?php echo $hero->text; ?>">
+					<img <?php echo $hero->srcType; ?>="<?php echo $hero->src; ?>" alt="<?php echo strip_tags( $hero->text ); ?>">
 				</div>
 				
 				<div class="hero-foreground animated fadeIn animated-3s animated-delay-1s" style="<?php //BG Color Overlay
