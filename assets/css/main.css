@@ -18429,6 +18429,18 @@ Menu
   font-size: 1.2em;
   text-align: center;
 }
+#search {
+  background: transparent;
+  width: 100%;
+  border: none;
+  border-bottom: 2px solid transparent;
+  outline: none;
+  color: #d8d8d8;
+  font-size: 2em;
+}
+#search:focus {
+  border-bottom: 2px solid #d8d8d8;
+}
 .expanded-nav {
   height: 0;
   overflow: hidden;
@@ -19003,11 +19015,11 @@ Organisms
   top: 30%;
   left: 5%;
   color: #fff;
+  pointer-events: none;
 }
 .thin-promos > .wpb_column .wpb_text_column h2 {
   text-transform: uppercase;
   margin-bottom: 0;
-  pointer-events: none;
 }
 .thin-promos .wpb_content_element {
   margin-bottom: 2px;

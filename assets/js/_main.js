@@ -79,14 +79,14 @@ var Roots = {
 				
 				//$(".expanded-nav, html").toggleClass("expanded-nav-open");
 				
-				
-				
 				switch (action) {
 					case 'open':
 						
 						$("html").addClass("expanded-nav-open");
 						$(".expanded-nav").css( 'height' , exMenuHeight+'px' );
 						$(".search-toggle .fa").removeClass("fa-search").addClass("fa-times");
+						
+						$("#search").focus();
 						
 						console.log( "Opening Menu!" );
 						
@@ -104,15 +104,6 @@ var Roots = {
 				
 			}
 			
-			
-			$(".search-toggle").click( function(){
-				
-				toggleExMenu();
-				
-				return false;
-			});
-			
-			
 			// Takes the gutter width from the bottom margin of .post
 			var firstItem =		'#menu-expanded-navigation > li.menu-item-first';
 			var itemSelector =	'#menu-expanded-navigation > li';
@@ -123,12 +114,38 @@ var Roots = {
 		 
 			// Creates an instance of Masonry on #posts
 		 
-			container.masonry({
+			var $exMenMason = container.masonry({
 				gutter: gutter,
 				itemSelector: itemSelector,
 				columnWidth: firstItem
 			});
 			
+			$exMenMason.on( 'layoutComplete', function() {
+				
+			});
+			
+			
+			$(".search-toggle").click( function(){
+				
+				toggleExMenu();
+				
+				return false;
+			});
+			
+			$('#search').hideseek(
+				//msnry.layout();
+			);
+			
+			$( "#search" ).keyup(function() {
+				
+				$exMenMason.masonry();
+				
+				var exMenuHeight = $('#menu-expanded-navigation').outerHeight();
+				$(".expanded-nav").css( 'height' , exMenuHeight+50+'px' );
+				
+				console.log("Layout complete: "+exMenuHeight);
+				
+			});
 			
 			
 			// This code fires every time a user resizes the screen and only affects .post elements

@@ -19,6 +19,8 @@
 		
 		<div class="expanded-nav">
 			
+			<input id="search" name="search" placeholder="Start typing..." type="text" data-list=".sub-menu">
+			
 			<?php
 				if (has_nav_menu('expanded_navigation')) :
 				  wp_nav_menu( array(
