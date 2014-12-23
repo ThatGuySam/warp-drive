@@ -42,6 +42,56 @@ function parse_title($unparsed) {
 	return $parsed;
 }
 
+function cacheHandler( $object ) {
+    // cache files are created like cache/abcdef123456...
+    
+    //if no cache_time is set: 1 hour
+    if( empty( $object->cache->cache_time ) ) $object->cache->cache_time = '-60 minutes';
+    
+    $function = $object->cache->function_name;
+    
+    $filename = $object->cache->function_name . "-" . preg_replace("/[^\da-z]/i", '', $object->id ).".json";
+    if( $object->cache->cache_name ) $filename = $object->cache->cache_name."-".$filename;
+    $cacheFile = 'cache' . DIRECTORY_SEPARATOR . $filename;
+	
+	if( array_key_exists( 'purge' , $_GET ) || $object->purge == true ) @unlink($cacheFile);
+	
+    if (file_exists($cacheFile)) {
+        $fh = fopen($cacheFile, 'r');
+        //$cacheTime = trim(fgets($fh));
+        
+        $cacheTime = filemtime($cacheFile);
+
+        // if data was cached recently, return cached data
+        if ($cacheTime > strtotime( $object->cache->cache_time )) {
+            $object_cached = @file_get_contents($cacheFile);
+            
+            $output = json_decode( $object_cached );
+            
+            //echo "Cache Read";
+            return $output;
+        }
+
+        // else delete cache file
+        fclose($fh);
+        unlink($cacheFile);
+    }
+
+    
+    $output = $function($object);
+    
+    //debug( $output );
+    
+    $new_object_json = json_encode( $output );
+	
+    $fh = fopen($cacheFile, 'w');
+    fwrite($fh, $new_object_json);
+    fclose($fh);
+	
+	//echo "File Made";
+    return $output;
+}
+
 function hex2rgb($hex) {
    $hex = str_replace("#", "", $hex);
 
@@ -103,6 +153,18 @@ function get_avg_luminance($filename, $num_samples=10) {
     return $avg_lum;
     // assume a medium gray is the threshold, #acacac or RGB(172, 172, 172)
     // this equates to a luminance of 170
+}
+
+
+function removeWhitespace($buffer) {
+	
+	//$string = $buffer;
+	
+    //return preg_replace('~>\s+<~', '><', $buffer);
+    
+    //preg_replace_callback('~<([A-Z0-9]+) \K(.*?)>~i', function($m) {$replacement = preg_replace('~\s*~', '', $m[0]); return $replacement;}, $string);
+    
+    return preg_replace( '/>(\s|\n|\r)+</', '><', $buffer );
 }
 
 
@@ -206,7 +268,7 @@ function countdownEvents( $object=false ) {
 		sort($schedule);
 		//$until = $schedule[0] - $current_time;
 		
-		$until = $schedule[0];
+		$until = $schedule[0]; 
 		
 	}
 	
@@ -220,6 +282,69 @@ function countdownEvents( $object=false ) {
 	
 }
 
+
+function isLive() {
+	
+	$countdown = new stdClass();
+	$countdown->cache = new stdClass();
+	
+	//Define countdown options
+	$countdown->cache->function_name =	"countdownEvents";
+	$countdown->cache->cache_time =		'-15 minutes';
+	$countdown->cache->cache_name =		"countdown";
+    
+    //Get any events
+    $countdown->objects = countdownEvents();
+    
+    //Parse next event date into js friendly date
+    //$until_js = date( 'Y/m/d H:i:00', $countdown->objects[0]->start_time );
+    
+    $objects = $countdown->objects;
+    
+    $event = $objects[0];
+    
+    //strtotime("-30 minutes")
+    
+    //$event->start_time;
+    
+    //echo ( $event->start_time > strtotime($event->start_time,"-15 minutes") );
+    
+    $countdown->now = date( 'r', strtotime('now') );
+    
+    $countdown->event = date( 'r', $event->start_time );
+    
+    $countdown->isAfterPre = ( strtotime('now') > strtotime($event->start_time,"-15 minutes") );
+    
+    $countdown->isBeforeEnd = ( strtotime('now') > strtotime($event->start_time,"+90 minutes") );
+    
+    $countdown->isLive = ( $countdown->isAfterPre && $countdown->isBeforeEnd );
+    
+/*
+    if( $event->start_time > strtotime($event->start_time,"-30 minutes") ){
+	     
+    }
+*/
+	
+	return $countdown->isLive;
+}
+
+
+function currentServiceLink() {
+	
+	$output = false;
+	
+	if( isLive() ){
+		
+		$output = site_url().'/live';
+		
+	} else {
+		
+		$output = site_url().'/watch';
+		
+	}
+	
+	return $output;
+}
 
 function social_media_profiles($strapped=0) {
 	

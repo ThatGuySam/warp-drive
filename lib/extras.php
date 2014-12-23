@@ -2,8 +2,11 @@
 
 date_default_timezone_set('America/Chicago');
 
+$GLOBALS['theme_dir'] = get_theme_root();
 
-require get_theme_root().'/'.get_template().'/lib/vendor/autoload.php';
+//$GLOBALS['root_dir'] = get_home_path();
+
+require $GLOBALS['theme_dir']. DIRECTORY_SEPARATOR . get_template().'/lib/vendor/autoload.php';
 
 
 use League\ColorExtractor\Client as ColorExtractor;
@@ -11,7 +14,6 @@ use League\ColorExtractor\Client as ColorExtractor;
 $client = new ColorExtractor;
 
 $detect = new Mobile_Detect;
-
 
 include get_theme_root().'/'.get_template().'/inc/snippets.php';
 
@@ -22,6 +24,16 @@ include get_theme_root().'/'.get_template().'/inc/heroes.php';
 include get_theme_root().'/'.get_template().'/inc/boxes.php';
 
 //include get_theme_root().'/'.get_template().'/inc/sms.php';
+
+
+if( array_key_exists( 'watchservice' , $_GET ) ) {
+	
+	debug( currentServiceLink() );
+	
+	wp_redirect( currentServiceLink(), $status );
+	exit;
+	
+};
 
 
 /*

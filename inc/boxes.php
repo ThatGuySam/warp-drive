@@ -5,55 +5,7 @@ function date_sort_objects($a, $b) {
 	return strcmp($a->date_unix, $b->date_unix); //only doing string comparison
 }
 
-function cacheHandler( $object ) {
-    // cache files are created like cache/abcdef123456...
-    
-    //if no cache_time is set: 1 hour
-    if( empty( $object->cache->cache_time ) ) $object->cache->cache_time = '-60 minutes';
-    
-    $function = $object->cache->function_name;
-    
-    $filename = $object->cache->function_name . "-" . preg_replace("/[^\da-z]/i", '', $object->id ).".json";
-    if( $object->cache->cache_name ) $filename = $object->cache->cache_name."-".$filename;
-    $cacheFile = get_home_path().'cache' . DIRECTORY_SEPARATOR . $filename;
-	
-	if( array_key_exists( 'purge' , $_GET ) || $object->purge == true ) unlink($cacheFile);
-	
-    if (file_exists($cacheFile)) {
-        $fh = fopen($cacheFile, 'r');
-        //$cacheTime = trim(fgets($fh));
-        
-        $cacheTime = filemtime($cacheFile);
 
-        // if data was cached recently, return cached data
-        if ($cacheTime > strtotime( $object->cache->cache_time )) {
-            $object_cached = @file_get_contents($cacheFile);
-            
-            $output = json_decode( $object_cached );
-            
-            //echo "Cache Read";
-            return $output;
-        }
-
-        // else delete cache file
-        fclose($fh);
-        unlink($cacheFile);
-    }
-
-    
-    $output = $function($object);
-    
-    //debug( $output );
-    
-    $new_object_json = json_encode( $output );
-	
-    $fh = fopen($cacheFile, 'w');
-    fwrite($fh, $new_object_json);
-    fclose($fh);
-	
-	//echo "File Made";
-    return $output;
-}
 
 function boxesInstagram($user_id) {
 
