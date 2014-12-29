@@ -1,5 +1,5 @@
 /*!
- * Masonry v3.2.1
+ * Masonry v3.2.2
  * Cascading grid layout library
  * http://masonry.desandro.com
  * MIT License
@@ -194,7 +194,8 @@ if ( typeof define === 'function' && define.amd ) {
       'get-size/get-size'
     ],
     masonryDefinition );
-} else if (typeof exports === 'object') {
+} else if ( typeof exports === 'object' ) {
+  // CommonJS
   module.exports = masonryDefinition(
     require('outlayer'),
     require('get-size')
