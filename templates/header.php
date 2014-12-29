@@ -19,7 +19,7 @@
 		
 		<div class="expanded-nav">
 			
-			<input id="search" name="search" placeholder="Start typing..." type="text" data-list=".sub-menu">
+			<input id="search" name="search" placeholder="Start typing..." type="text" autocomplete="off">
 			
 			<?php
 				if (has_nav_menu('expanded_navigation')) :

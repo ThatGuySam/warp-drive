@@ -127,25 +127,43 @@ var Roots = {
 			
 			$(".search-toggle").click( function(){
 				
-				toggleExMenu();
+				toggleExMenu(); 
 				
 				return false;
 			});
 			
-			$('#search').hideseek(
-				//msnry.layout();
-			);
+			$('#search').hideseek({
+				list: '.sub-menu, .ex-menu-item',
+				navigation: true
+			});
 			
-			$( "#search" ).keyup(function() {
+			//On search complete
+			$('#search').on("_after", function() {
 				
 				$exMenMason.masonry();
 				
 				var exMenuHeight = $('#menu-expanded-navigation').outerHeight();
 				$(".expanded-nav").css( 'height' , exMenuHeight+50+'px' );
 				
-				console.log("Layout complete: "+exMenuHeight);
+				
+				
+				console.log( $('#menu-expanded-navigation > li a:visible') );
+				
+				if($('#menu-expanded-navigation > li a:visible').length === 0) {
+					console.log("No mo");
+				}
 				
 			});
+			
+/*
+			$( "#search" ).keyup(function() {
+				
+				if($('#menu-expanded-navigation').children(':visible').length === 0) {
+					// action when all are hidden
+				}
+				
+			});
+*/
 			
 			
 			// This code fires every time a user resizes the screen and only affects .post elements

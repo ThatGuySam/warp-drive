@@ -2321,7 +2321,7 @@
         });
     };
 });;/*!
- * Masonry PACKAGED v3.2.1
+ * Masonry PACKAGED v3.2.2
  * Cascading grid layout library
  * http://masonry.desandro.com
  * MIT License
@@ -2633,13 +2633,13 @@ if ( typeof define === 'function' && define.amd ) {
 })( window );
 
 /*!
- * EventEmitter v4.2.9 - git.io/ee
- * Oliver Caldwell
- * MIT license
+ * EventEmitter v4.2.11 - git.io/ee
+ * Unlicense - http://unlicense.org/
+ * Oliver Caldwell - http://oli.me.uk/
  * @preserve
  */
 
-(function () {
+;(function () {
     
 
     /**
@@ -3162,13 +3162,13 @@ if ( typeof define === 'function' && define.amd ) {
 })( window );
 
 /*!
- * getSize v1.2.0
+ * getSize v1.2.2
  * measure size of elements
  * MIT license
  */
 
 /*jshint browser: true, strict: true, undef: true, unused: true */
-/*global define: false, exports: false, require: false, module: false */
+/*global define: false, exports: false, require: false, module: false, console: false */
 
 ( function( window, undefined ) {
 
@@ -3183,6 +3183,8 @@ function getStyleSize( value ) {
   var isValid = value.indexOf('%') === -1 && !isNaN( num );
   return isValid && num;
 }
+
+function noop() {}
 
 var logError = typeof console === 'undefined' ? noop :
   function( message ) {
@@ -3259,10 +3261,10 @@ function setup() {
         if ( !style ) {
           logError( 'Style returned ' + style +
             '. Are you running this code in a hidden iframe on Firefox? ' +
-            'See http://bit.ly/getsizeiframe' );
+            'See http://bit.ly/getsizebug1' );
         }
         return style;
-      }
+      };
   })();
 
   // -------------------------- box sizing -------------------------- //
@@ -3367,7 +3369,7 @@ function getSize( elem ) {
 // taken from jQuery's curCSS
 function mungeNonPixel( elem, value ) {
   // IE8 and has percent value
-  if ( getComputedStyle || value.indexOf('%') === -1 ) {
+  if ( window.getComputedStyle || value.indexOf('%') === -1 ) {
     return value;
   }
   var style = elem.style;
@@ -5067,7 +5069,7 @@ if ( typeof define === 'function' && define.amd ) {
 })( window );
 
 /*!
- * Masonry v3.2.1
+ * Masonry v3.2.2
  * Cascading grid layout library
  * http://masonry.desandro.com
  * MIT License
@@ -5262,7 +5264,8 @@ if ( typeof define === 'function' && define.amd ) {
       'get-size/get-size'
     ],
     masonryDefinition );
-} else if (typeof exports === 'object') {
+} else if ( typeof exports === 'object' ) {
+  // CommonJS
   module.exports = masonryDefinition(
     require('outlayer'),
     require('get-size')
@@ -5946,25 +5949,43 @@ var Roots = {
 			
 			$(".search-toggle").click( function(){
 				
-				toggleExMenu();
+				toggleExMenu(); 
 				
 				return false;
 			});
 			
-			$('#search').hideseek(
-				//msnry.layout();
-			);
+			$('#search').hideseek({
+				list: '.sub-menu, .ex-menu-item',
+				navigation: true
+			});
 			
-			$( "#search" ).keyup(function() {
+			//On search complete
+			$('#search').on("_after", function() {
 				
 				$exMenMason.masonry();
 				
 				var exMenuHeight = $('#menu-expanded-navigation').outerHeight();
 				$(".expanded-nav").css( 'height' , exMenuHeight+50+'px' );
 				
-				console.log("Layout complete: "+exMenuHeight);
+				
+				
+				console.log( $('#menu-expanded-navigation > li a:visible') );
+				
+				if($('#menu-expanded-navigation > li a:visible').length === 0) {
+					console.log("No mo");
+				}
 				
 			});
+			
+/*
+			$( "#search" ).keyup(function() {
+				
+				if($('#menu-expanded-navigation').children(':visible').length === 0) {
+					// action when all are hidden
+				}
+				
+			});
+*/
 			
 			
 			// This code fires every time a user resizes the screen and only affects .post elements
