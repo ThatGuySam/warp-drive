@@ -27,12 +27,8 @@ include get_theme_root().'/'.get_template().'/inc/boxes.php';
 
 
 if( array_key_exists( 'watchservice' , $_GET ) ) {
-	
-	//debug( currentServiceLink() );
-	
 	wp_redirect( currentServiceLink(), $status );
 	exit;
-	
 };
 
 
