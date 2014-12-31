@@ -6,6 +6,25 @@ Filters
 
 */
 
+
+if ( function_exists( 'add_image_size' ) ) {
+	add_image_size( 'hd1080', 1920, 1080, true );
+	add_image_size( 'hd720', 1280, 720, true );
+	add_image_size( 'hd360', 640, 360, true );
+	add_image_size( 'thumb-hd', 400, 225, true );
+}
+add_filter('image_size_names_choose', 'my_image_sizes');
+function my_image_sizes($sizes) {
+	$addsizes = array(
+		'hd1080' => 'HD 1080p',
+		'hd720' => 'HD 720p',
+		'hd360' => 'HD 360p',
+		'thumb-hd' => 'Thumb HD'
+	);
+	$newsizes = array_merge($sizes, $addsizes);
+	return $newsizes;
+}
+
 //Enable Shortcodes in widgets
 add_filter('widget_text', 'do_shortcode');
 

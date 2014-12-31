@@ -41,12 +41,6 @@ if ( $detect->isMobile() ) {
 */
 
 
-add_image_size( '1080', 1920, 1080, true );
-add_image_size( '720', 1280, 720, true );
-add_image_size( '360', 640, 360, true );
-add_image_size( 'thumb-hd', 400, 225, true );
-
-
 /* Plugin Deregisters to avoid redendancy after script concatenation */
 add_action('wp_print_styles', 'deregister_styles', 100);
 
