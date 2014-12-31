@@ -114,7 +114,7 @@ function boxesVimeo($boxes) {
 		
 		$videos->{"video_".$i} = $v_box;
 		
-		if( $i >= $boxes->amount - 1 ) break;
+		//if( $i >= $boxes->amount - 1 ) break;
 		
 		$i++;
 	}
@@ -370,10 +370,11 @@ class Boxes {
 			if( isset( $props['double-stacked'] ) ){
 				$boxes->show = $boxes->show * 2;
 			}
-			//debug( $boxes->post );
+			
+			$i=0;
 		?>
 			
-			<div id="boxes-<?php echo $type; ?>-<?php echo $boxes->id; ?>" class="box-boxes boxes-<?php echo $type; ?> <?php echo $class; ?>">
+			<div id="boxes-<?php echo $type; ?>-<?php echo $boxes->id; ?>" class="box-boxes boxes-<?php echo $type; ?> <?php echo 'boxes-'.$boxes->layout;?> <?php echo $boxes->class; ?>">
 			
 			<?php if( !empty( $boxes->header ) ): ?>
 				<div class="boxes-header">
@@ -382,9 +383,9 @@ class Boxes {
 				</div>
 			<?php endif; ?>
 
-			<div class="frame" data-show="<?php echo $boxes->show; ?>">
-				<ul class="easecubic">
-					<?php if( $boxes->objects ): foreach($boxes->objects as $key => $box){ ?>
+			<div class="frame container-fluid" data-show="<?php echo $boxes->show; ?>">
+				<ul class="easecubic row">
+					<?php if( $boxes->objects ): foreach($boxes->objects as $key => $box): ?>
 					
 						<?php 
 							if( isset( $props['date-format-human'] ) ){
@@ -437,7 +438,7 @@ class Boxes {
 								
 							<?php if( !isset( $props['double-stacked'] ) || $box->index % 2 == 0 || !$box->index  ){ ?></li><?php } ?>
 						
-					<?php } endif; ?>
+					<?php if( $box->index >= $boxes->amount-1 ){ break; } endforeach;/* foreach($boxes->objects) */ endif;/* if( $boxes->objects ) */ ?>
 				</ul>
 			</div>
 			
