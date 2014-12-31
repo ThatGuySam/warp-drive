@@ -1,9 +1,9 @@
 <?php get_template_part('templates/head'); ?>
 <body <?php body_class(); ?>>
 
-  <!--[if lt IE 8]>
+  <!--[if lt IE 10]>
     <div class="alert alert-warning">
-      <?php _e('You are using an <strong>outdated browser</strong>. Please <a href="http://outdatedbrowser.com/">upgrade your browser</a> to ensure you have the safest and best experience at GutsChurch.com', 'roots'); ?>
+      <?php _e('You are using an <strong>outdated browser</strong>. Please <a href="http://outdatedbrowser.com/">upgrade your browser</a> to ensure you have the safest and best experience at GutsChurch.com. For any questions email <a href="mailto:admin@gutschurch.com">admin@gutschurch.com</a>', 'roots'); ?>
     </div>
   <![endif]-->
 
