@@ -896,7 +896,7 @@ function hero() {
 	
 	if( has_post_thumbnail() || $hero->heroes ){
 	
-		$thumbnail_src = wp_get_attachment_image_src( get_post_thumbnail_id( $post->ID ), "full" );
+		$thumbnail_src = wp_get_attachment_image_src( get_post_thumbnail_id( $post->ID ), "hd720" );
 		
 		$hero->kind = "media";
 		
@@ -907,7 +907,7 @@ function hero() {
 		
 		if( isset( $hero->heroes[0]['image'] ) ){
 			$hero->attachment_id = $hero->heroes[0]['image'];
-			$image_attachment = wp_get_attachment_image_src($hero->attachment_id, '720');
+			$image_attachment = wp_get_attachment_image_src($hero->attachment_id, 'hd720');
 			$hero->src = $image_attachment[0];
 		}
 		
@@ -1006,7 +1006,7 @@ function hero() {
 				//Setup Image
 				$hero->attachment_id = get_sub_field('image');
 				
-				$image_attachment = wp_get_attachment_image_src($hero->attachment_id, '720');
+				$image_attachment = wp_get_attachment_image_src($hero->attachment_id, 'hd720');
 				
 				$hero->src = $image_attachment[0];
 				
