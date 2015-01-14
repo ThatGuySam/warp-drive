@@ -432,11 +432,7 @@ class Boxes {
 		    	$boxes->cache->function_name = 'boxesCategory';
 		        $boxes->cache->cache_name = 'category';
 				
-				//$boxes->objects = cacheHandler( $boxes );
-				
-				$boxes->objects = boxesCategory($boxes);
-				
-				//debug( $boxes );
+				$boxes->objects = cacheHandler( $boxes );
 				
 		        break;
 		    case "youtube":
