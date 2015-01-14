@@ -986,13 +986,7 @@ function hero() {
 			}
 			
 		}
-		
-		
-	//No Thumbnail? No Heroes
-	} else {
-		
-		
-		
+			
 	}
 	
 	//If Post
