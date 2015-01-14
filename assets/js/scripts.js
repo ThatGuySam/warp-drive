@@ -5482,344 +5482,439 @@ Johann Burkard
 
 */
 jQuery.fn.highlight=function(t){function e(t,i){var n=0;if(3==t.nodeType){var a=t.data.toUpperCase().indexOf(i);if(a>=0){var s=document.createElement("mark");s.className="highlight";var r=t.splitText(a);r.splitText(i.length);var o=r.cloneNode(!0);s.appendChild(o),r.parentNode.replaceChild(s,r),n=1}}else if(1==t.nodeType&&t.childNodes&&!/(script|style)/i.test(t.tagName))for(var h=0;h<t.childNodes.length;++h)h+=e(t.childNodes[h],i);return n}return this.length&&t&&t.length?this.each(function(){e(this,t.toUpperCase())}):this},jQuery.fn.removeHighlight=function(){return this.find("mark.highlight").each(function(){with(this.parentNode.firstChild.nodeName,this.parentNode)replaceChild(this.firstChild,this),normalize()}).end()};
-;/* globals jQuery, ripples */
+;/**
+ * jQuery Unveil
+ * A very lightweight jQuery plugin to lazy load images
+ * http://luis-almeida.github.com/unveil
+ *
+ * Licensed under the MIT license.
+ * Copyright 2013 Luís Almeida
+ * https://github.com/luis-almeida
+ */
 
-(function($) {
-    // Selector to select only not already processed elements
-    $.expr[":"].notmdproc = function(obj){
-        if ($(obj).data("mdproc")) {
-            return false;
-        } else {
-            return true;
-        }
-    };
+;(function($) {
 
-    function _isChar(evt) {
-        if (typeof evt.which == "undefined") {
-            return true;
-        } else if (typeof evt.which == "number" && evt.which > 0) {
-            return !evt.ctrlKey && !evt.metaKey && !evt.altKey && evt.which != 8;
-        }
-        return false;
+  $.fn.unveil = function(threshold, callback) {
+
+    var $w = $(window),
+        th = threshold || 0,
+        retina = window.devicePixelRatio > 1,
+        attrib = retina? "data-src-retina" : "data-src",
+        images = this,
+        loaded;
+
+    this.one("unveil", function() {
+      var source = this.getAttribute(attrib);
+      source = source || this.getAttribute("data-src");
+      if (source) {
+        this.setAttribute("src", source);
+        if (typeof callback === "function") callback.call(this);
+      }
+    });
+
+    function unveil() {
+      var inview = images.filter(function() {
+        var $e = $(this);
+        if ($e.is(":hidden")) return;
+
+        var wt = $w.scrollTop(),
+            wb = wt + $w.height(),
+            et = $e.offset().top,
+            eb = et + $e.height();
+
+        return eb >= wt - th && et <= wb + th;
+      });
+
+      loaded = inview.trigger("unveil");
+      images = images.not(loaded);
     }
 
-    $.material =  {
-        "options": {
-            "withRipples": [
-                ".btn:not(.btn-link)",
-                ".card-image",
-                ".navbar a:not(.withoutripple)",
-                ".dropdown-menu a",
-                ".nav-tabs a:not(.withoutripple)",
-                ".withripple"
-            ].join(","),
-            "inputElements": "input.form-control, textarea.form-control, select.form-control",
-            "checkboxElements": ".checkbox > label > input[type=checkbox]",
-            "radioElements": ".radio > label > input[type=radio]"
-        },
-        "checkbox": function(selector) {
-            // Add fake-checkbox to material checkboxes
-            $((selector) ? selector : this.options.checkboxElements)
-            .filter(":notmdproc")
-            .data("mdproc", true)
-            .after("<span class=ripple></span><span class=check></span>");
-        },
-        "radio": function(selector) {
-            // Add fake-radio to material radios
-            $((selector) ? selector : this.options.radioElements)
-            .filter(":notmdproc")
-            .data("mdproc", true)
-            .after("<span class=circle></span><span class=check></span>");
-        },
-        "input": function(selector) {
-            $((selector) ? selector : this.options.inputElements)
-            .filter(":notmdproc")
-            .data("mdproc", true)
-            .each( function() {
-                var $this = $(this);
-                $this.wrap("<div class=form-control-wrapper></div>");
-                $this.after("<span class=material-input></span>");
-                if ($this.hasClass("floating-label")) {
-                    var placeholder = $this.attr("placeholder");
-                    $this.attr("placeholder", null).removeClass("floating-label");
-                    $this.after("<div class=floating-label>" + placeholder + "</div>");
-                }
-                if ($this.val() === null || $this.val() == "undefined" || $this.val() === "") {
-                    $this.addClass("empty");
-                }
-                if ($this.parent().next().is("[type=file]")) {
-                    $this.parent().addClass("fileinput");
-                    var $input = $this.parent().next().detach();
-                    $this.after($input);
-                }
-            });
+    $w.scroll(unveil);
+    $w.resize(unveil);
 
-            $(document)
-            .on("change", ".checkbox input", function() { $(this).blur(); })
-            .on("keydown paste", ".form-control", function(e) {
-                if(_isChar(e)) {
-                    $(this).removeClass("empty");
-                }
-            })
-            .on("keyup change", ".form-control", function() {
-                var $this = $(this);
-                if($this.val() === "") {
-                    $this.addClass("empty");
-                } else {
-                    $this.removeClass("empty");
-                }
-            })
-            .on("focus", ".form-control-wrapper.fileinput", function() {
-                $(this).find("input").addClass("focus");
-            })
-            .on("blur", ".form-control-wrapper.fileinput", function() {
-                $(this).find("input").removeClass("focus");
-            })
-            .on("change", ".form-control-wrapper.fileinput [type=file]", function() {
-                var value = "";
-                $.each($(this)[0].files, function(i, file) {
-                    console.log(file);
-                    value += file.name + ", ";
-                });
-                value = value.substring(0, value.length - 2);
-                if (value) {
-                    $(this).prev().removeClass("empty");
-                } else {
-                    $(this).prev().addClass("empty");
-                }
-                $(this).prev().val(value);
-            });
-        },
-        "ripples": function(selector) {
-            ripples.init((selector) ? selector : this.options.withRipples);
-        },
-        "init": function() {
-            this.ripples();
-            this.input();
-            this.checkbox();
-            this.radio();
+    unveil();
 
-            if (document.arrive) {
-                document.arrive("input, textarea, select", function() {
-                    $.material.init();
-                });
-            }
+    return this;
 
-            // Detect autofill
-            (function() {
-                // This part of code will detect autofill when the page is loading (username and password inputs for example)
-                var loading = setInterval(function() {
-                    $("input").each(function() {
-                        if ($(this).val() !== $(this).attr("value")) {
-                            $(this).trigger("change");
-                        }
-                    });
-                }, 100);
-                // After 10 seconds we are quite sure all the needed inputs are autofilled then we can stop checking them
-                setTimeout(function() {
-                    clearInterval(loading);
-                }, 10000);
-                // Now we just listen on inputs of the focused form (because user can select from the autofill dropdown only when the input has focus)
-                var focused;
-                $(document)
-                .on("focus", "input", function() {
-                    var $inputs = $(this).parents("form").find("input");
-                    focused = setInterval(function() {
-                        $inputs.each(function() {
-                            if ($(this).val() !== $(this).attr("value")) {
-                                $(this).trigger("change");
-                            }
-                        });
-                    }, 100);
-                })
-                .on("blur", "input", function() {
-                    clearInterval(focused);
-                });
+  };
 
-            })();
+})(window.jQuery || window.Zepto);
+;/* globals jQuery */
+
+(function($) {
+  // Selector to select only not already processed elements
+  $.expr[":"].notmdproc = function(obj){
+    if ($(obj).data("mdproc")) {
+      return false;
+    } else {
+      return true;
+    }
+  };
+
+  function _isChar(evt) {
+    if (typeof evt.which == "undefined") {
+      return true;
+    } else if (typeof evt.which == "number" && evt.which > 0) {
+      return !evt.ctrlKey && !evt.metaKey && !evt.altKey && evt.which != 8;
+    }
+    return false;
+  }
+
+  $.material =  {
+    "options": {
+      // These options set what will be started by $.material.init()
+      "input": true,
+      "ripples": true,
+      "checkbox": true,
+      "togglebutton": true,
+      "radio": true,
+      "arrive": true,
+      "autofill": true,
+
+      "withRipples": [
+        ".btn:not(.btn-link)",
+        ".card-image",
+        ".navbar a:not(.withoutripple)",
+        ".dropdown-menu a",
+        ".nav-tabs a:not(.withoutripple)",
+        ".withripple"
+      ].join(","),
+      "inputElements": "input.form-control, textarea.form-control, select.form-control",
+      "checkboxElements": ".checkbox > label > input[type=checkbox]",
+      "togglebuttonElements": ".togglebutton > label > input[type=checkbox]",
+      "radioElements": ".radio > label > input[type=radio]"
+    },
+    "checkbox": function(selector) {
+      // Add fake-checkbox to material checkboxes
+      $((selector) ? selector : this.options.checkboxElements)
+      .filter(":notmdproc")
+      .data("mdproc", true)
+      .after("<span class=ripple></span><span class=check></span>");
+    },
+    "togglebutton": function(selector) {
+      // Add fake-checkbox to material checkboxes
+      $((selector) ? selector : this.options.togglebuttonElements)
+      .filter(":notmdproc")
+      .data("mdproc", true)
+      .after("<span class=toggle></span>");
+    },
+    "radio": function(selector) {
+      // Add fake-radio to material radios
+      $((selector) ? selector : this.options.radioElements)
+      .filter(":notmdproc")
+      .data("mdproc", true)
+      .after("<span class=circle></span><span class=check></span>");
+    },
+    "input": function(selector) {
+      $((selector) ? selector : this.options.inputElements)
+      .filter(":notmdproc")
+      .data("mdproc", true)
+      .each( function() {
+        var $this = $(this);
+        $this.wrap("<div class=form-control-wrapper></div>");
+        $this.after("<span class=material-input></span>");
+
+        // Add floating label if required
+        if ($this.hasClass("floating-label")) {
+          var placeholder = $this.attr("placeholder");
+          $this.attr("placeholder", null).removeClass("floating-label");
+          $this.after("<div class=floating-label>" + placeholder + "</div>");
         }
-    };
+
+        // Add hint label if required
+        if ($this.attr("data-hint")) {
+          $this.after("<div class=hint>" + $this.attr("data-hint") + "</div>");
+        }
+
+        // Set as empty if is empty (damn I must improve this...)
+        if ($this.val() === null || $this.val() == "undefined" || $this.val() === "") {
+          $this.addClass("empty");
+        }
+
+        // Support for file input
+        if ($this.parent().next().is("[type=file]")) {
+          $this.parent().addClass("fileinput");
+          var $input = $this.parent().next().detach();
+          $this.after($input);
+        }
+      });
+
+      $(document)
+      .on("change", ".checkbox input[type=checkbox]", function() { $(this).blur(); })
+      .on("keydown paste", ".form-control", function(e) {
+        if(_isChar(e)) {
+          $(this).removeClass("empty");
+        }
+      })
+      .on("keyup change", ".form-control", function() {
+        var $this = $(this);
+        if($this.val() === "") {
+          $this.addClass("empty");
+        } else {
+          $this.removeClass("empty");
+        }
+      })
+      .on("focus", ".form-control-wrapper.fileinput", function() {
+        $(this).find("input").addClass("focus");
+      })
+      .on("blur", ".form-control-wrapper.fileinput", function() {
+        $(this).find("input").removeClass("focus");
+      })
+      .on("change", ".form-control-wrapper.fileinput [type=file]", function() {
+        var value = "";
+        $.each($(this)[0].files, function(i, file) {
+          console.log(file);
+          value += file.name + ", ";
+        });
+        value = value.substring(0, value.length - 2);
+        if (value) {
+          $(this).prev().removeClass("empty");
+        } else {
+          $(this).prev().addClass("empty");
+        }
+        $(this).prev().val(value);
+      });
+    },
+    "ripples": function(selector) {
+      $.ripples({"target": (selector) ? selector : this.options.withRipples});
+    },
+    "autofill": function() {
+
+      // This part of code will detect autofill when the page is loading (username and password inputs for example)
+      var loading = setInterval(function() {
+        $("input[type!=checkbox]").each(function() {
+          if ($(this).val() && $(this).val() !== $(this).attr("value")) {
+            $(this).trigger("change");
+          }
+        });
+      }, 100);
+
+      // After 10 seconds we are quite sure all the needed inputs are autofilled then we can stop checking them
+      setTimeout(function() {
+        clearInterval(loading);
+      }, 10000);
+      // Now we just listen on inputs of the focused form (because user can select from the autofill dropdown only when the input has focus)
+      var focused;
+      $(document)
+      .on("focus", "input", function() {
+        var $inputs = $(this).parents("form").find("input").not("[type=file]");
+        focused = setInterval(function() {
+          $inputs.each(function() {
+            if ($(this).val() !== $(this).attr("value")) {
+              $(this).trigger("change");
+            }
+          });
+        }, 100);
+      })
+      .on("blur", "input", function() {
+        clearInterval(focused);
+      });
+    },
+    "init": function() {
+      if ($.ripples && this.options.ripples) {
+        this.ripples();
+      }
+      if (this.options.input) {
+        this.input();
+      }
+      if (this.options.checkbox) {
+        this.checkbox();
+      }
+      if (this.options.togglebutton) {
+        this.togglebutton();
+      }
+      if (this.options.radio) {
+        this.radio();
+      }
+      if (this.options.autofill) {
+        this.autofill();
+      }
+
+      if (document.arrive && this.options.arrive) {
+        $(document).arrive(this.options.inputElements, function() {
+          $.material.input($(this));
+        });
+        $(document).arrive(this.options.checkboxElements, function() {
+          $.material.checkbox($(this));
+        });
+        $(document).arrive(this.options.radioElements, function() {
+          $.material.radio($(this));
+        });
+        $(document).arrive(this.options.togglebuttonElements, function() {
+          $.material.togglebutton($(this));
+        });
+      }
+    }
+  };
 
 })(jQuery);
 ;/* Copyright 2014+, Federico Zivolo, LICENSE at https://github.com/FezVrasta/bootstrap-material-design/blob/master/LICENSE.md */
-/* globals CustomEvent */
-window.ripples = {
-    init : function(withRipple) {
-        "use strict";
+/* globals jQuery, navigator */
 
-        // Cross browser matches function
-        function matchesSelector(domElement, selector) {
-            var matches = domElement.matches ||
-                domElement.matchesSelector ||
-                domElement.webkitMatchesSelector ||
-                domElement.mozMatchesSelector ||
-                domElement.msMatchesSelector ||
-                domElement.oMatchesSelector;
-            return matches.call(domElement, selector);
-        }
+(function($) {
 
-        // animations time
-        var rippleOutTime = 100,
-            rippleStartTime = 500;
+  // Detect if the browser supports transitions
+  $.support.transition = (function(){
+    var thisBody = document.body || document.documentElement,
+        thisStyle = thisBody.style,
+        support = (
+          thisStyle.transition !== undefined ||
+          thisStyle.WebkitTransition !== undefined ||
+          thisStyle.MozTransition !== undefined ||
+          thisStyle.MsTransition !== undefined ||
+          thisStyle.OTransition !== undefined
+        );
+    return support;
+  })();
 
-        // Helper to bind events on dynamically created elements
-        var bind = function(events, selector, callback) {
-            if (typeof events === "string") {
-                events = [events];
-            }
-            events.forEach(function(event) {
-                document.addEventListener(event, function(e) {
-                    var target = (typeof e.detail !== "number") ? e.detail : e.target;
+  $.ripples = function(options) {
 
-                    if (matchesSelector(target, selector)) {
-                        callback(e, target);
-                    }
-                });
-            });
-        };
-
-        var rippleStart = function(e, target, callback) {
-
-            // Init variables
-            var $rippleWrapper      = target,
-                $el                 = $rippleWrapper.parentNode,
-                $ripple             = document.createElement("div"),
-                elPos               = $el.getBoundingClientRect(),
-                // Mouse pos in most cases
-                mousePos            = {x: e.clientX - elPos.left, y: ((window.ontouchstart) ? e.clientY - window.scrollY: e.clientY) - elPos.top},
-                scale               = "scale(" + Math.round($rippleWrapper.offsetWidth / 5) + ")",
-                rippleEnd           = new CustomEvent("rippleEnd", {detail: $ripple}),
-                _rippleOpacity      = 0.3,
-                refreshElementStyle;
+    // Default options
+    var defaultOptions = {
+      "target": ".btn:not(.btn-link), .card-image, .navbar a:not(.withoutripple), .nav-tabs a:not(.withoutripple), .withripple"
+    };
 
 
-            // If multitouch is detected or some other black magic suff is happening...
-            if (e.touches) {
-                mousePos  = {x: e.touches[0].clientX - elPos.left, y:  e.touches[0].clientY - elPos.top};
-            }
+    function isTouch() {
+      return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+    }
 
-            $ripplecache = $ripple;
 
-            // Set ripple class
-            $ripple.className = "ripple";
+    // Fade out the ripple and then destroy it
+    function rippleOut(ripple) {
 
-            // Move ripple to the mouse position
-            $ripple.setAttribute("style", "left:" + mousePos.x + "px; top:" + mousePos.y + "px;");
+      // Unbind events from ripple
+      ripple.off();
 
-            // Get the clicked target's text color, this will be applied to the ripple as background-color.
-            var targetColor = window.getComputedStyle($el).color;
-
-            // Convert the rgb color to an rgba color with opacity set to __rippleOpacity__
-            targetColor = targetColor.replace("rgb", "rgba").replace(")",  ", " + _rippleOpacity + ")");
-
-            // Insert new ripple into ripple wrapper
-            $rippleWrapper.appendChild($ripple);
-
-            // Make sure the ripple has the class applied (ugly hack but it works)
-            refreshElementStyle = window.getComputedStyle($ripple).opacity;
-
-            // Let other funtions know that this element is animating
-            $ripple.dataset.animating = 1;
-
-            // Set scale value, background-color and opacity to ripple and animate it
-            $ripple.className = "ripple ripple-on";
-
-            // Prepare the style of the ripple
-            var rippleStyle = [
-                $ripple.getAttribute("style"),
-                "background-color: " + targetColor,
-                "-ms-transform: " + scale,
-                "-moz-transform" + scale,
-                "-webkit-transform" + scale,
-                "transform: " + scale
-            ];
-
-            // Apply the style
-            $ripple.setAttribute("style", rippleStyle.join(";"));
-
-            // This function is called when the animation is finished
-            setTimeout(function() {
-
-                // Let know to other functions that this element has finished the animation
-                $ripple.dataset.animating = 0;
-                document.dispatchEvent(rippleEnd);
-                if (callback) {
-                    callback();
-                }
-
-            }, rippleStartTime);
-
-        };
-
-        var rippleOut = function($ripple) {
-            // Clear previous animation
-            $ripple.className = "ripple ripple-on ripple-out";
-
-            // Let ripple fade out (with CSS)
-            setTimeout(function() {
-                $ripple.remove();
-            }, rippleOutTime);
-        };
-
-        // Helper, need to know if mouse is up or down
-        var mouseDown = false;
-        bind(["mousedown", "touchstart"], "*", function() {
-            mouseDown = true;
+      // Start the out animation
+      if ($.support.transition) {
+        ripple.addClass("ripple-out");
+      } else {
+        ripple.animate({
+          "opacity": 0
+        }, 100, function() {
+          ripple.trigger("transitionend");
         });
-        bind(["mouseup", "touchend", "mouseout"], "*", function() {
-            mouseDown = false;
-        });
+      }
 
-        // Append ripple wrapper if not exists already
-        var rippleInit = function(e, target) {
-            if (target.getElementsByClassName("ripple-wrapper").length === 0) {
-                target.className += " withripple";
-                var $rippleWrapper = document.createElement("div");
-                $rippleWrapper.className = "ripple-wrapper";
-                target.appendChild($rippleWrapper);
-                if (window.ontouchstart === null) {
-                    rippleStart(e, $rippleWrapper, function() {
-                        // FIXME: ugly fix for first touchstart event on mobile devices...
-                        $rippleWrapper.getElementsByClassName("ripple")[0].remove();
-                    });
-                }
-            }
-        };
-
-        var $ripplecache;
-
-        // Events handler
-        // init RippleJS and start ripple effect on mousedown
-        bind(["mouseover", "touchstart"], withRipple, rippleInit);
-
-        // start ripple effect on mousedown
-        bind(["mousedown", "touchstart"], ".ripple-wrapper", function(e, $ripple) {
-            // Start ripple only on left or middle mouse click and touch click
-            if (e.which === 0 || e.which === 1 || e.which === 2) {
-                rippleStart(e, $ripple);
-            }
-        });
-
-        // if animation ends and user is not holding mouse then destroy the ripple
-        bind("rippleEnd", ".ripple-wrapper .ripple", function(e, $ripple) {
-
-            var $ripples = $ripple.parentNode.getElementsByClassName("ripple");
-
-            if (!mouseDown || ( $ripples[0] == $ripple && $ripples.length > 1)) {
-                rippleOut($ripple);
-            }
-        });
-
-        // Destroy ripple when mouse is not holded anymore if the ripple still exists
-        bind(["mouseup", "touchend", "mouseout"], ".ripple-wrapper", function() {
-            var $ripple = $ripplecache;
-            if ($ripple && $ripple.dataset.animating != 1) {
-                rippleOut($ripple);
-            }
-        });
+      // This function is called when the transition "out" ends
+      ripple.on("transitionend webkitTransitionEnd oTransitionEnd MSTransitionEnd", function(){
+        ripple.remove();
+      });
 
     }
-};
+
+    // Apply custom options
+    options = $.extend(defaultOptions, options);
+
+
+    $(document)
+    .on("mousedown touchstart", options.target, function(e) {
+      if (isTouch() && e.type == "mousedown") {
+        return false;
+      }
+
+      var element = $(this);
+
+      // If the ripple wrapper does not exists, create it
+      if (!$(this).find(".ripple-wrapper").length) {
+        $(this).append("<div class=ripple-wrapper></div>");
+      }
+
+      var wrapper = $(this).find(".ripple-wrapper");
+
+
+      var wrapperOffset = wrapper.offset(),
+          relX,
+          relY;
+      if (!isTouch()) {
+        // Get the mouse position relative to the ripple wrapper
+        relX = e.pageX - wrapperOffset.left;
+        relY = e.pageY - wrapperOffset.top;
+      } else {
+        // Make sure the user is using only one finger and then get the touch position relative to the ripple wrapper
+        e = e.originalEvent;
+        if (e.touches.length === 1) {
+          relX = e.touches[0].pageX - wrapperOffset.left;
+          relY = e.touches[0].pageY - wrapperOffset.top;
+        } else {
+          return;
+        }
+      }
+
+      // Meet the new ripple
+      var ripple = $("<div></div>");
+
+      // Add to it the ripple class
+      ripple.addClass("ripple");
+
+      // Position it in the right place
+      ripple.css({"left": relX, "top": relY});
+
+      // Set the background color of the ripple
+      ripple.css({"background-color": window.getComputedStyle($(this)[0]).color});
+
+      // Spawn it
+      wrapper.append(ripple);
+
+      // Make sure the ripple has the styles applied (ugly hack but it works)
+      (function() { return window.getComputedStyle(ripple[0]).opacity; })();
+
+      // Set the new size
+      var size = (Math.max($(this).outerWidth(), $(this).outerHeight()) / ripple.outerWidth()) * 2.5;
+
+
+      // Decide if use CSS transitions or jQuery transitions
+      if ($.support.transition) {
+        // Start the transition
+        ripple.css({
+          "-ms-transform": "scale(" + size + ")",
+          "-moz-transform": "scale(" + size + ")",
+          "-webkit-transform": "scale(" + size + ")",
+          "transform": "scale(" + size + ")"
+        });
+        ripple.addClass("ripple-on");
+        ripple.data("animating", "on");
+        ripple.data("mousedown", "on");
+      } else {
+        // Start the transition
+        ripple.animate({
+          "width": Math.max($(this).outerWidth(), $(this).outerHeight()) * 2,
+          "height": Math.max($(this).outerWidth(), $(this).outerHeight()) * 2,
+          "margin-left": Math.max($(this).outerWidth(), $(this).outerHeight()) * -1,
+          "margin-top": Math.max($(this).outerWidth(), $(this).outerHeight()) * -1,
+          "opacity": 0.2
+        }, 500, function() {
+          ripple.trigger("transitionend");
+        });
+      }
+
+      // This function is called when the transition "on" ends
+      setTimeout(function() {
+        ripple.data("animating", "off");
+        if (ripple.data("mousedown") == "off") {
+          rippleOut(ripple);
+        }
+      }, 500);
+
+      // On mouseup or on mouseleave, set the mousedown flag to "off" and try to destroy the ripple
+      element.on("mouseup mouseleave", function() {
+        ripple.data("mousedown", "off");
+        // If the transition "on" is finished then we can destroy the ripple with transition "out"
+        if (ripple.data("animating") == "off") {
+          rippleOut(ripple);
+        }
+      });
+
+    });
+
+  };
+
+  $.fn.ripples = function() {
+    $.ripples({"target": $(this)});
+  };
+
+})(jQuery);
 ;/* ========================================================================
  * DOM-based Routing
  * Based on http://goo.gl/EUTi53 by Paul Irish
@@ -5927,19 +6022,19 @@ var Roots = {
 			}
 			
 			// Takes the gutter width from the bottom margin of .post
-			var firstItem =		'#menu-expanded-navigation > li.menu-item-first';
-			var itemSelector =	'#menu-expanded-navigation > li';
-			var gutter =		parseInt($(itemSelector).css('marginBottom'));
-			var container =		$('#menu-expanded-navigation');
+			var menuFirstItem =		'#menu-expanded-navigation > li.menu-item-first';
+			var menuItemSelector =	'#menu-expanded-navigation > li';
+			var menuGutter =		parseInt($(menuItemSelector).css('marginBottom'));
+			var menuContainer =		$('#menu-expanded-navigation');
 		 
 		 
 		 
 			// Creates an instance of Masonry on #posts
 		 
-			var $exMenMason = container.masonry({
-				gutter: gutter,
-				itemSelector: itemSelector,
-				columnWidth: firstItem
+			var $exMenMason = menuContainer.masonry({
+				gutter: menuGutter,
+				itemSelector: menuItemSelector,
+				columnWidth: menuFirstItem
 			});
 			
 			$exMenMason.on( 'layoutComplete', function() {
@@ -5994,12 +6089,17 @@ var Roots = {
 			
 			/* Header */
 			
+			var wh;
+			var ww;
+			
 			$(window).on('resize', function() {
 				
 				var $media = $(".hero-background > img");
+				var $section = $(".hero-media .hero-section");
+				var sectionHeight = $section.outerHeight();
 				
-				var wh = window.innerHeight;
-				var ww = window.innerWidth;
+				wh = window.innerHeight;
+				ww = window.innerWidth;
 				
 				var ratio = 9/16;
 				
@@ -6018,7 +6118,7 @@ var Roots = {
 					}
 				}
 				 
-				$(".hero-media .hero-section")
+				$section
 					.css("height", heroHeight)
 					.css("max-height", maxHeroHeight);
 					
@@ -6030,7 +6130,7 @@ var Roots = {
 						var top_offset = Math.round(
 							(
 								( ww*ratio ) - wh
-							)/2 
+							)/2
 						);
 						
 						$(this).css("margin-top", -top_offset+"px");
@@ -6050,17 +6150,17 @@ var Roots = {
 				if (!$('#menu-expanded-navigation').parent().hasClass('container')) {
 					
 					// Resets all widths to 'auto' to sterilize calculations
-					var post_width = $(firstItem).width() + gutter;
+					var post_width = $(menuFirstItem).width() + menuGutter;
 					$('#menu-expanded-navigation, .expanded-nav').css('width', 'auto');
 					
 					
 					
 					// Calculates how many .post elements will actually fit per row. Could this code be cleaner?
 					var posts_per_row = $('#menu-expanded-navigation').innerWidth() / post_width;
-					var floor_posts_width = (Math.floor(posts_per_row) * post_width) - gutter;
-					var ceil_posts_width = (Math.ceil(posts_per_row) * post_width) - gutter;
+					var floor_posts_width = (Math.floor(posts_per_row) * post_width) - menuGutter;
+					var ceil_posts_width = (Math.ceil(posts_per_row) * post_width) - menuGutter;
 					var posts_width = (ceil_posts_width > $('#menu-expanded-navigation').innerWidth()) ? floor_posts_width : ceil_posts_width;
-					if (posts_width === $(itemSelector).width()) {
+					if (posts_width === $(menuItemSelector).width()) {
 						posts_width = '100%';
 					}
 					
@@ -6084,9 +6184,10 @@ var Roots = {
 			*/
 			
 			
-			var $boxes = $('.hero-slick .hero-section');
+			//Hero Slickize
+			var $heroes = $('.hero-slick .hero-section');
 				
-			$boxes.slick({
+			$heroes.slick({
 				arrows: !Modernizr.touch,
 				autoplay: true,
 				autoplaySpeed: 6000,
@@ -6096,15 +6197,12 @@ var Roots = {
 			});
 			
 			
-			
-			function boxize($boxesContainer){
+			//Slider Boxes
+			function slickize($boxesContainer){
 					
 				var $frame = $boxesContainer.find('.frame'); window.frr = $frame;
 				
 				var slidesToShow = $frame.data("show");
-				
-				//console.log( slidesToShow );
-				
 				
 				$frame.find("ul").slick({
 					arrows: !Modernizr.touch,
@@ -6123,27 +6221,117 @@ var Roots = {
 						}
 					}]
 				});
-			
-				// Method calling buttons
-				$boxesContainer.on('click', 'button[data-action]', function () {
-					var action = $(this).data('action');
-			
-					switch (action) {
-						case 'add':
-							//Add slide function
-							break;
-						case 'remove':
-							//Remove slide function
-							break;
-						default:
-							sly[action]();
-					}
-				});
 			}
 			
 			
+			//Masonry Boxes
+			function masonize($boxesContainer){
+				
+				// Takes the gutter width from the bottom margin
+				var $frame = $boxesContainer.find('.frame'); window.frr = $frame;
+				var $list = $boxesContainer.find('.frame ul');
+				var $firstItem =		$list.find("li:first-child");
+				var $itemSelector =	$list.find("li");
+				var gutter =		parseInt($itemSelector.css('marginBottom'));
+				var slidesToShow = $frame.data("show");
+
+				
+				// Creates an instance of Masonry
+				var $boxesMason = $list.masonry({
+					gutter: gutter,
+					itemSelector: 'li',
+					columnWidth: 'li:first-child'
+				});
+				
+				var frameHeight = $list.outerHeight(true);
+				var frameTop = $list.offset().top;
+				var frameBottom = frameTop+frameHeight;
+				var scrollBottom = $(window).scrollTop() + wh;
+				var $nextRow = $list.find(".box-lazyload").slice(0,slidesToShow);
+				var scrollEvents = 'scroll DOMMouseScroll';
+				var scrollTimer;
+				
+				//Relayout Listener
+/*
+				$boxesMason.on( 'layoutComplete', function() {
+					
+				});
+*/
+				
+				$list.masonry( 'on', 'layoutComplete', function( msnryInstance, laidOutItems ) {
+					frameHeight = $list.outerHeight(true);
+					frameTop = $list.offset().top;
+					frameBottom = frameTop+frameHeight;
+					
+					if( $nextRow.length ) {
+						
+						clearTimeout(scrollTimer);
+					    scrollTimer = setTimeout(function() {
+					        
+					        loadBoxes();
+					        
+					    }, 100);
+					    
+					}
+				});
+				
+				
+				function loadBoxes() {
+					
+					scrollBottom = $(window).scrollTop() + wh;
+					
+			        if( scrollBottom >= frameBottom + 100 ) {
+				        
+			            $nextRow = $list.find(".box-lazyload").slice(0,slidesToShow);
+			            
+			            $nextRow.each(function( i ){
+				            var $box = $(this);
+				            var $image = $(this).find('.box-image img');
+				            var delay = i*100;
+				            
+				            $box.css('transition-delay', delay+'ms');//Staggering
+				            
+				            $image.unveil(0, function() {
+								$(this).load(function() {
+									$box.removeClass("box-lazyload");
+									//if( i === $nextRow.length-1 ){
+										$list.masonry();
+									//}
+								});
+							});
+			            });
+			            
+			        }
+			        
+			        return false;
+			        
+			        //$itemSelector.find(".box-lazyload").slice(0,2)
+			    }
+				
+				$(window).on( scrollEvents, function(event) {
+					clearTimeout(scrollTimer);
+				    scrollTimer = setTimeout(function() {
+				        
+				        loadBoxes(event);
+				        
+				    }, 100);
+				    event.stopPropagation();
+				}).trigger('scroll');
+				
+				//var slidesToShow = $list.data("show");
+			}
+			
+			//Let's make som slides
 			$('.box-boxes').each(function() {
-				boxize( $(this) );
+				
+				//$boxesContainer
+				var $this = $(this);
+				
+				if( $this.hasClass('boxes-slick') ){
+					slickize( $this );
+				} else if( $this.hasClass('boxes-masonry') ){
+					masonize( $this );
+				}
 				
 				if( $(this).hasClass("double-stacked") ){
 					//sizeFirstBox( $(this) );
