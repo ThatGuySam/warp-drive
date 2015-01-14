@@ -86,8 +86,6 @@ function boxesVimeo($boxes) {
 			$d++;
 		}
 		
-		//debug( $details );
-		
 		if( !empty($details->date) ){
 			$date = date( "F jS" , strtotime( $details->date ) );
 		} else {
@@ -232,7 +230,7 @@ function boxesEvents($boxes) {
 			$e_box->date_unix			= strtotime($date_raw);
 			$e_box->id					= $id;
 			$e_box->title				= $title;
-			$e_box->image_url			= getThumb( $id );
+			$e_box->image_url			= getImage( $id );
 			$e_box->type				= "event";
 			$e_box->color				= get_field('page_color', $id);
 			$e_box->link				= $boxes->site_url."/?p=".$id;
@@ -253,6 +251,65 @@ function boxesEvents($boxes) {
 	
 }
 
+
+function boxesCategory($boxes) {
+	
+	//debug( $boxes );
+	
+	// WP_Query arguments
+	$args = array (
+		'category_name'          => $boxes->source,
+		'posts_per_page'         => '100',
+	);
+	
+	// The Query
+	$query = new WP_Query( $args );
+	
+	$ids = array();
+	
+	if( $query->have_posts() ) {
+		$c = '0';
+		foreach($query->posts as $post) {
+			
+			//Let's Go
+			$c_box = new stdClass();
+			
+			$id = $post->ID;
+			
+			//Date
+			$date = date( "F jS" , strtotime( $post->post_date ) );
+			
+			$thumb = getImage($id);
+			
+			$c_box->date				= $date;
+			$c_box->date_unix			= strtotime( $post->post_date );
+			$c_box->id					= $id;
+			$c_box->title				= $post->post_title;
+			$c_box->image_url			= $thumb;
+			$c_box->type				= 'post';
+			$c_box->color				= get_field('page_color', $id);
+			$c_box->link				= $boxes->site_url."/?p=".$id;
+			$c_box->index				= $c;
+			
+			$boxes->objects[$c] = $c_box;
+			
+			$c++;
+		}
+	}
+	
+	
+	
+	//Sort by date
+	
+	//usort( $boxes->objects, 'date_sort_objects');
+	
+	$output = $boxes->objects;
+	
+	//return $ids;
+	
+	return $output;
+	
+}
 
 
 
@@ -279,7 +336,10 @@ class Boxes {
 			'class'		=> false,
 			'amount'	=> 8,
 			'show'		=> 3,
+			'layout'	=> 'slick'
 		), $atts, 'boxes' ) );
+		
+		global $post;
 		
 		$boxes = new stdClass();
 			
@@ -291,13 +351,29 @@ class Boxes {
 		
 		$boxes->links_type = "normal";
 		
-		global $post;
-		
 		$boxes->post = $post;
 		
-		foreach ($atts as $key => $value) {$boxes->{$key} = $value; }//Convert Shortcode attributes to object values
+		foreach ($atts as $key => $value) {$boxes->{$key} = $value;}//Convert Shortcode attributes to object values
+		
+		if( empty( $boxes->layout ) ) $boxes->layout = 'slick';
 		
 		$parsed_classes = explode(' ', $class);
+		
+		$boxes->child_classes = '';
+		
+		if( $boxes->layout == 'masonry' ){ 
+			
+			$col_width = 6;
+			
+			if( $boxes->show < 5 ) $col_width = 12 / $boxes->show;
+			
+			array_push( $parsed_classes , 'thin-padding');
+			$boxes->child_classes = 'col-sm-6 col-md-'.$col_width;
+			$boxes->srcType = 'src';
+			$boxes->amount = $boxes->show;
+		}
+		
+		$boxes->class = implode ( ' ',$parsed_classes );
 		
 		$props = array();
 		
@@ -305,9 +381,9 @@ class Boxes {
 			$props[$prop] = true;
 		}
 		
-		//$debug = $props;
-		
 		$boxes->props = $props;
+		
+		//$debug = $boxes->props;
 		
 		
 		//Feed Type
@@ -328,6 +404,7 @@ class Boxes {
 		        
 		        $boxes->cache->function_name = "boxesVimeo";
 		        $boxes->cache->cache_name = "vimeo";
+		        //$boxes->cache->json = true;
 		        
 		        $boxes->objects = cacheHandler( $boxes );
 		        
@@ -349,7 +426,18 @@ class Boxes {
 				
 		        break;
 		    case "category":
-		        echo $source;
+		        
+		        $boxes->id = $source;
+		    	
+		    	$boxes->cache->function_name = 'boxesCategory';
+		        $boxes->cache->cache_name = 'category';
+				
+				//$boxes->objects = cacheHandler( $boxes );
+				
+				$boxes->objects = boxesCategory($boxes);
+				
+				//debug( $boxes );
+				
 		        break;
 		    case "youtube":
 		        echo $source;
@@ -388,14 +476,15 @@ class Boxes {
 					<?php if( $boxes->objects ): foreach($boxes->objects as $key => $box): ?>
 					
 						<?php 
+							
+							//Reset $boxes->child_class to prevent stacking
+							$boxes->child_class = $boxes->child_classes;
+							
+							
 							if( isset( $props['date-format-human'] ) ){
-								
 								$normal_date = strtotime( $box->date );
-								
 								if( strtotime( $box->title ) ) $normal_date = strtotime( $box->title );
-								
 								$box->title = ago( $normal_date );
-								
 							}
 							
 							//Hash Links
@@ -403,12 +492,22 @@ class Boxes {
 								$box->link = "#".$box->id;
 							}
 							
-							$box->srcType = 'src="'.get_template_directory_uri().'/assets/img/blank.gif" data-lazy';
+							if( empty($boxes->srcType) ){
+								$box->srcType = 'src="'.get_template_directory_uri().'/assets/img/blank.gif" data-lazy';
+							} else {
+								$box->srcType = $boxes->srcType;
+							}
 							//if( $key < $boxes->show ) $box->srcType = "src";//if is showing don't lazyload
+							
+							
+							if( $boxes->layout == 'masonry' && $box->index >= $boxes->amount ){
+								$boxes->child_class = $boxes->child_class." box-lazyload ease-opacity";
+								$box->srcType = 'src="'.get_template_directory_uri().'/assets/img/blank.gif" data-src';
+							}
 						?>
 						
 						
-							<?php if( !isset( $props['double-stacked'] ) || $box->index % 2 != 0 || !$box->index ){ ?><li><?php } ?>
+							<?php if( !isset( $props['double-stacked'] ) || $box->index % 2 != 0 || !$box->index ){ ?><li class="<?php echo $boxes->child_class; ?>" ><?php } ?>
 								
 								<div id="box-<?php echo $type; ?>-<?php echo $box->id; ?>" class="box-box box-<?php echo $box->type; ?> easecubic" style="<?php 
 								//BG Color Overlay
@@ -428,17 +527,14 @@ class Boxes {
 											</div>
 										</div>
 										
-										
-									
 										<div class="box-caption easecubic"><p><?php echo parse_title( $box->desc ); ?></p></div>
-										
 										
 									</a>
 								</div>
 								
 							<?php if( !isset( $props['double-stacked'] ) || $box->index % 2 == 0 || !$box->index  ){ ?></li><?php } ?>
 						
-					<?php if( $box->index >= $boxes->amount-1 ){ break; } endforeach;/* foreach($boxes->objects) */ endif;/* if( $boxes->objects ) */ ?>
+					<?php endforeach;/* foreach($boxes->objects) */ endif;/* if( $boxes->objects ) */ ?>
 				</ul>
 			</div>
 			

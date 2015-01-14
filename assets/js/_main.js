@@ -105,19 +105,19 @@ var Roots = {
 			}
 			
 			// Takes the gutter width from the bottom margin of .post
-			var firstItem =		'#menu-expanded-navigation > li.menu-item-first';
-			var itemSelector =	'#menu-expanded-navigation > li';
-			var gutter =		parseInt($(itemSelector).css('marginBottom'));
-			var container =		$('#menu-expanded-navigation');
+			var menuFirstItem =		'#menu-expanded-navigation > li.menu-item-first';
+			var menuItemSelector =	'#menu-expanded-navigation > li';
+			var menuGutter =		parseInt($(menuItemSelector).css('marginBottom'));
+			var menuContainer =		$('#menu-expanded-navigation');
 		 
 		 
 		 
 			// Creates an instance of Masonry on #posts
 		 
-			var $exMenMason = container.masonry({
-				gutter: gutter,
-				itemSelector: itemSelector,
-				columnWidth: firstItem
+			var $exMenMason = menuContainer.masonry({
+				gutter: menuGutter,
+				itemSelector: menuItemSelector,
+				columnWidth: menuFirstItem
 			});
 			
 			$exMenMason.on( 'layoutComplete', function() {
@@ -172,12 +172,17 @@ var Roots = {
 			
 			/* Header */
 			
+			var wh;
+			var ww;
+			
 			$(window).on('resize', function() {
 				
 				var $media = $(".hero-background > img");
+				var $section = $(".hero-media .hero-section");
+				var sectionHeight = $section.outerHeight();
 				
-				var wh = window.innerHeight;
-				var ww = window.innerWidth;
+				wh = window.innerHeight;
+				ww = window.innerWidth;
 				
 				var ratio = 9/16;
 				
@@ -196,7 +201,7 @@ var Roots = {
 					}
 				}
 				 
-				$(".hero-media .hero-section")
+				$section
 					.css("height", heroHeight)
 					.css("max-height", maxHeroHeight);
 					
@@ -208,7 +213,7 @@ var Roots = {
 						var top_offset = Math.round(
 							(
 								( ww*ratio ) - wh
-							)/2 
+							)/2
 						);
 						
 						$(this).css("margin-top", -top_offset+"px");
@@ -228,17 +233,17 @@ var Roots = {
 				if (!$('#menu-expanded-navigation').parent().hasClass('container')) {
 					
 					// Resets all widths to 'auto' to sterilize calculations
-					var post_width = $(firstItem).width() + gutter;
+					var post_width = $(menuFirstItem).width() + menuGutter;
 					$('#menu-expanded-navigation, .expanded-nav').css('width', 'auto');
 					
 					
 					
 					// Calculates how many .post elements will actually fit per row. Could this code be cleaner?
 					var posts_per_row = $('#menu-expanded-navigation').innerWidth() / post_width;
-					var floor_posts_width = (Math.floor(posts_per_row) * post_width) - gutter;
-					var ceil_posts_width = (Math.ceil(posts_per_row) * post_width) - gutter;
+					var floor_posts_width = (Math.floor(posts_per_row) * post_width) - menuGutter;
+					var ceil_posts_width = (Math.ceil(posts_per_row) * post_width) - menuGutter;
 					var posts_width = (ceil_posts_width > $('#menu-expanded-navigation').innerWidth()) ? floor_posts_width : ceil_posts_width;
-					if (posts_width === $(itemSelector).width()) {
+					if (posts_width === $(menuItemSelector).width()) {
 						posts_width = '100%';
 					}
 					
@@ -262,9 +267,10 @@ var Roots = {
 			*/
 			
 			
-			var $boxes = $('.hero-slick .hero-section');
+			//Hero Slickize
+			var $heroes = $('.hero-slick .hero-section');
 				
-			$boxes.slick({
+			$heroes.slick({
 				arrows: !Modernizr.touch,
 				autoplay: true,
 				autoplaySpeed: 6000,
@@ -274,15 +280,12 @@ var Roots = {
 			});
 			
 			
-			
-			function boxize($boxesContainer){
+			//Slider Boxes
+			function slickize($boxesContainer){
 					
 				var $frame = $boxesContainer.find('.frame'); window.frr = $frame;
 				
 				var slidesToShow = $frame.data("show");
-				
-				//console.log( slidesToShow );
-				
 				
 				$frame.find("ul").slick({
 					arrows: !Modernizr.touch,
@@ -301,27 +304,117 @@ var Roots = {
 						}
 					}]
 				});
-			
-				// Method calling buttons
-				$boxesContainer.on('click', 'button[data-action]', function () {
-					var action = $(this).data('action');
-			
-					switch (action) {
-						case 'add':
-							//Add slide function
-							break;
-						case 'remove':
-							//Remove slide function
-							break;
-						default:
-							sly[action]();
-					}
-				});
 			}
 			
 			
+			//Masonry Boxes
+			function masonize($boxesContainer){
+				
+				// Takes the gutter width from the bottom margin
+				var $frame = $boxesContainer.find('.frame'); window.frr = $frame;
+				var $list = $boxesContainer.find('.frame ul');
+				var $firstItem =		$list.find("li:first-child");
+				var $itemSelector =	$list.find("li");
+				var gutter =		parseInt($itemSelector.css('marginBottom'));
+				var slidesToShow = $frame.data("show");
+
+				
+				// Creates an instance of Masonry
+				var $boxesMason = $list.masonry({
+					gutter: gutter,
+					itemSelector: 'li',
+					columnWidth: 'li:first-child'
+				});
+				
+				var frameHeight = $list.outerHeight(true);
+				var frameTop = $list.offset().top;
+				var frameBottom = frameTop+frameHeight;
+				var scrollBottom = $(window).scrollTop() + wh;
+				var $nextRow = $list.find(".box-lazyload").slice(0,slidesToShow);
+				var scrollEvents = 'scroll DOMMouseScroll';
+				var scrollTimer;
+				
+				//Relayout Listener
+/*
+				$boxesMason.on( 'layoutComplete', function() {
+					
+				});
+*/
+				
+				$list.masonry( 'on', 'layoutComplete', function( msnryInstance, laidOutItems ) {
+					frameHeight = $list.outerHeight(true);
+					frameTop = $list.offset().top;
+					frameBottom = frameTop+frameHeight;
+					
+					if( $nextRow.length ) {
+						
+						clearTimeout(scrollTimer);
+					    scrollTimer = setTimeout(function() {
+					        
+					        loadBoxes();
+					        
+					    }, 100);
+					    
+					}
+				});
+				
+				
+				function loadBoxes() {
+					
+					scrollBottom = $(window).scrollTop() + wh;
+					
+			        if( scrollBottom >= frameBottom + 100 ) {
+				        
+			            $nextRow = $list.find(".box-lazyload").slice(0,slidesToShow);
+			            
+			            $nextRow.each(function( i ){
+				            var $box = $(this);
+				            var $image = $(this).find('.box-image img');
+				            var delay = i*100;
+				            
+				            $box.css('transition-delay', delay+'ms');//Staggering
+				            
+				            $image.unveil(0, function() {
+								$(this).load(function() {
+									$box.removeClass("box-lazyload");
+									//if( i === $nextRow.length-1 ){
+										$list.masonry();
+									//}
+								});
+							});
+			            });
+			            
+			        }
+			        
+			        return false;
+			        
+			        //$itemSelector.find(".box-lazyload").slice(0,2)
+			    }
+				
+				$(window).on( scrollEvents, function(event) {
+					clearTimeout(scrollTimer);
+				    scrollTimer = setTimeout(function() {
+				        
+				        loadBoxes(event);
+				        
+				    }, 100);
+				    event.stopPropagation();
+				}).trigger('scroll');
+				
+				//var slidesToShow = $list.data("show");
+			}
+			
+			//Let's make som slides
 			$('.box-boxes').each(function() {
-				boxize( $(this) );
+				
+				//$boxesContainer
+				var $this = $(this);
+				
+				if( $this.hasClass('boxes-slick') ){
+					slickize( $this );
+				} else if( $this.hasClass('boxes-masonry') ){
+					masonize( $this );
+				}
 				
 				if( $(this).hasClass("double-stacked") ){
 					//sizeFirstBox( $(this) );

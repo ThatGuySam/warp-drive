@@ -8,8 +8,8 @@ function heroOrganism($hero) {
 		case "text":
 			
 		break;
-		case "media":
-		
+		case 'media':
+			
 			ob_start(); ?>
 			
 			<div class="hero-slide" >
@@ -26,9 +26,44 @@ function heroOrganism($hero) {
 				
 					<div class="container">
 						<div class="page-header">
-							<h1>
-								<?php echo parse_title( $hero->text ); ?>
-							</h1>
+							<h1><?php 
+								echo parse_title( $hero->text ); 
+							?></h1>
+						</div>
+					</div>
+					
+				</div>
+				
+			</div>
+			
+			<?php $hero->output = ob_get_clean();
+			
+		break;
+		case 'post':
+			
+			ob_start(); ?>
+			
+			<div class="hero-slide" >
+				
+				<div class="hero-background">
+					<img <?php echo $hero->srcType; ?>="<?php echo $hero->src; ?>" alt="<?php echo $hero->text; ?>">
+				</div>
+				
+				<div class="hero-foreground animated fadeIn animated-3s animated-delay-1s" style="<?php //BG Color Overlay
+					if( get_field('page_color') ): 
+						?>background: <?php echo get_field('page_color'); ?>; <?php //#000000
+						?>background: rgba(<?php echo hex2rgb( get_field('page_color') ); ?>,0.85); <?php //rgba(0,0,0,0.8)
+					endif; ?>">
+				
+					<div class="container">
+						<div class="page-header">
+							<h1><?php
+								echo parse_title( $hero->text ); 
+							?></h1>
+							<div class="hero-content">
+								<p class="byline author vcard"><?php echo __('by', 'roots'); ?> <a href="<?php echo get_author_posts_url(get_the_author_meta('ID')); ?>" rel="author" class="fn"><?php echo get_the_author(); ?></a></p>
+							</div>
+							
 						</div>
 					</div>
 					
@@ -40,7 +75,7 @@ function heroOrganism($hero) {
 			
 		break;
 		case "event":
-		
+			
 			ob_start(); ?>
 			
 			<div class="hero-slide" >
@@ -78,8 +113,6 @@ function heroOrganism($hero) {
 			
 		break;
 		case "program":
-			
-			//debug( $hero );
 			
 			ob_start(); ?>
 			
@@ -129,8 +162,6 @@ function heroOrganism($hero) {
 			
 			<div class="hero-slide" >
 				
-				<?php //debug( $hero ); ?>
-			
 				<?php echo do_shortcode( $hero->text ); ?>
 				
 			</div>
@@ -147,7 +178,7 @@ function heroOrganism($hero) {
 	//Link Wrapper
 	if( $hero->link && $hero->link !== "" ){ 
 		
-		$hero->output = "<a href=".$hero->link." >".$hero->output."</a>";
+		$hero->output = '<a href="'.$hero->link.'" >'.$hero->output.'</a>';
 		
 	}
 	
@@ -453,8 +484,6 @@ class Bars {
 		add_action('init', array(__CLASS__, 'register_script'), 110);
 		add_action('wp_footer', array(__CLASS__, 'print_script'), 110);
 		add_action('wp_footer', array(__CLASS__, 'internal_script'), 110);
-		
-		//debug( $hero );
 	}
  
 	static function handle_shortcode($atts) {
@@ -467,10 +496,7 @@ class Bars {
 		
 		//global $hero;
 		
-		//$hero->section_class = "row";
-		
-		//debug( $hero );
-		
+		//$hero->section_class = "row";		
 		
 		// WP_Query arguments
 		$args = array (
@@ -501,7 +527,7 @@ class Bars {
 					            	
 					            	$options = custom_options();
 					            	
-					            	$logo = getThumb( get_the_ID(), 'full');
+					            	$logo = getImage( get_the_ID(), 'full');
 					            	
 					            	if( !empty( $options->logo ) ) $logo = $options->logo;
 					            	
@@ -879,11 +905,15 @@ function hero() {
 	
 	$hero->srcType = "src";
 	
+	$hero->src = getImage();
+	
 	$hero->heroes = false;
 	
 	$hero->heroesCount = 0;
 	
 	$hero->page_options = custom_options();
+	
+	$hero->post = $post;
 	
 	if( !empty( $hero->page_options->logo ) ) $hero->logo = $hero->page_options->logo;
 	
@@ -894,9 +924,11 @@ function hero() {
 	
 	array_push( $hero->classes, get_post_type() );
 	
-	if( has_post_thumbnail() || $hero->heroes ){
+	//debug( $hero->post );
 	
-		$thumbnail_src = wp_get_attachment_image_src( get_post_thumbnail_id( $post->ID ), "hd720" );
+	if( has_post_thumbnail() || $hero->heroes ){
+		
+		$thumbnail_src = wp_get_attachment_image_src( get_post_thumbnail_id( $post->ID ), 'hd720' );
 		
 		$hero->kind = "media";
 		
@@ -912,25 +944,30 @@ function hero() {
 		}
 		
 		
-		if( get_post_type() == "ai1ec_event" ){// if it's a shortcode
+		//Set Kind
 		
+		//If Event
+		if( $hero->post->post_type === 'ai1ec_event' ){
 			$hero->kind = "event";
-			
 			array_push( $hero->classes, "media" );
-			
 		}
 		
-		//If is program
-		if( is_page_template( 'template-program.php' ) ){// if it's a progarm
-		
-			$hero->kind = "program";
-			
+		//If Program
+		if( is_page_template( 'template-program.php' ) ){
+			$hero->kind = 'program';
 			array_push( $hero->classes, "media" );
-			
 		}
 		
+		if( $hero->post->post_type === 'post' ){
+			//$hero->kind = "post";
+			array_push( $hero->classes, "media" );
+			
+			if( $hero->src == '' ){
+				$hero->src = getImage($hero->post->id, 'hd720' );
+			}
+		}
 		
-		
+		//If Shortcode
 		if( $hero->heroes ){// if there are any heroes
 			
 			$hero->heroesCount = count( $hero->heroes );
@@ -949,10 +986,27 @@ function hero() {
 			}
 			
 		}
+		
+		
+	//No Thumbnail? No Heroes
+	} else {
+		
+		
+		
 	}
 	
+	//If Post
+/*
+	if(  ){
+		$hero->kind = "post";
+		array_push( $hero->classes, "media" );
+	}
+*/
+	
+	//Add kind to classes
 	array_push( $hero->classes, $hero->kind );
 	
+	//Add Slick class if there's more than one hero
 	if( $hero->heroesCount > 1 && $hero->kind !== "shortcode" ) array_push( $hero->classes, "slick" );
 
 	
@@ -978,9 +1032,7 @@ function hero() {
 				
 				<div class="container">
 					<div class="page-header">
-						<h1>
-							<?php echo $hero->text; ?>
-						</h1>
+						<h1><?php echo $hero->text; ?></h1>
 					</div>
 				</div>
 				
@@ -991,8 +1043,7 @@ function hero() {
 		
 		$hero->index = 0;
 		
-		
-		
+		//For Multiple Heroes
 		if(get_field('heroes')): while(has_sub_field('heroes')): ?>
 		
 			<?php
@@ -1034,11 +1085,7 @@ function hero() {
 		
 		<?php endwhile; 
 		
-		else: ?>
-		
-			<?php echo heroOrganism($hero); ?>
-		
-		<?php endif; ?>
+		else: echo heroOrganism($hero); endif; ?>
 		
 	</div>
 	

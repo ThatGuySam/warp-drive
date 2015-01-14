@@ -14,15 +14,130 @@ function debug( $thing ) {
 
 //$current_id = get_the_ID();
 
-function getThumb($id = false, $size = 'thumb-hd') {
+function getImage($id = false, $size = 'thumb-hd') {
 	
 	if( !$id ) $id = get_the_ID();
 	
 	$thumb_id = get_post_thumbnail_id($id);
 	$thumb_url_array = wp_get_attachment_image_src($thumb_id, $size, true);
+	
+	if (strpos($thumb_url_array[0],'/wp-includes/images/media/default') !== false) {
+		$filler_id = intval( substr($id, -2) );
+		$thumb_url_array = wp_get_attachment_image_src( getFillerImage( $filler_id ) , $size, true);
+	}
+	
 	$thumb_url = $thumb_url_array[0];
 	
 	return $thumb_url;
+}
+
+function getFillerImage( $digit ) {
+	
+	$fillers = array(
+		30,
+		9548,
+		9549,
+		47,
+		54,
+		9547,
+		9546,
+		9545,
+		9544,
+		9543,
+		9542,
+		9541,
+		9540,
+		9539,
+		9538,
+		9537,
+		9536,
+		9535,
+		9534,
+		9532,
+		9530,
+		9529,
+		9522,
+		9521,
+		9520,
+		9519,
+		9518,
+		9517,
+		9516,
+		9515,
+		9514,
+		9513,
+		9512,
+		9511,
+		9510,
+		9509,
+		9508,
+		9507,
+		9506,
+		9505,
+		9504,
+		9503,
+		9502,
+		9501,
+		9500,
+		9499,
+		9498,
+		9497,
+		9496,
+		9495,
+		9494,
+		9493,
+		9492,
+		9491,
+		9490,
+		9489,
+		9488,
+		9487,
+		9486,
+		9485,
+		9484,
+		9483,
+		9482,
+		9481,
+		9480,
+		9479,
+		9478,
+		9477,
+		9476,
+		9475,
+		9474,
+		9473,
+		9472,
+		9471,
+		9470,
+		9469,
+		9468,
+		9467,
+		9466,
+		9465,
+		9464,
+		9463,
+		9462,
+		9461,
+		9460,
+		9459,
+		9458,
+		9457,
+		9456,
+		9455,
+		9454,
+		9453,
+		9452,
+		9451,
+		9450,
+		9449,
+		9448,
+		9447,
+		9446,
+		9445,
+		9552
+	);
+	
+	return $fillers[$digit];
 	
 }
 
@@ -66,6 +181,8 @@ function cacheHandler( $object ) {
         if ($cacheTime > strtotime( $object->cache->cache_time )) {
             $object_cached = @file_get_contents($cacheFile);
             
+            if( !empty( $object->cache->json ) ) return $object_cached;
+            
             $output = json_decode( $object_cached );
             
             //echo "Cache Read";
@@ -80,13 +197,13 @@ function cacheHandler( $object ) {
     
     $output = $function($object);
     
-    //debug( $output );
-    
     $new_object_json = json_encode( $output );
 	
     $fh = fopen($cacheFile, 'w');
     fwrite($fh, $new_object_json);
     fclose($fh);
+    
+    if( !empty( $object->cache->json ) ) return $new_object_json;
 	
 	//echo "File Made";
     return $output;
@@ -226,8 +343,6 @@ function countdownEvents( $object=false ) {
 		$until = strtotime( $chop_json->response->item->eventStartTime );
 		
 		//$until_js = date( 'Y/m/d H:i:00', $until );
-		
-		//debug( $chop_json->response->item );
 		
 	} else {//Fallback to default service times
 		

@@ -29,7 +29,7 @@
 @import "../vendor/bootstrap-material-design/less/ripples";		// Material Ripple
 
 @import (inline) "../vendor/slick.js/slick/slick.css";
-@import (inline) "../vendor/selection-sharer/dist/selection-sharer.css"; 
+@import (inline) "../vendor/selection-sharer/dist/selection-sharer.css";
 @import (inline) "../vendor/animate.css/animate.min.css";
 
 
@@ -87,9 +87,6 @@ Variables
 @letter-spacing: 0.1em;
 
 
-
-
-
 @link-color:		@primary-dark;
 
 @link-hover-color:	@secondary-dark;
@@ -112,7 +109,6 @@ Mixins
 	// IE hacks
 	zoom: 1; // hasLayout
 	background-color: transparent\9;
-	
 }
 
 .scrim() {	
@@ -135,14 +131,8 @@ Mixins
 
 
 .transition( @property:all, @duration:500ms, @delay:0 ) {
-	-webkit-transition: @property @duration @primary-ease; 
-	   -moz-transition: @property @duration @primary-ease; 
-	     -o-transition: @property @duration @primary-ease; 
 	        transition: @property @duration @primary-ease;
-	
-	-webkit-transition-timing-function: @primary-ease; 
-	   -moz-transition-timing-function: @primary-ease; 
-	     -o-transition-timing-function: @primary-ease; 
+	        
 	        transition-timing-function: @primary-ease;
 	        
 	
@@ -481,6 +471,9 @@ Bootstrap Modifications
     }
 }
 
+.post > header {
+	margin-bottom: 2em;
+}
 
 
 /*
@@ -494,7 +487,7 @@ html {
 }
 
 body {
-	background-color: @primary-light;
+	background: @primary-light;
 	font-size: 16px;
 	overflow-x: hidden;
 }
@@ -838,7 +831,7 @@ Hero
 			height: 100%;
 			.hero-background img {
 				width: 100%;
-				@media (max-width:992px) {
+				@media (max-width:360px) {
 			    	width: auto;
 			    	height: 100%;
 			    }
@@ -858,6 +851,11 @@ Hero
 			vertical-align: middle;
 			color: #ffffff;
 			text-shadow: 0 0 1px #000000;
+			max-width: 99%;
+			@media (max-width:768px) {
+				font-size: 0.5em;
+				margin: 0;
+			}
 			
 			h1 {
 				font-size: 3em;
@@ -1034,6 +1032,8 @@ Organisms
 
 .frame {
 	
+	//padding: 0;
+	
 	.slick-slider {
 		padding: 0;
 		margin-bottom: 0;
@@ -1182,6 +1182,38 @@ Organisms
 	
 }
 
+.boxes-masonry {
+	
+	.row {
+		margin-left: 0;
+		margin-right: 0;
+		padding-left: 0;
+		overflow: hidden;
+	}
+	
+	.frame ul li {
+		padding: 1px;
+		z-index: 1;
+		&.box-lazyload {
+			opacity: 0;
+			height: 0px;
+			z-index: -1;
+			//position: absolute;
+			//bottom: 0;
+		}
+	}
+	
+	.frame .box-box {
+		margin: 0;
+		.box-header {
+			text-align: center;
+			h3 {
+				font-weight: 900;
+			}
+		}
+	}
+}
+
 .text-overlay {
 	
 	.box-box {
@@ -1223,8 +1255,6 @@ Organisms
 	&.slick-disabled {
 		&:before {
 			opacity: 0;
-			
-			
 		}
 	}
 
