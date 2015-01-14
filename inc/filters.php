@@ -101,7 +101,7 @@ function expanded_nav_menu_css_class( $classes = array(), $item, $args ) {
             $main_nav = wp_get_nav_menu_object( $locations[ $location_name ] );
 				
 			if( $item->menu_item_parent==0 ){
-				$classes[] = 'col-lg-15 col-md-3 col-sm-4 col-xs-6 ex-menu-item';
+				$classes[] = 'col-lg-15 col-md-3 col-sm-4 ex-menu-item';
 			}
 			
             if ($item->menu_order == 1) {
