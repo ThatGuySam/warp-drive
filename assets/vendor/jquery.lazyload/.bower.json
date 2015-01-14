@@ -30,6 +30,6 @@
   },
   "_source": "git://github.com/tuupola/jquery_lazyload.git",
   "_target": "~1.9.3",
-  "_originalSource": "tuupola/jquery_lazyload",
+  "_originalSource": "jquery.lazyload",
   "_direct": true
 }

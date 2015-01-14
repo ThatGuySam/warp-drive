@@ -23,6 +23,7 @@ module.exports = function(grunt) {
     'assets/vendor/jquery.countdown/dist/jquery.countdown.js',
     'assets/vendor/masonry/dist/masonry.pkgd.js',
     'assets/vendor/HideSeek/jquery.hideseek.js',
+    'assets/vendor/jquery-unveil/jquery.unveil.js',
     'assets/vendor/bootstrap-material-design/dist/js/material.js',
     'assets/vendor/bootstrap-material-design/dist/js/ripples.js',
     'assets/js/plugins/*.js',
