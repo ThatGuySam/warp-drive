@@ -32,11 +32,11 @@
 @import (inline) "../vendor/animate.css/animate.min.css";
 
 // External
-@import "../vendor/font-awesome/css/font-awesome.min.css";				// Font Awesome
+@import "../fonts/fontello/css/fontello.css";					// Font Awesome
 
 
-@import "icon-font";									// Icon Font
-@import "elements";										// Elements
+@import "icon-font";											// Icon Font
+@import "elements";												// Elements
 
 
 
@@ -190,40 +190,49 @@ Icons
 }
 
 .down-arrow:before {
-	font-family: FontAwesome;
-	content: "\f107";
+	font-family: "fontello";
+	content: "\E8AA";
 	font-size: 2em;
 }
 
 .up-arrow:before {
-	font-family: FontAwesome;
-	content: "\f106";
+	font-family: "fontello";
+	content: "\E8A7";
 }
 
 .left-arrow:before {
-	font-family: FontAwesome;
+	font-family: "fontello";
 	content: "\f104";
 }
 
 .right-arrow:before {
-	font-family: FontAwesome;
-	content: "\f105";
+	font-family: "fontello";
+	content: "\E8A8";
+}
+
+.slick-prev:before {
+	font-family: "fontello";
+	content: "\E8A7";
 }
 
 .slick-next:before {
-	font-family: FontAwesome;
-	content: "\f105";
+	font-family: "fontello";
+	content: "\E8A8";
 }
 
-
-.slick-prev:before {
-	font-family: FontAwesome;
-	content: "\f104";
+.gc-instagram:before {
+	font-family: "fontello";
+	content: "\E9E0";
 }
 
+.gc-pinterest:before {
+	font-family: "fontello";
+	content: "\E9B7";
+}
 
-.fa-email:before {
-	content: "\f0e0";
+.gc-email:before {
+	font-family: "fontello";
+	content: "\E804";
 }
 
 /*
@@ -1252,7 +1261,7 @@ Organisms
 	width: 40px;
 	
 	&:before {
-		font-size: 40px;
+		font-size: 30px;
 		
 		.transition( opacity , 250ms );
 	}

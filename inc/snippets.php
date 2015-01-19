@@ -528,7 +528,7 @@ function social_media_profiles($strapped=0) {
 		//Add offset to first
 		if( $strapped && !$p ) $classes .= " col-sm-offset-".$po." col-xs-offset-".$pos;
 		
-		$output .= '<div class="'.$classes.'"><a href="'.$options->{$profile}.'"><i class="fa fa-'.$profile.'"></i></a></div>';
+		$output .= '<div class="'.$classes.'"><a href="'.$options->{$profile}.'"><i class="gc-'.$profile.'"></i></a></div>';
 		
 	$p++;
 	}

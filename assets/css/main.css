@@ -1,4 +1,4 @@
-@import "../vendor/font-awesome/css/font-awesome.min.css";
+@import "../fonts/fontello/css/fontello.css";
 /*! normalize.css v3.0.2 | MIT License | git.io/normalize */
 html {
   font-family: sans-serif;
@@ -14978,32 +14978,41 @@ Icons
   -moz-osx-font-smoothing: grayscale;
 }
 .down-arrow:before {
-  font-family: FontAwesome;
-  content: "\f107";
+  font-family: "fontello";
+  content: "\E8AA";
   font-size: 2em;
 }
 .up-arrow:before {
-  font-family: FontAwesome;
-  content: "\f106";
+  font-family: "fontello";
+  content: "\E8A7";
 }
 .left-arrow:before {
-  font-family: FontAwesome;
+  font-family: "fontello";
   content: "\f104";
 }
 .right-arrow:before {
-  font-family: FontAwesome;
-  content: "\f105";
-}
-.slick-next:before {
-  font-family: FontAwesome;
-  content: "\f105";
+  font-family: "fontello";
+  content: "\E8A8";
 }
 .slick-prev:before {
-  font-family: FontAwesome;
-  content: "\f104";
+  font-family: "fontello";
+  content: "\E8A7";
 }
-.fa-email:before {
-  content: "\f0e0";
+.slick-next:before {
+  font-family: "fontello";
+  content: "\E8A8";
+}
+.gc-instagram:before {
+  font-family: "fontello";
+  content: "\E9E0";
+}
+.gc-pinterest:before {
+  font-family: "fontello";
+  content: "\E9B7";
+}
+.gc-email:before {
+  font-family: "fontello";
+  content: "\E804";
 }
 /*
 
@@ -15951,7 +15960,7 @@ Organisms
 }
 .slick-prev:before,
 .slick-next:before {
-  font-size: 40px;
+  font-size: 30px;
   -webkit-transition: all opacity 250ms;
   -o-transition: all opacity 250ms;
   transition: all opacity 250ms;

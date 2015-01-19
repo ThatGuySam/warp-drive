@@ -137,7 +137,7 @@ function add_outer_menu($items, $args) {
 	ob_start(); ?>
 		
 	<li class="menu-outer-item col-xs-1">
-      <a href="<?php echo esc_url(home_url('/')); ?>"><i class="icon-guts-g"></i></a>
+      <a href="<?php echo esc_url(home_url('/')); ?>"><i class="gc-logo"></i></a>
 	</li>
 		    
 	<?php $before = ob_get_clean();
@@ -147,7 +147,7 @@ function add_outer_menu($items, $args) {
 		
 	<li class="menu-outer-item search-toggle col-xs-1 pull-right">
 		<a href="#">
-			<i class="fa fa-search "></i>
+			<i class="gc-search"></i>
 		</a>
 	</li>
 		    
