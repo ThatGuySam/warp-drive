@@ -14,7 +14,7 @@
     echo socialBar();
   ?>
 
-  <div class="wrap container" role="document">
+  <div class="wrap container-fluid" role="document">
     <div id="content" class="content row">
       <main class="main" role="main">
         <?php include roots_template_path(); ?>

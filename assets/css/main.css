@@ -15275,6 +15275,7 @@ body {
 .wrap {
   padding-top: 3em;
   padding-bottom: 3em;
+  max-width: 1140px;
 }
 /*
 
@@ -15401,9 +15402,11 @@ Menu
   zoom: 1;
   background-color: transparent\9;
 }
-.primary-nav .menu-outer-item {
-  font-size: 1.2em;
+.primary-nav li.menu-outer-item {
   text-align: center;
+}
+.primary-nav li.menu-outer-item a i {
+  font-size: 1.2em;
 }
 #search {
   background: transparent;
