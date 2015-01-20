@@ -87,9 +87,9 @@ function boxesVimeo($boxes) {
 		}
 		
 		if( !empty($details->date) ){
-			$date = date( "F jS" , strtotime( $details->date ) );
+			$date = strtotime( $details->date );
 		} else {
-			$date = date( "F jS" , strtotime( $video->upload_date ) );
+			$date = strtotime( $video->upload_date );
 		}
 		
 		$title = $video->title;
@@ -102,7 +102,8 @@ function boxesVimeo($boxes) {
 		$v_box->type 		= "video";
 		$v_box->id			= $video->id;
 		$v_box->image_url	= $video->thumbnail_large;
-		$v_box->date 		= $date;
+		$v_box->date 		= date( "F jS" , $date );
+		$v_box->date_unix	= $date;
 		$v_box->title		= $title;
 		$v_box->text 		= $title;
 		$v_box->desc 		= $desc[0];
@@ -478,8 +479,10 @@ class Boxes {
 							
 							
 							if( isset( $props['date-format-human'] ) ){
-								$normal_date = strtotime( $box->date );
+								$normal_date = $box->date_unix;
+								
 								if( strtotime( $box->title ) ) $normal_date = strtotime( $box->title );
+								
 								$box->title = ago( $normal_date );
 							}
 							
