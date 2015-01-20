@@ -1278,7 +1278,107 @@ Organisms
 }
 
 
+.box-single {
+    overflow: hidden;
+    
+    .box-icon {
+      position: absolute;
+      top: 0;
+      right: 0;
+      
+      padding: 0.5em;
+    }
+    
+    .ir > div {
+      background: #323232;
+      color: #d8d8d8;
+      text-align: center;
+      
+      &:before{
+        content: '';
+        display: inline-block;
+        height: 100%; 
+        vertical-align: middle;
+        margin-right: -0.25em;
+      }
+      
+      &.box-when {
+        .box-icon i:before {
+          content: '\e890';
+        }
+      }
+      
+      &.box-where {
+        .box-icon i:before {
+          content: '\e863';
+        }
+        background: #f9f5ed;
+        color: #323232;
+      }
+      
+      &.box-who {
+        .box-icon i:before {
+          content: '\e80c';
+        }
+        text-align: right;
+        .box-image {
+          padding: 1em;
+          max-width: 56%;
+          opacity: 1;
+          img {
+            height: 100%;
+            border-radius: 500px;
+          }
+        }
 
+        .box-header {
+          text-align: center;
+          right: 0;
+          margin: 0;
+          max-width: 50%;
+          //height: 100%;
+          padding: 0.5em;
+          //float: right;
+          //text-align: right;
+          display: inline-block;
+
+          .box-header-content {
+            color: #d8d8d8;
+            display: inline-block;
+            vertical-align: middle;
+            max-width: 99%;
+          }
+          .box-header-sub {
+            
+          }
+        }
+      }
+      
+    }
+    .box-image {
+      position: absolute;
+      top: 0;
+      opacity: 0.1;
+      
+      pointer-events: none;
+      
+      img { width: 100%; }
+    }
+    .box-header {
+      h3 {margin-top: 0;}
+      position: relative;
+      display: inline-block;
+      vertical-align: middle;
+      max-width: 99%;
+      width: 80%;
+      text-align: left;
+      margin: 0 auto;
+
+      .box-header-content {
+        font-weight: 500;
+      }
+    }
+}
 
 
 .thin-promos {

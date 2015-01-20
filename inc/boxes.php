@@ -588,3 +588,73 @@ class Boxes {
 }
 
 Boxes::init();
+
+
+
+class Box {
+	static $add_script;
+
+	static function init() {
+		add_shortcode('box', array(__CLASS__, 'handle_shortcode'));
+	}
+
+	static function handle_shortcode($atts, $content = null) {
+		self::$add_script = true;
+		
+		extract( shortcode_atts( array(
+			'title'		=> false,
+			'caption'	=> false,
+			'color'		=> false,
+			'image'		=> false,
+			'icon'		=> false,
+			'type'		=> false,
+		), $atts, 'box' ) );
+		
+		
+		//
+		
+		$box_styles = '';
+		
+		if( !empty($color) ){
+			$color = trim($color, '#');
+			
+			$alt_color = getContrastingColor($color);
+			
+			$box_styles .= 'background: #'.$color.'; ';
+			
+			$box_styles .= 'color: #'.$alt_color.'; ';
+		}
+		
+		ob_start(); ?>
+			
+			<div class='box-single'>
+		      <div class='ir'>
+		        <div class='box-<?php echo $type; ?>' style='<?php echo $box_styles; ?>'>
+			      
+		          <div class='box-icon'>
+		            <i class='<?php echo $icon; ?>'></i>
+		          </div>
+		          
+		          <div class='box-image'>
+				  	<?php echo $content; ?>
+		          </div>
+		          
+		          <div class='box-header'>
+		            <h3 class='box-header-content'><?php echo $title; ?></h3>
+		            <div class='box-header-sub'>
+		              <span><?php echo $caption; ?></span>
+		            </div>
+		          </div>
+		          
+		        </div>
+		      </div>
+		    </div>
+			
+		<?php $content = ob_get_clean();
+			
+		return $content;
+	}
+
+}
+
+Box::init();
