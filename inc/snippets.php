@@ -234,6 +234,21 @@ function hex2rgb($hex) {
    //return $rgb; // returns an array with the rgb values
 }
 
+function getContrastingColor($hexcolor){
+    //24ways.org/2010/calculating-color-contrast/
+    
+    //Simple
+    //return (hexdec(trim($hexcolor,'#')) > 0xffffff/2) ? '323232':'d8d8d8';
+    
+    //YIQ
+    $hexcolor = trim($hexcolor,'#');//Strip pounds
+    $r = hexdec(substr($hexcolor,0,2));
+	$g = hexdec(substr($hexcolor,2,2));
+	$b = hexdec(substr($hexcolor,4,2));
+	$yiq = (($r*299)+($g*587)+($b*114))/1000;
+	return ($yiq >= 128) ? '323232' : 'd8d8d8';
+}
+
 function get_avg_luminance($filename, $num_samples=10) {
     $img = imagecreatefromjpeg($filename);
  
@@ -581,5 +596,5 @@ function ago($time){
 	
 	if( $time > strtotime('-7 day') ) $output = "This week";
 	
-	return $output;
+	return $output;//." ".date('r',$time);
 }
