@@ -69,7 +69,7 @@ var Roots = {
 			/* Menu */
 			
 			
-			function toggleExMenu( action ) {
+			function toggleExMenu( action ) { 
 				
 				var actions = ['close','open'];
 				var closed = $("html").hasClass("expanded-nav-open") ? 0 : 1;
@@ -84,7 +84,7 @@ var Roots = {
 						
 						$("html").addClass("expanded-nav-open");
 						$(".expanded-nav").css( 'height' , exMenuHeight+'px' );
-						$(".search-toggle .fa").removeClass("fa-search").addClass("fa-times");
+						$(".search-toggle i").removeClass("gc-search").addClass("gc-cancel");
 						
 						$("#search").focus();
 						
@@ -95,7 +95,7 @@ var Roots = {
 						
 						$("html").removeClass("expanded-nav-open");
 						$(".expanded-nav").css( 'height' , '' );
-						$(".search-toggle .fa").removeClass("fa-times").addClass("fa-search");
+						$(".search-toggle i").removeClass("gc-cancel").addClass("gc-search");
 						
 						console.log( "Closing Menu!" );
 						
