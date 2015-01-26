@@ -6190,6 +6190,7 @@ var Roots = {
 			$heroes.slick({
 				arrows: !Modernizr.touch,
 				autoplay: true,
+				accessibility: true,
 				autoplaySpeed: 6000,
 				speed: 750,
 				fade: !Modernizr.touch,
@@ -6206,6 +6207,7 @@ var Roots = {
 				
 				$frame.find("ul").slick({
 					arrows: !Modernizr.touch,
+					//accessibility: false,
 					infinite: false,
 					speed: 750,
 					slide: 'li',
@@ -6517,6 +6519,8 @@ var Roots = {
 			if( !Modernizr.cssanimations ){
 				$("html").addClass("no-cssanimations");
 			}
+			
+			//$("#hero .hero-section").click();
 			
 			
 /*

@@ -868,7 +868,7 @@ Hero
 			text-shadow: 0 0 1px #000000;
 			max-width: 99%;
 			@media (max-width:768px) {
-				font-size: 0.5em;
+				font-size: .9em;
 				margin: 0;
 			}
 			
@@ -1336,10 +1336,7 @@ Organisms
           right: 0;
           margin: 0;
           max-width: 50%;
-          //height: 100%;
           padding: 0.5em;
-          //float: right;
-          //text-align: right;
           display: inline-block;
 
           .box-header-content {
@@ -1379,6 +1376,106 @@ Organisms
       }
     }
 }
+
+
+.program-promos {
+
+	margin-left:	0;
+	margin-right:	0;
+	.vc_row {
+		margin-left:	0;
+		margin-right:	0;
+	}
+	
+	>.wpb_column {
+		padding: 0 1px;
+		margin: 1em 0;
+		text-align: center;
+		overflow: hidden;
+		
+		>.wpb_wrapper {
+			@media (min-width:768px) { .ir(); }
+			background: @primary-dark;
+			
+			>.wpb_single_image {
+				position: absolute;
+				top: 0;
+				left: 0;
+				right: 0;
+				
+				z-index: 0;
+				
+				img {
+					opacity: 0.2;
+					left: 0;
+					width: 100%;
+				}
+			}
+			
+			.vc_row .wpb_column {
+				height: 100%;
+				
+				&:before {
+					content: '';
+					display: inline-block;
+					height: 100%; 
+					vertical-align: middle;
+					margin-right: -0.25em;
+				}
+				
+				.wpb_wrapper {
+					position: relative;
+					display: inline-block;
+					vertical-align: middle;
+					max-width: 99%;
+					margin: 0 auto;
+				}
+			}
+			
+			div.wpb_text_column {
+				//position: absolute;
+				//top: 30%;
+				//left: 5%;
+				
+				&:before {
+					content: '';
+					display: inline-block;
+					height: 100%; 
+					vertical-align: middle;
+					margin-right: -0.25em;
+				}
+				
+				.wpb_wrapper {
+					position: relative;
+					display: inline-block;
+					vertical-align: middle;
+					max-width: 99%;
+					width: 80%;
+					height: auto;
+					text-align: left;
+					margin: 0 auto;
+					padding: 1.5em 0;
+				}
+				
+				color: #fff;
+				//pointer-events: none;
+				h2, h3 {
+					//text-transform: uppercase;
+					margin-top: 0;
+					margin-bottom: 0;
+				}
+				
+				z-index: 1;
+			}
+		}
+	}
+	
+	.wpb_content_element {
+		margin-bottom: 0;
+	}
+	
+}
+
 
 
 .thin-promos {

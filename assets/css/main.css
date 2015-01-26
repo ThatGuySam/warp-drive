@@ -22614,7 +22614,7 @@ Hero
 }
 @media (max-width: 768px) {
   .hero-container.hero-media .page-header {
-    font-size: 0.5em;
+    font-size: .9em;
     margin: 0;
   }
 }
@@ -23048,6 +23048,106 @@ Organisms
 }
 .box-single .box-header .box-header-content {
   font-weight: 500;
+}
+.program-promos {
+  margin-left: 0;
+  margin-right: 0;
+}
+.program-promos .vc_row {
+  margin-left: 0;
+  margin-right: 0;
+}
+.program-promos > .wpb_column {
+  padding: 0 1px;
+  margin: 1em 0;
+  text-align: center;
+  overflow: hidden;
+}
+.program-promos > .wpb_column > .wpb_wrapper {
+  background: #323232;
+}
+@media (min-width: 768px) {
+  .program-promos > .wpb_column > .wpb_wrapper {
+    position: relative;
+    width: 100%;
+    height: 0;
+    padding-bottom: 56.25%;
+  }
+  .program-promos > .wpb_column > .wpb_wrapper > iframe,
+  .program-promos > .wpb_column > .wpb_wrapper > video,
+  .program-promos > .wpb_column > .wpb_wrapper > img,
+  .program-promos > .wpb_column > .wpb_wrapper > div {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+  }
+  .program-promos > .wpb_column > .wpb_wrapper > iframe,
+  .program-promos > .wpb_column > .wpb_wrapper > video,
+  .program-promos > .wpb_column > .wpb_wrapper > img,
+  .program-promos > .wpb_column > .wpb_wrapper > div {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+  }
+}
+.program-promos > .wpb_column > .wpb_wrapper > .wpb_single_image {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 0;
+}
+.program-promos > .wpb_column > .wpb_wrapper > .wpb_single_image img {
+  opacity: 0.2;
+  left: 0;
+  width: 100%;
+}
+.program-promos > .wpb_column > .wpb_wrapper .vc_row .wpb_column {
+  height: 100%;
+}
+.program-promos > .wpb_column > .wpb_wrapper .vc_row .wpb_column:before {
+  content: '';
+  display: inline-block;
+  height: 100%;
+  vertical-align: middle;
+  margin-right: -0.25em;
+}
+.program-promos > .wpb_column > .wpb_wrapper .vc_row .wpb_column .wpb_wrapper {
+  position: relative;
+  display: inline-block;
+  vertical-align: middle;
+  max-width: 99%;
+  margin: 0 auto;
+}
+.program-promos > .wpb_column > .wpb_wrapper div.wpb_text_column {
+  color: #fff;
+  z-index: 1;
+}
+.program-promos > .wpb_column > .wpb_wrapper div.wpb_text_column:before {
+  content: '';
+  display: inline-block;
+  height: 100%;
+  vertical-align: middle;
+  margin-right: -0.25em;
+}
+.program-promos > .wpb_column > .wpb_wrapper div.wpb_text_column .wpb_wrapper {
+  position: relative;
+  display: inline-block;
+  vertical-align: middle;
+  max-width: 99%;
+  width: 80%;
+  height: auto;
+  text-align: left;
+  margin: 0 auto;
+  padding: 1.5em 0;
+}
+.program-promos > .wpb_column > .wpb_wrapper div.wpb_text_column h2,
+.program-promos > .wpb_column > .wpb_wrapper div.wpb_text_column h3 {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+.program-promos .wpb_content_element {
+  margin-bottom: 0;
 }
 .thin-promos {
   margin-left: 0;
