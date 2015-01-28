@@ -22000,6 +22000,10 @@ Icons
   font-family: "fontello";
   content: "\E9B7";
 }
+.gc-vimeo:before {
+  font-family: "fontello";
+  content: "\E9CF";
+}
 .gc-email:before {
   font-family: "fontello";
   content: "\E804";
@@ -22694,7 +22698,7 @@ Hero
   display: inline-block;
 }
 .social-container .social-bar-item {
-  padding: 15px;
+  padding: 15px 0;
   font-size: 1.8em;
 }
 .page-header {
@@ -23449,6 +23453,10 @@ Cheats
 .disable-hover,
 .disable-hover * {
   pointer-events: none !important;
+}
+.circle {
+  border-radius: 1000px;
+  border-radius: 50%;
 }
 /* Key Frames
 ---------------------------------------------------- */

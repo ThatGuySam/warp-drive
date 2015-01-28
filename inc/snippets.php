@@ -449,11 +449,6 @@ function isLive() {
     
     $countdown->isLive = ( $countdown->isAfterPre && $countdown->isBeforeEnd );
     
-/*
-    if( $event->start_time > strtotime($event->start_time,"-30 minutes") ){
-	     
-    }
-*/
 	
 	return $countdown->isLive;
 }
@@ -476,7 +471,7 @@ function currentServiceLink() {
 	return $output;
 }
 
-function social_media_profiles($strapped=0) {
+function social_media_profiles($strapped=0,$profiles=0) {
 	
 	//HTML Output
 	$output = "";
@@ -492,8 +487,9 @@ function social_media_profiles($strapped=0) {
 		"facebook",
 		"twitter",
 		"instagram",
-		"email",
-		"pinterest"
+		"pinterest",
+		"vimeo",
+		"email"
 	);
 	
 	
