@@ -491,17 +491,26 @@ class Bars {
 		
 		extract( shortcode_atts( array(
 			'class' => false,
-			'pages' => false
+			'pages' => false,
+			'logos' => true
 		), $atts, 'bars' ) );
 		
-		//global $hero;
+		global $hero;
 		
-		//$hero->section_class = "row";		
+		//$hero->section_class = "row";	
+		
+		//$bars =
+		
+		if( empty($pages) ){
+			$pages = array( 91 , 89 ,95 ,97 ,101 );//Youth Pages
+		} else {
+			$pages = explode(',',$pages);
+		}
 		
 		// WP_Query arguments
 		$args = array (
 			'post_type'				=> 'page',
-			'post__in'				=> array( 91 , 89 ,95 ,97 ,101 ),//Youth Pages
+			'post__in'				=> $pages,
 			'orderby'				=> 'date',
 		);
 		
@@ -525,46 +534,69 @@ class Bars {
 				            	
 				            	<?php  
 					            	
+					            	$count = $query->post_count;
+					            	
 					            	$options = custom_options();
 					            	
-					            	$logo = getImage( get_the_ID(), 'full');
+					            	$post_id = get_the_ID();
+					            	
+					            	$featured = getImage( $post_id, '720');
+					            	
+					            	$logo = $featured;
 					            	
 					            	if( !empty( $options->logo ) ) $logo = $options->logo;
 					            	
 				            	?>
 				            	
+				            	<!-- Filler Bar -->
 				            	<?php if( $p == 0 ): ?>
 				            	
 						            <div class="filler bar-bar col-md-1 hidden-sm hidden-xs ease" rel="" style="<?php //BG Color Overlay
-									if( get_field('page_color') ): 
-										?>background: <?php echo get_field('page_color'); ?>; <?php //#000000
-									endif; ?>">
-						            </div>
+										if( get_field('page_color') ): 
+											?>background: <?php echo get_field('page_color'); ?>; <?php //#000000
+										endif; 
+									?>"></div>
 						            
 					            <?php endif; ?>
 								
 								
 								
-					            <!-- bar-bar - Safari -->
+					            <!-- bar-bar - <?php the_title(); ?> -->
 					            <div class="youth-program bar-bar col-md-2 ease bar-<?php echo $p; ?>" rel="" style="<?php //BG Color Overlay
 									if( get_field('page_color') ): 
 										?>background: <?php echo get_field('page_color'); ?>; <?php //#000000
 									endif; ?>">
-										
-					                <div class="center">
-					                	<a href="<?php the_permalink(); ?>" title="<?php the_title(); ?>">
-						                    <span class="bar-logo"><img src="<?php echo $logo; ?>"></span>
-						                    <h2><?php the_title(); ?></h2>
-						                    <div class="hover-info">
-							                    <p></p>
-						                    </div>
-					                	</a>
-					                	
-					                	
-										<div class="social-icons">
-											<?php echo social_media_profiles(); ?>
+									
+									<?php if( !$logos ){ ?>
+										<div class="bar-bg-image ease-opacity">
+											<img src="<?php echo $featured; ?>" alt="<?php the_title(); ?>">
 										</div>
-					                </div>
+									<?php } ?>
+									
+									<div class="bar-content">
+										
+										<a href="<?php the_permalink(); ?>" title="<?php the_title(); ?>">
+										
+							                <div class="center">
+							                	
+							                    <?php if( $logos ){ ?>
+							                    	<span class="bar-logo"><img src="<?php echo $logo; ?>"></span>
+							                    <?php } ?>
+							                    <h2><?php the_title(); ?></h2>
+							                    <div class="hover-info">
+								                    <p></p>
+							                    </div>
+							                	
+												<div class="social-icons ease-height">
+													<?php echo social_media_profiles(); ?>
+												</div>
+												
+							                </div>
+						                
+						                </a>
+						                
+									</div>
+									
 					            </div>
 				            
 				            <?php $p++; endwhile; endif; wp_reset_query();//Clear query so nothing weird shows up after loop  ?>
@@ -681,20 +713,55 @@ class Bars {
 				}
 				
 				.bar-bar {
-				  margin: 0;
-				  padding: 0;
-				  border: none;
-				  height: 400px;
-				  text-align: center;
+					position: relative;
+					margin: 0;
+					padding: 0;
+					border: none;
+					height: 400px;
+					text-align: center;
+					overflow: hidden;
+				}
+								
+				.bar-bar .bar-bg-image {
+				    position: absolute;
+				    top: 0;
+				    bottom: 0;
+				    left: 0;
+				    right: 0;
+				    
+				    opacity: 0.1;
+				    
+				    z-index: 10;
 				}
 				
-				.bar-bar:before {
+				.bar-bar.program-hovering .bar-bg-image {
+					opacity: 0.5;
+				}
+				
+				.bar-bar .bar-bg-image img {
+					height: 100%;
+					width: auto;
+				}
+				
+				.bar-bar .bar-content {
+					position: absolute;
+					top: 0;
+				    bottom: 0;
+				    left: 0;
+				    right: 0;
+					
+					z-index: 100;
+					
+				}
+				
+				.bar-bar .bar-content:before {
 					content: '';
 					display: inline-block;
 					height: 100%; 
 					vertical-align: middle;
 					margin-right: -0.25em; /* Adjusts for spacing */
 				}
+
 				
 				.bar-bar .center {
 				    display: inline-block;
@@ -714,6 +781,7 @@ class Bars {
 				    font-size: 1.25em;
 				    font-weight: 700;
 				    text-transform: uppercase;
+				    max-width: 200px;
 				}
 				
 				.bar-bar h2 span {
@@ -749,7 +817,14 @@ class Bars {
 				  color: #fff;
 				  font-size: 1.5em;
 				  letter-spacing: 0.15em;
+				  height: 0;
+				  overflow: hidden;
 				}
+				
+				.bar-bar.program-hovering .social-icons {
+					height: 50px;
+				}
+				
 				/* section-450 */
 				
 				
