@@ -347,7 +347,7 @@ function countdownEvents( $object=false ) {
 	
 	$until = false;
 	
-	$chop_json = @file_get_contents("http://live.gutschurch.com/api/v1/events/current");//Get contents and supress warnings to allow for fallback
+	$chop_json = @file_get_contents('http://live.gutschurch.com/api/v1/events/current');//Get contents and supress warnings to allow for fallback
 	
 	if( $chop_json ) {
 		
@@ -358,8 +358,9 @@ function countdownEvents( $object=false ) {
 		$until = strtotime( $chop_json->response->item->eventStartTime );
 		
 		//$until_js = date( 'Y/m/d H:i:00', $until );
-		
-	} else {//Fallback to default service times
+	
+	//Fallback to default service times
+	} else {
 		
 		$eventTime = 4500;
 	
@@ -417,6 +418,7 @@ function isLive() {
 	
 	$countdown = new stdClass();
 	$countdown->cache = new stdClass();
+	$min = 60;
 	
 	//Define countdown options
 	$countdown->cache->function_name =	"countdownEvents";
@@ -443,12 +445,17 @@ function isLive() {
     
     $countdown->event = date( 'r', $event->start_time );
     
-    $countdown->isAfterPre = ( strtotime('now') > strtotime($event->start_time,"-15 minutes") );
     
-    $countdown->isBeforeEnd = ( strtotime('now') > strtotime($event->start_time,"+90 minutes") );
+    $countdown->eventPre = date( 'U', $event->start_time - ( 15*$min ) );
+    
+    $countdown->eventEnd = date( 'U', $event->start_time + ( 90*$min ) );
+    
+    
+    $countdown->isAfterPre = ( strtotime('now') > $countdown->eventPre );
+    
+    $countdown->isBeforeEnd = ( strtotime('now') > $countdown->isBeforeEnd );
     
     $countdown->isLive = ( $countdown->isAfterPre && $countdown->isBeforeEnd );
-    
 	
 	return $countdown->isLive;
 }

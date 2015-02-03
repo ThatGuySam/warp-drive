@@ -27,7 +27,7 @@ include get_theme_root().'/'.get_template().'/inc/boxes.php';
 
 
 if( array_key_exists( 'watchservice' , $_GET ) ) {
-	wp_redirect( currentServiceLink(), $status );
+	wp_redirect( currentServiceLink() );
 	exit;
 };
 
@@ -122,6 +122,31 @@ if( $profiles ): ob_start(); ?>
 Living Organisms
 
 */
+
+
+class Current_Service_Link {
+	static $add_script;
+ 
+	static function init() {
+		add_shortcode('current_service', array(__CLASS__, 'handle_shortcode'));
+		
+		//add_action('init', array(__CLASS__, 'register_script'));
+		//add_action('wp_footer', array(__CLASS__, 'print_script'));
+		//add_action('wp_footer', array(__CLASS__, 'internal_script'));
+	}
+ 
+	static function handle_shortcode($atts) {
+		//self::$add_script = true;
+		
+		extract( shortcode_atts( array(
+			'class' => false,
+		), $atts, 'current_service' ) );
+			
+		return currentServiceLink();
+	}
+}
+Current_Service_Link::init();
+
 
 
 
