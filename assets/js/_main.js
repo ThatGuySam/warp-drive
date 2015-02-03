@@ -24,8 +24,6 @@ var Roots = {
     init: function() {
       // JavaScript to be fired on all pages
       
-      	window.gc = window.gc || {};
-      
 		if ( undefined !== window.jQuery ) { jQuery(function ($) { 'use strict';
 			
 			/* easeOutQuint */

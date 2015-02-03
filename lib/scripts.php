@@ -14,28 +14,41 @@
  * - An ID has been defined in config.php
  * - You're not logged in as an administrator
  */
+ 
 function roots_scripts() {
   /**
    * The build task in Grunt renames production assets with a hash
    * Read the asset names from assets-manifest.json
    */
+   
+  global $assets;
+  
   if (WP_ENV === 'development') {
-    $assets = array(
-      'css'       	=> '/assets/css/main.css',
+	$js_assets = array(
       'js'        	=> '/assets/js/scripts.js',
       'modernizr' 	=> '/assets/vendor/modernizr/modernizr.js',
       'jquery'    	=> '//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.js'
     );
+	  
+    $assets = array(
+      'css'       	=> '/assets/css/main.css'
+    );
   } else {
     $get_assets = file_get_contents(get_template_directory() . '/assets/manifest.json');
     $assets     = json_decode($get_assets, true);
-    $assets     = array(
-      'css'			=> '/assets/css/main.min.css?' . $assets['assets/css/main.min.css']['hash'],
+    
+    $js_assets = array(
       'js'			=> '/assets/js/scripts.min.js?' . $assets['assets/js/scripts.min.js']['hash'],
       'modernizr'	=> '/assets/js/vendor/modernizr.min.js?'.$assets['assets/js/scripts.min.js']['hash'],
       'jquery'		=> '//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js'
     );
+    
+    $assets = array(
+      'css'			=> '/assets/css/main.min.css?' . $assets['assets/css/main.min.css']['hash']
+    );
   }
+  
+  $assets = array_merge ( $assets, $js_assets );
 
   wp_enqueue_style('roots_css', get_template_directory_uri() . $assets['css'], false, null);
 
@@ -53,6 +66,8 @@ function roots_scripts() {
   if (is_single() && comments_open() && get_option('thread_comments')) {
     wp_enqueue_script('comment-reply');
   }
+  
+  
 
   wp_enqueue_script('modernizr', get_template_directory_uri() . $assets['modernizr'], array(), null, true);
   wp_enqueue_script('jquery');
@@ -77,28 +92,92 @@ function roots_jquery_local_fallback($src, $handle = null) {
 }
 add_action('wp_head', 'roots_jquery_local_fallback');
 
+function roots_header() {
+    echo '<script type="text/javascript">window.gc = window.gc || {}; gc.pageScripts = [];</script>';
+}
+// Add hook for front-end <head></head>
+add_action('wp_head', 'roots_header');
+
+
 /**
  * Google Analytics snippet from HTML5 Boilerplate
  * 
  * Cookie domain is 'auto' configured. See: http://goo.gl/VUCHKM
  */
-function roots_google_analytics() { ?>
+function roots_custom_footer() { 
+	
+	global $assets;
+	
+?>
+
+<?php if (GOOGLE_ANALYTICS_ID && (WP_ENV !== 'production' || !current_user_can('manage_options'))) { ?>
+	<script>
+	  <?php if (WP_ENV === 'production') : ?>
+	    (function(b,o,i,l,e,r){b.GoogleAnalyticsObject=l;b[l]||(b[l]=
+	    function(){(b[l].q=b[l].q||[]).push(arguments)});b[l].l=+new Date;
+	    e=o.createElement(i);r=o.getElementsByTagName(i)[0];
+	    e.src='//www.google-analytics.com/analytics.js';
+	    r.parentNode.insertBefore(e,r)}(window,document,'script','ga'));
+	  <?php else : ?>
+	    function ga() {
+	      //console.log('GoogleAnalytics: ' + [].slice.call(arguments));
+	    }
+	  <?php endif; ?>
+	  ga('create','<?php echo GOOGLE_ANALYTICS_ID; ?>','auto');ga('send','pageview');
+	</script>
+<? } ?>
+
 <script>
-  <?php if (WP_ENV === 'production') : ?>
-    (function(b,o,i,l,e,r){b.GoogleAnalyticsObject=l;b[l]||(b[l]=
-    function(){(b[l].q=b[l].q||[]).push(arguments)});b[l].l=+new Date;
-    e=o.createElement(i);r=o.getElementsByTagName(i)[0];
-    e.src='//www.google-analytics.com/analytics.js';
-    r.parentNode.insertBefore(e,r)}(window,document,'script','ga'));
-  <?php else : ?>
-    function ga() {
-      //console.log('GoogleAnalytics: ' + [].slice.call(arguments));
-    }
-  <?php endif; ?>
-  ga('create','<?php echo GOOGLE_ANALYTICS_ID; ?>','auto');ga('send','pageview');
+	
+	gc.globalScripts = [
+		"<?php echo get_template_directory_uri() . $assets['modernizr']; ?>", 
+		"<?php //echo $assets['jquery']; ?>",
+		"<?php echo get_template_directory_uri() . $assets['js']; ?>"
+	];
+	
+	//document.addEventListener("initOrganisms", function(e) {
+		
+		//console.log( gc.pageScripts );
+/*
+		for (i = 0; i < gc.pageScripts.length; i++) { 
+		    gc.pageScripts[i]();
+		}
+*/
+		
+	//});
+	
+	
+	var organismsInit = function() {
+			for (var key in gc.pageScripts) { gc.pageScripts[key](); }
+	    };
+	
+	var downloadJSAtOnload = function(n) {
+	        if ("[object Array]" !== Object.prototype.toString.call(n)) return 0;
+	        var t, e;
+	        for (t = 0; t < n.length; t++) e = document.createElement("script"), e.src = n[t], document.body.appendChild(e);
+	        return !0
+	    };
+	    
+	var initDefer = function(n) {
+			//Deferred Externals
+//			downloadJSAtOnload(n);
+			//Deferred Internals
+			organismsInit();
+		};
+		
+	window.addEventListener ? window.addEventListener("load", function() {
+	    initDefer(gc.globalScripts)
+	}, !1) : window.attachEvent ? window.attachEvent("onload", function() {
+	    initDefer(gc.globalScripts)
+	}) : window.onload = function() {
+	    initDefer(gc.globalScripts)
+	};
+	
+	//document.dispatchEvent(organismsInit);
+	
 </script>
 
 <?php }
-if (GOOGLE_ANALYTICS_ID && (WP_ENV !== 'production' || !current_user_can('manage_options'))) {
-  add_action('wp_footer', 'roots_google_analytics', 20);
-}
+
+  add_action('wp_footer', 'roots_custom_footer', 1000);
+

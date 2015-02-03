@@ -18,6 +18,7 @@ module.exports = function(grunt) {
 //    'assets/vendor/bootstrap/js/scrollspy.js',
 //    'assets/vendor/bootstrap/js/tab.js',
 //    'assets/vendor/bootstrap/js/affix.js',
+    'assets/vendor/jquery/dist/jquery.js',
     'assets/vendor/slick.js/slick/slick.js',
     'assets/vendor/selection-sharer/dist/selection-sharer.js',
     'assets/vendor/jquery.countdown/dist/jquery.countdown.js',
@@ -53,7 +54,7 @@ module.exports = function(grunt) {
           ]
         },
         options: {
-          compress: false,
+          compress: true,
           // LESS source map
           // To enable, set sourceMap to true and update sourceMapRootpath based on your install
           sourceMap: true,
@@ -78,7 +79,7 @@ module.exports = function(grunt) {
           ]
         },
         options: {
-          compress: false
+          compress: true
         }
       },
       compress: {
