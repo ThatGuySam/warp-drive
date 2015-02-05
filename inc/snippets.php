@@ -300,12 +300,16 @@ function removeWhitespace($buffer) {
 }
 
 
-function parse_shortcode( $string ){
+function parse_shortcode( $raw_string ){
+	
+	$string = trim($raw_string);
+	if( empty( $string ) ) return false;
+	
+	preg_match("/\[([^\]]*)\]/", $string, $matches);
+	$naked_shortcode = $matches[1];
+	if( empty($naked_shortcode) ) return false;
 	
 	$shortcode = new stdClass();
-	
-	$naked_shortcode = trim($string,"[]");
-	if( !$naked_shortcode ) return false;
 	$parts = explode(' ', $naked_shortcode);
 	
 	foreach( $parts as $key => $part ){
