@@ -1133,9 +1133,13 @@ function hero() {
 				$hero->link = get_sub_field('link');
 				
 				//Setup Foreground
-				$hero->text = $hero->title;
-				if( get_sub_field('title') ) $hero->text = get_sub_field('title');
-				$hero->text = trim( $hero->text );
+				if( $hero->heroesCount === 1 ) {
+					$hero->text = $hero->title;
+					if( get_sub_field('title') ) $hero->text = get_sub_field('title');
+					$hero->text = trim( $hero->text );
+				} else {
+					$hero->text = "";
+				}
 				
 				$hero->heroes[$hero->index]['shortcode'] = parse_shortcode( $hero->text );
 				
