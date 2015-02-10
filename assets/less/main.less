@@ -71,7 +71,9 @@ Variables
 
 @secondary-dark: #4d4d4d;
 
-//@tertiary-dark: #4d4d4d
+@tertiary-dark: #aaaaaa;
+
+@primary: #F44336; 
 
 
 // Easing
@@ -275,8 +277,9 @@ Interface
 	border-radius: 0;
 }
 
-hr {
-	border-top: 1px solid @primary-dark;
+hr,
+.vc_separator .vc_sep_holder .vc_sep_line {
+	border-top: 1px solid @tertiary-dark;
 }
 
 
@@ -303,6 +306,7 @@ hr {
 	
 	.btn:not(.btn-link):not(.btn-flat), .btn-default:not(.btn-link):not(.btn-flat) {
 		background-color: @primary-dark;
+		color: @primary-light;
 		margin-top: 0;
 	}
 	
@@ -546,7 +550,7 @@ Menu
 }
 
 .navbar, 
-.navbar-default, 
+.navbar-default.navbar, 
 .expanded-nav-open header.banner.navbar {
 	position: absolute;
 	left: 0;
@@ -576,6 +580,7 @@ Menu
 
 .navbar .navbar-nav {
 	width: 100%;
+	color: @primary-light;
 	
 	&#menu-primary-navigation > li {	
 	
