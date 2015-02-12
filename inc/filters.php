@@ -193,7 +193,7 @@ function load_google_fonts() {
   if( ! defined( 'GOOGLE_FONTS' ) ) return;
   echo '<link href="http://fonts.googleapis.com/css?family=' . GOOGLE_FONTS . '" rel="stylesheet" type="text/css" />'."\n";
 }
-add_action( 'wp_head', 'load_google_fonts' , 1);
+//add_action( 'wp_head', 'load_google_fonts' , 1);
 
 
 //Custom Admin CSS
