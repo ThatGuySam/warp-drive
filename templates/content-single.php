@@ -5,6 +5,10 @@
     </header>
     <div class="entry-content">
       <?php the_content(); ?>
+      <div class="social-share">
+      	<div class="addthis_native_toolbox"></div>
+      	<script> gc.globalScripts.push("//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-5149d8572d6ab06e");  </script>
+      </div>
     </div>
     <footer>
       <?php wp_link_pages(array('before' => '<nav class="page-nav"><p>' . __('Pages:', 'roots'), 'after' => '</p></nav>')); ?>
