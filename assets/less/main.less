@@ -287,6 +287,36 @@ hr,
 	border-radius: 0;
 }
 
+
+//Accordian
+
+.wpb_content_element .wpb_accordion_wrapper .wpb_accordion_header, 
+.wpb_content_element.wpb_tabs .wpb_tour_tabs_wrapper .wpb_tab {
+	
+	background-color: @primary-dark;
+	border: 1px solid transparent;
+	font-size: 1.2em;
+	a {
+		color: @primary-light;
+	}
+	
+	&.ui-accordion-header-active,
+	&.ui-state-active {
+		background-color: @primary-light;
+		border-bottom-color: @primary-dark;
+		
+		a {
+			color: @primary-dark;
+		}
+	}
+}
+
+.wpb_accordion .wpb_accordion_wrapper .ui-state-default .ui-icon, 
+.wpb_accordion .wpb_accordion_wrapper .ui-state-active .ui-icon {
+	background: none;
+}
+
+
 .dark {
 	.backgroundRGBa();
 	color: @primary-light;
