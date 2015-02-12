@@ -2,9 +2,9 @@
 
 function debug( $thing ) {
 	
-	if( !isset( $thing ) ) return "That's not a set value";
+	if( !isset( $thing ) ) return 'That\'s not a set value';
 	
-	if( $thing === null ) return "He's Null Jim";
+	if( $thing === null ) return 'He\'s Null Jim';
 	
 	ob_start(); ?><pre><?php print_r($thing); ?></pre><?php $output = ob_get_clean();
 	
@@ -165,11 +165,11 @@ function cacheHandler( $object ) {
     
     $function = $object->cache->function_name;
     
-    $filename = $object->cache->function_name . "-" . preg_replace("/[^\da-z]/i", '', $object->id ).".json";
-    if( $object->cache->cache_name ) $filename = $object->cache->cache_name."-".$filename;
+    $filename = $object->cache->function_name . '-' . preg_replace('/[^\da-z]/i', '', $object->id ).'.json';
+    if( $object->cache->cache_name ) $filename = $object->cache->cache_name.'-'.$filename;
     $cacheFile = 'cache' . DIRECTORY_SEPARATOR . $filename;
 	
-	if( array_key_exists( 'purge' , $_GET ) || $object->purge == true ) @unlink($cacheFile);
+	if( array_key_exists( 'purge' , $_GET ) || $object->purge === true ) @unlink($cacheFile);
 	
     if (file_exists($cacheFile)) {
         $fh = fopen($cacheFile, 'r');
@@ -210,9 +210,9 @@ function cacheHandler( $object ) {
 }
 
 function hex2rgb($hex) {
-   $hex = str_replace("#", "", $hex);
+   $hex = trim($hex, '#');
 
-   if(strlen($hex) == 3) {
+   if(strlen($hex) === 3) {
       $r = hexdec(substr($hex,0,1).substr($hex,0,1));
       $g = hexdec(substr($hex,1,1).substr($hex,1,1));
       $b = hexdec(substr($hex,2,1).substr($hex,2,1));
@@ -230,7 +230,7 @@ function hex2rgb($hex) {
    $rgb->green	= $g;
    $rgb->blue	= $b;
 */
-   return implode(",", $rgb); // returns the rgb values separated by commas
+   return implode(',', $rgb); // returns the rgb values separated by commas
    //return $rgb; // returns an array with the rgb values
 }
 
@@ -305,7 +305,7 @@ function parse_shortcode( $raw_string ){
 	$string = trim($raw_string);
 	if( empty( $string ) ) return false;
 	
-	preg_match("/\[([^\]]*)\]/", $string, $matches);
+	preg_match('/\[([^\]]*)\]/', $string, $matches);
 	$naked_shortcode = $matches[1];
 	if( empty($naked_shortcode) ) return false;
 	
@@ -313,7 +313,7 @@ function parse_shortcode( $raw_string ){
 	$parts = explode(' ', $naked_shortcode);
 	
 	foreach( $parts as $key => $part ){
-		if( $key == 0 ){
+		if( !$key ){
 			$shortcode->name = $part;
 			continue;//skip iteration
 		}
@@ -334,7 +334,7 @@ function custom_options() {
 	
 	foreach( $options as $option ){
 		
-		if( $option['option'] == "" ) continue;
+		if( $option['option'] === '' ) continue;
 		
 		$output->{$option['option']} = $option['value'];
 	}
@@ -427,9 +427,9 @@ function isLive() {
 	$min = 60;
 	
 	//Define countdown options
-	$countdown->cache->function_name =	"countdownEvents";
+	$countdown->cache->function_name =	'countdownEvents';
 	$countdown->cache->cache_time =		'-15 minutes';
-	$countdown->cache->cache_name =		"countdown";
+	$countdown->cache->cache_name =		'countdown';
     
     //Get any events
     $countdown->objects = countdownEvents();
@@ -484,10 +484,20 @@ function currentServiceLink() {
 	return $output;
 }
 
+
+/*
+function newestLink( $type='post', $id=0 ) {
+	
+	
+	
+	return $output;
+}
+*/
+
 function social_media_profiles($strapped=0,$profiles=0) {
 	
 	//HTML Output
-	$output = "";
+	$output = '';
 	
 	//Current Pages Fields
 	$options = custom_options();
@@ -497,12 +507,12 @@ function social_media_profiles($strapped=0,$profiles=0) {
 	
 	//Types of Profiles and Order
 	$profiles_list = array(
-		"facebook",
-		"twitter",
-		"instagram",
-		"pinterest",
-		"vimeo",
-		"email"
+		'facebook',
+		'twitter',
+		'instagram',
+		'pinterest',
+		'vimeo',
+		'email'
 	);
 	
 	
@@ -545,12 +555,12 @@ function social_media_profiles($strapped=0,$profiles=0) {
 			
 		}
 		
-		$classes = "social-bar-item";
+		$classes = 'social-bar-item';
 		
-		if( $strapped ) $classes .= " col-sm-".$pw." col-xs-2";
+		if( $strapped ) $classes .= ' col-sm-'.$pw.' col-xs-2';
 		
 		//Add offset to first
-		if( $strapped && !$p ) $classes .= " col-sm-offset-".$po." col-xs-offset-".$pos;
+		if( $strapped && !$p ) $classes .= ' col-sm-offset-'.$po.' col-xs-offset-'.$pos;
 		
 		$output .= '<div class="'.$classes.'"><a href="'.$options->{$profile}.'"><i class="gc-'.$profile.'"></i></a></div>';
 		
@@ -571,7 +581,7 @@ function count_top_level_menu_items($menu_id){
     $count = 0;
     $menu_items = wp_get_nav_menu_items($menu_id);
     foreach($menu_items as $menu_item){
-        if($menu_item->menu_item_parent==0){
+        if($menu_item->menu_item_parent===0){
             $count++;
         }
     }
@@ -581,13 +591,13 @@ function count_top_level_menu_items($menu_id){
 
 function ago($time){
 	
-	$periods = array("second", "minute", "hour", "day", "week", "month", "year", "decade");
-	$lengths = array("60","60","24","7","4.35","12","10");
+	$periods = array('second', 'minute', 'hour', 'day', 'week', 'month', 'year', 'decade');
+	$lengths = array('60','60','24','7','4.35','12','10');
 	
 	$now = time();
 	
 	   $difference     = $now - $time;
-	   $tense         = "ago";
+	   $tense         = 'ago';
 	
 	for($j = 0; $difference >= $lengths[$j] && $j < count($lengths)-1; $j++) {
 	   $difference /= $lengths[$j];
@@ -596,14 +606,14 @@ function ago($time){
 	$difference = round($difference);
 	
 	if($difference != 1) {
-	   $periods[$j].= "s";
+	   $periods[$j].= 's';
 	}
 	
 	$output = "$difference $periods[$j] ago";
 	
-	if( $time > strtotime('-14 day') ) $output = "Last week";
+	if( $time > strtotime('-14 day') ) $output = 'Last week';
 	
-	if( $time > strtotime('-7 day') ) $output = "This week";
+	if( $time > strtotime('-7 day') ) $output = 'This week';
 	
 	return $output;//." ".date('r',$time);
 }

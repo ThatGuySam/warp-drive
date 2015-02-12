@@ -62,10 +62,10 @@ function deregister_styles() {
 		$type = $script[0];
 		
 		switch ($type) {
-		    case "js":
+		    case 'js':
 		        if( wp_script_is( $slug, 'registered' ) ) wp_deregister_script($slug);
 		        break;
-		    case "css":
+		    case 'css':
 		        if( wp_style_is( $slug, 'registered' ) ) wp_deregister_style($slug);
 		        break;
 		}	
@@ -269,9 +269,9 @@ class Countdown {
 			$countdown->cache = new stdClass();
 			
 			//Define countdown options
-			$countdown->cache->function_name =	"countdownEvents";
+			$countdown->cache->function_name =	'countdownEvents';
 			$countdown->cache->cache_time =		'-15 minutes';
-			$countdown->cache->cache_name =		"countdown";
+			$countdown->cache->cache_name =		'countdown';
 		    
 		    //Get any events
 		    $countdown->objects = cacheHandler( $countdown );

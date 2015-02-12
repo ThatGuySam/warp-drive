@@ -1,6 +1,5 @@
 <?php
 	
-	
 function date_sort_objects($a, $b) {
 	return strcmp($a->date_unix, $b->date_unix); //only doing string comparison
 }
@@ -21,7 +20,7 @@ function boxesInstagram($user_id) {
 		return $result;
 	}
 	
-	$result = fetchData("https://api.instagram.com/v1/users/".$user_id."/media/recent/?access_token=10392439.44b554e.ab889407055b456381897320866ab6b7");
+	$result = fetchData('https://api.instagram.com/v1/users/'.$user_id.'/media/recent/?access_token=10392439.44b554e.ab889407055b456381897320866ab6b7');
 	$result = json_decode($result);
 	
 	$i=0;
@@ -94,15 +93,15 @@ function boxesVimeo($boxes) {
 		
 		$title = $video->title;
 		
-		$link = $boxes->site_url."/watch/?vid=".$video->id;
+		$link = $boxes->site_url.'/watch/?vid='.$video->id;
 		
 		
 		$v_box = new stdClass();
 		
-		$v_box->type 		= "video";
+		$v_box->type 		= 'video';
 		$v_box->id			= $video->id;
 		$v_box->image_url	= $video->thumbnail_large;
-		$v_box->date 		= date( "F jS" , $date );
+		$v_box->date 		= date( 'F jS' , $date );
 		$v_box->date_unix	= $date;
 		$v_box->title		= $title;
 		$v_box->text 		= $title;
@@ -111,7 +110,7 @@ function boxesVimeo($boxes) {
 		$v_box->index		= $i;
 		
 		
-		$videos->{"video_".$i} = $v_box;
+		$videos->{'video_'.$i} = $v_box;
 		
 		//if( $i >= $boxes->amount - 1 ) break;
 		
@@ -146,7 +145,7 @@ function boxVimeo($object) {
 }
 
 
-function getLatestVideo($album_id="2238693") {
+function getLatestVideo($album_id='2238693') {
 	
 	$output =
 	$boxes = 
@@ -154,14 +153,14 @@ function getLatestVideo($album_id="2238693") {
 		
 	$boxes->cache = new stdClass();
 	
-	$boxes->source = "/album/".$album_id;
+	$boxes->source = '/album/'.$album_id;
 	
 	$boxes->amount = 1;
 	
 	$boxes->id = preg_replace('/[^\da-z]/i', '', $boxes->source );
 	
-	$boxes->cache->function_name = "boxesVimeo";
-	$boxes->cache->cache_name = "firstVideo";
+	$boxes->cache->function_name = 'boxesVimeo';
+	$boxes->cache->cache_name = 'firstVideo';
     
     $boxes->objects = cacheHandler( $boxes );
     
@@ -192,7 +191,7 @@ function boxesEvents($boxes) {
 	
 	$source = array( 5 );
 	
-	if( $boxes->source != "" && is_numeric( $boxes->source ) ){
+	if( $boxes->source !== '' && is_numeric( $boxes->source ) ){
 		$source = array( $boxes->source );
 	}
 	
@@ -225,16 +224,16 @@ function boxesEvents($boxes) {
 			//Date
 			$date_raw = $ai1ec_registry->get('view.event.time')->get_long_date( $event->get( 'start' ) );
 			
-			$date = date( "F jS" , strtotime( $date_raw ) );
+			$date = date( 'F jS' , strtotime( $date_raw ) );
 			
 			$e_box->date				= $date;
 			$e_box->date_unix			= strtotime($date_raw);
 			$e_box->id					= $id;
 			$e_box->title				= $title;
 			$e_box->image_url			= getImage( $id );
-			$e_box->type				= "event";
+			$e_box->type				= 'event';
 			$e_box->color				= get_field('page_color', $id);
-			$e_box->link				= $boxes->site_url."/?p=".$id;
+			$e_box->link				= $boxes->site_url.'/?p='.$id;
 			
 			$boxes->objects[$e] = $e_box;
 			
@@ -278,7 +277,7 @@ function boxesCategory($boxes) {
 			$id = $post->ID;
 			
 			//Date
-			$date = date( "F jS" , strtotime( $post->post_date ) );
+			$date = date( 'F jS' , strtotime( $post->post_date ) );
 			
 			$thumb = getImage($id);
 			
@@ -289,7 +288,7 @@ function boxesCategory($boxes) {
 			$c_box->image_url			= $thumb;
 			$c_box->type				= 'post';
 			$c_box->color				= get_field('page_color', $id);
-			$c_box->link				= $boxes->site_url."/?p=".$id;
+			$c_box->link				= $boxes->site_url.'/?p='.$id;
 			$c_box->index				= $c;
 			
 			$boxes->objects[$c] = $c_box;
@@ -350,7 +349,7 @@ class Boxes {
 		
 		$boxes->site_url = site_url();
 		
-		$boxes->links_type = "normal";
+		$boxes->links_type = 'normal';
 		
 		$boxes->post = $post;
 		
@@ -362,7 +361,7 @@ class Boxes {
 		
 		$boxes->child_classes = '';
 		
-		if( $boxes->layout == 'masonry' ){ 
+		if( $boxes->layout === 'masonry' ){ 
 			
 			$col_width = 6;
 			
@@ -389,13 +388,13 @@ class Boxes {
 		
 		//Feed Type
 		switch ($type) {
-		    case "instagram":
+		    case 'instagram':
 		        $boxes->objects = boxesInstagram($boxes);
 		        
-		        $target = "_blank";
+		        $target = '_blank';
 		        
 		        break;
-		    case "vimeo":
+		    case 'vimeo':
 		        
 		        $vid_url = parse_url($boxes->source);
 		        
@@ -403,30 +402,30 @@ class Boxes {
 		        
 		        $boxes->id = preg_replace('/[^\da-z]/i', '', $vid_url['path'] );
 		        
-		        $boxes->cache->function_name = "boxesVimeo";
-		        $boxes->cache->cache_name = "vimeo";
+		        $boxes->cache->function_name = 'boxesVimeo';
+		        $boxes->cache->cache_name = 'vimeo';
 		        //$boxes->cache->json = true;
 		        
 		        $boxes->objects = cacheHandler( $boxes );
 		        
-		        if( $boxes->post->post_name == "watch" ) {
-					$boxes->links_type = "hash";
+		        if( $boxes->post->post_name === 'watch' ) {
+					$boxes->links_type = 'hash';
 				}
 		        
-		        $target = "_self";
+		        $target = '_self';
 		        
 		        break;
-		    case "events":
+		    case 'events':
 		    	
 		    	$boxes->id = $source;
 		    	
-		    	$boxes->cache->function_name = "boxesEvents";
-		        $boxes->cache->cache_name = "events";
+		    	$boxes->cache->function_name = 'boxesEvents';
+		        $boxes->cache->cache_name = 'events';
 				
 				$boxes->objects = cacheHandler( $boxes );
 				
 		        break;
-		    case "category":
+		    case 'category':
 		        
 		        $boxes->id = $source;
 		    	
@@ -436,14 +435,14 @@ class Boxes {
 				$boxes->objects = cacheHandler( $boxes );
 				
 		        break;
-		    case "youtube":
+		    case 'youtube':
 		        echo $source;
 		        break;
-		    case "acf":
+		    case 'acf':
 		        echo $source;
 		        break;
 		    default:
-		       echo "Nothing here";
+		       echo 'Nothing here';
 		}		
 		
 		
@@ -487,8 +486,8 @@ class Boxes {
 							}
 							
 							//Hash Links
-							if( $boxes->links_type == "hash" ){
-								$box->link = "#".$box->id;
+							if( $boxes->links_type === 'hash' ){
+								$box->link = '#'.$box->id;
 							}
 							
 							if( empty($boxes->srcType) ){
@@ -499,8 +498,8 @@ class Boxes {
 							//if( $key < $boxes->show ) $box->srcType = "src";//if is showing don't lazyload
 							
 							
-							if( $boxes->layout == 'masonry' && $box->index >= $boxes->amount ){
-								$boxes->child_class = $boxes->child_class." box-lazyload ease-opacity";
+							if( $boxes->layout === 'masonry' && $box->index >= $boxes->amount ){
+								$boxes->child_class = $boxes->child_class.' box-lazyload ease-opacity';
 								$box->srcType = 'src="'.get_template_directory_uri().'/assets/img/blank.gif" data-src';
 							}
 						?>
@@ -516,7 +515,7 @@ class Boxes {
 								
 									<a href="<?php echo $box->link; ?>" target="<?php echo $target; ?>" >
 										<div class="box-image">
-											<img class="easecubic" <?php echo $box->srcType; ?>="<?php echo $box->image_url; ?>" alt="<?php echo $box->title." - ".$box->date; ?>" >
+											<img class="easecubic" <?php echo $box->srcType; ?>="<?php echo $box->image_url; ?>" alt="<?php echo $box->title.' - '.$box->date; ?>" >
 										</div>
 										
 										<div class="box-header easecubic" style="">
@@ -531,7 +530,7 @@ class Boxes {
 									</a>
 								</div>
 								
-							<?php if( !isset( $props['double-stacked'] ) || $box->index % 2 == 0 || !$box->index  ){ ?></li><?php } ?>
+							<?php if( !isset( $props['double-stacked'] ) || $box->index % 2 === 0 || !$box->index  ){ ?></li><?php } ?>
 						
 					<?php endforeach;/* foreach($boxes->objects) */ endif;/* if( $boxes->objects ) */ ?>
 				</ul>

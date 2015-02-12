@@ -1138,13 +1138,13 @@ function hero() {
 					if( get_sub_field('title') ) $hero->text = get_sub_field('title');
 					$hero->text = trim( $hero->text );
 				} else {
-					$hero->text = "";
+					$hero->text = '';
 				}
 				
 				$hero->heroes[$hero->index]['shortcode'] = parse_shortcode( $hero->text );
 				
 				if($hero->heroes[$hero->index]['shortcode']) {
-				    $hero->heroes[$hero->index]['kind'] = "shortcode";
+				    $hero->heroes[$hero->index]['kind'] = 'shortcode';
 				}
 				
 			?>
@@ -1163,7 +1163,7 @@ function hero() {
 	</div>
 	
 	
-	<?php if( $hero->kind !== "text"): ?>
+	<?php if( $hero->kind !== 'text'): ?>
 		
 		<a href="#content" class="scrollto">
 			<div class="read-more hidden-sm hidden-xs">
