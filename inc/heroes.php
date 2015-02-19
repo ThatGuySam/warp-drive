@@ -1167,7 +1167,7 @@ function hero() {
 		
 		<a href="#content" class="scrollto">
 			<div class="read-more hidden-sm hidden-xs">
-				<span class="read-more-text">Scroll</span>
+				<span class="read-more-text">Learn More</span>
 				<br>
 				<span><i class="down-arrow"></i></span>
 			</div>
