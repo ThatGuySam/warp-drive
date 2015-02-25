@@ -2,11 +2,17 @@
 
 function debug( $thing ) {
 	
-	if( !isset( $thing ) ) return 'That\'s not a set value';
+	$output_data = $thing;
 	
-	if( $thing === null ) return 'He\'s Null Jim';
+	if( !isset( $thing ) ) $output_data = 'That\'s not a set value';
 	
-	ob_start(); ?><pre><?php print_r($thing); ?></pre><?php $output = ob_get_clean();
+	//if( $thing === null ) $output_data = 'He\'s Null Jim';
+	
+	if( $thing === false ) $output_data = 'Returned False';
+	
+	if( $thing === 0 ) $output_data = 'Returned Zero';
+	
+	ob_start(); ?><pre><?php var_dump($thing); ?></pre><?php $output = ob_get_clean();
 	
 	echo $output;
 	
@@ -341,7 +347,6 @@ function custom_options() {
 	
 	return $output;
 }
-
 
 function countdownEvents( $object=false ) {
 	
