@@ -300,6 +300,7 @@ hr,
 		color: @primary-light;
 	}
 	
+/*
 	&.ui-accordion-header-active,
 	&.ui-state-active {
 		background-color: @primary-light;
@@ -307,6 +308,19 @@ hr,
 		
 		a {
 			color: @primary-dark;
+		}
+	}
+*/
+	
+	transition: box-shadow .28s cubic-bezier(.4, 0, .2, 1);
+	
+	&:hover {
+		box-shadow: 0 6px 10px rgba(0,0,0,0.23),0 10px 30px rgba(0,0,0,0.19);
+		
+		z-index: 10;
+		
+		&.ui-accordion-header-active {
+			box-shadow: none;
 		}
 	}
 }
@@ -1619,6 +1633,17 @@ Events
 	font-size: 1em;
 	color: @primary-dark;
 	
+	//General
+	
+	.ai1ec-btn-group > .ai1ec-btn-sm {
+		font-size: 1em;
+	}
+	
+	//
+	//Month View
+	//
+	
+	
 	//light
 	.ai1ec-calendar-toolbar,
 	table.ai1ec-month-view {
@@ -1639,11 +1664,7 @@ Events
 		
 	}
 	
-	.ai1ec-btn-group > .ai1ec-btn-sm {
-		font-size: 1em;
-	}
-	
-	//border
+	//Border
 	.ai1ec-month-view td, 
 	.ai1ec-week-view td, 
 	.ai1ec-oneday-view td {
@@ -1661,6 +1682,47 @@ Events
 	
 	.ai1ec-month-view td.ai1ec-empty {
 		background: @secondary-light !important;
+	}
+	
+	
+	
+	
+	//
+	//Agenda View
+	//
+	
+	
+	.ai1ec-agenda-widget-view,
+	.ai1ec-agenda-view {
+		
+		.ai1ec-date,
+		.ai1ec-date-title {
+			border-top: none; 
+			background: none;
+			box-shadow: none;
+		}
+		
+		.ai1ec-month, {
+			background: @primary-dark;
+			color: @primary-light;
+		}
+		
+		.ai1ec-event-title,
+		.ai1ec-date-title,
+		.ai1ec-event {
+			background: @primary-light;
+			color: @primary-dark;
+		}
+		
+		.ai1ec-event {
+			min-height: 4.9em;
+		}
+		
+		.ai1ec-date {
+			border-left: 1px solid #323232;
+			margin: 1em 0;
+		}
+	
 	}
 	
 }

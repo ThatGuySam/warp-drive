@@ -540,7 +540,7 @@ class Boxes {
 		<?php
 		$content = ob_get_clean();
 		
-		debug( $debug );
+		//debug( $debug );
 			
 		return $content;
 	}
