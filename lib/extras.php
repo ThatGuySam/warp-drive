@@ -220,6 +220,7 @@ class Content_Insert {
 			 	// assign the content to $output
 			 	the_content();
 			 endwhile;
+			 wp_reset_query();
 		 }
  
 		?>
