@@ -13,7 +13,10 @@ use League\ColorExtractor\Client as ColorExtractor;
 
 $client = new ColorExtractor;
 
+//mobiledetect.net/
+global $detect;
 $detect = new Mobile_Detect;
+
 
 include get_theme_root().'/'.get_template().'/inc/snippets.php';
 
@@ -23,7 +26,6 @@ include get_theme_root().'/'.get_template().'/inc/heroes.php';
 
 include get_theme_root().'/'.get_template().'/inc/boxes.php';
 
-//include get_theme_root().'/'.get_template().'/inc/sms.php';
 
 
 if( array_key_exists( 'watchservice' , $_GET ) ) {
@@ -39,6 +41,40 @@ if ( $detect->isMobile() ) {
 	debug( $detect );
 }
 */
+
+
+add_action('wp', 'custom_options_actions');
+function custom_options_actions() {
+	
+	global $post;
+	global $detect;//Device Detection
+	
+	$options = custom_options();
+	
+	//If there aren't any options set
+	if( empty( $options ) ) return false;
+	
+	//debug( clean_user_url( $options->redirect_ios ) );
+		
+	$user_url = false;
+	
+	//Redirects
+	//Android
+	if( !empty( $options->redirect_android ) && $detect->isAndroidOS() ) $user_url = $options->redirect_android;
+	//iOS
+	if( !empty( $options->redirect_ios ) && $detect->isiOS() ) $user_url = $options->redirect_ios;
+	//Windows Phone
+	if( !empty( $options->redirect_wf ) && $detect->is('Windows Phone') ) $user_url = $options->redirect_wf;
+	//Default
+	if( !empty( $options->redirect ) ) $user_url = $options->redirect;
+	
+	if($user_url){
+		$redirect_url = clean_user_url( $user_url );
+		wp_redirect( $redirect_url );
+	}
+	
+	
+}
 
 
 /* Plugin Deregisters to avoid redendancy after script concatenation */
