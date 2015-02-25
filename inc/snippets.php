@@ -305,6 +305,38 @@ function removeWhitespace($buffer) {
     return preg_replace( '/>(\s|\n|\r)+</', '><', $buffer );
 }
 
+function clean_user_url($user_url) {
+	
+	//Defaults
+	$scheme = 'http';
+	$host = 'gutschurch.com';
+	$path
+	= $query
+	= $fragment
+	= '';
+	
+	if (!preg_match("~^(?:f|ht)tps?://~i", $user_url)) $user_url = "http://" . $user_url;
+	
+	$url = parse_url($user_url);
+	
+	debug( $user_url );
+	
+	extract($url);
+	
+	return $scheme.'://'.$host.$path.'?'.$query.'#'.$fragment;
+	
+/*
+	[scheme] => http
+    [host] => hostname
+    [user] => username
+    [pass] => password
+    [path] => /path
+    [query] => arg=value
+    [fragment] => anchor
+*/
+
+}
+
 
 function parse_shortcode( $raw_string ){
 	
