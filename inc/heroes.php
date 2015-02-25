@@ -567,11 +567,11 @@ class Bars {
 										?>background: <?php echo get_field('page_color'); ?>; <?php //#000000
 									endif; ?>">
 									
-									<?php if( !$logos ){ ?>
+									<?php /* if( !$logos ){ ?>
 										<div class="bar-bg-image ease-opacity">
 											<img src="<?php echo $featured; ?>" alt="<?php the_title(); ?>">
 										</div>
-									<?php } ?>
+									<?php } */ ?>
 									
 									<div class="bar-content">
 										
