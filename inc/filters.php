@@ -137,7 +137,7 @@ function add_outer_menu($items, $args) {
 	ob_start(); ?>
 		
 	<li class="menu-outer-item col-xs-1">
-      <a href="<?php echo esc_url(home_url('/')); ?>"><i class="gc-logo"></i></a>
+      <a href="<?php echo esc_url(home_url('/')); ?>"><span class="icon-font">GUTS</span></a>
 	</li>
 		    
 	<?php $before = ob_get_clean();
