@@ -23,3 +23,7 @@
 .acf-input-table .row:before {
 	content: none;
 }
+
+.wp-color-result:after {
+	display: none;
+}
