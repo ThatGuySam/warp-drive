@@ -7,13 +7,13 @@
 
 // Roots
 @import "_global";                   // Base styling & custom mixins
-//@import "components/_buttons";       // Button tweaks
-//@import "components/_forms";         // Form tweaks
-//@import "components/_media";         // WordPress media
+@import "components/_buttons";       // Button tweaks
+@import "components/_forms";         // Form tweaks
+@import "components/_media";         // WordPress media
 @import "components/_wp-classes";    // WordPress generated classes
 @import "layouts/_general";          // General styling
 @import "layouts/_header";           // Header styling
-//@import "layouts/_sidebar";          // Sidebar styling
+@import "layouts/_sidebar";          // Sidebar styling
 @import "layouts/_footer";           // Footer styling
 @import "layouts/_pages";            // Page styling
 @import "layouts/pages/_home";       // Home page styling
@@ -306,27 +306,11 @@ hr,
 .wpb_content_element .wpb_accordion_wrapper .wpb_accordion_header, 
 .wpb_content_element.wpb_tabs .wpb_tour_tabs_wrapper .wpb_tab {
 	
-	position: relative;
-	
 	background-color: @primary-dark;
-	border: none;
+	border: 1px solid transparent;
 	font-size: 1.2em;
 	a {
 		color: @primary-light;
-	}
-	
-	&:before {
-		content: " ";
-		position: absolute;
-		top: 0;
-		bottom: 0;
-		left: 0;
-		background: #d8d8d8;
-		width: 100%;
-		width: 0px;
-		z-index: -1;
-		
-		.transition( width )
 	}
 	
 /*
@@ -344,20 +328,12 @@ hr,
 	transition: box-shadow .28s cubic-bezier(.4, 0, .2, 1);
 	
 	&:hover {
-		//box-shadow: 0 6px 10px rgba(0,0,0,0.23),0 10px 30px rgba(0,0,0,0.19);
-		
-		//border-left-color: @primary-light; 
-		
-		&:before {
-			width: 5px;
-		}
+		box-shadow: 0 6px 10px rgba(0,0,0,0.23),0 10px 30px rgba(0,0,0,0.19);
 		
 		z-index: 10;
 		
 		&.ui-accordion-header-active {
-			&:before {
-				width: 0;
-			}
+			box-shadow: none;
 		}
 	}
 }
@@ -667,7 +643,6 @@ Menu
 .navbar .navbar-nav {
 	width: 100%;
 	color: @primary-light;
-	margin: 0 0;
 	
 	&#menu-primary-navigation > li {	
 	
@@ -735,7 +710,6 @@ Menu
 	
 	li.menu-outer-item {
 		//a i { font-size: 1.1em; }
-		padding: 0 0;
 		text-align: center;
 	}
 
@@ -895,27 +869,9 @@ Hero
 	//height: 100%;
 	
 	.hero-slick & {
-		//max-width: 1140px;
+		max-width: 1140px;
 		margin: 0 auto;
-    	//.ir();
-    	
-    	
-    	@media (max-width:768px) {
-	    	.container {
-		    	font-size: 0.5em;
-		    	padding: 0;
-	    	}
-	    	
-	    	.page-header,
-	    	.hero-ctas {
-		    	margin: 0;
-	    	}
-	    	
-	    	.hero-cta {
-		    	font-size: 1.5em;
-	    	}
-    	}
-    	
+    	.ir();
     }
 	
 	position: relative;
@@ -931,12 +887,8 @@ Hero
 		
 		//css-tricks.com/centering-css-complete-guide/
 		height: 100%;
-		&:before,
-		&:before:focus,
-		&:active:before {
+		&:before{
 			content: '';
-			font-size: 0;
-			text-decoration: none;
 			display: inline-block;
 			height: 100%; 
 			vertical-align: middle;
@@ -957,48 +909,6 @@ Hero
 		@media (min-width:768px) {
 	    	letter-spacing: 0.2em;
 	    }
-	}
-	
-	.hero-welcome {
-		
-		.page-header > span {
-			
-		}
-		
-	}
-	
-	.hero-header {
-		font-size: 4em;
-	}
-	
-	.hero-ctas {
-		
-		padding: 1em;
-		margin: 1em 0;
-	
-		.hero-cta {
-			font-weight: 500;
-			text-transform: uppercase;
-			text-align: center;
-			display: inline-block;
-			
-			min-width: 4em;
-			padding: .75em 2em;
-			margin: 0 .5em;
-			border: 1px solid @primary-light;
-			color: @primary-light;
-			
-			&:hover {
-				color: @primary-dark;
-				background: @primary-light;
-				text-decoration: none;
-				text-shadow: none;
-			}
-			
-		}
-		
-		
-		
 	}
 	
 	&.hero-media {
@@ -1031,6 +941,7 @@ Hero
 			max-width: 99%;
 			@media (max-width:768px) {
 				font-size: .9em;
+				margin: 0;
 			}
 			
 			h1 {
@@ -1055,19 +966,6 @@ Hero
 	
 	&.hero-text {
 		padding-top: 60px;
-		
-		@media (max-width:768px) {
-			
-			padding-top: 0px;
-			
-			.page-header {
-				margin: 0;
-				h1 {
-					margin: 0;
-				}
-			}
-		}
-		
 	}
 	
 	.read-more {
@@ -1101,10 +999,6 @@ Hero
 		
 	}
 	
-	.slick-list,
-	.slick-track {
-    	height: 100%;
-	}
 	
 	&:hover {
 		
@@ -1218,6 +1112,7 @@ Widgets
 	
 	> h3 {
 		text-transform: uppercase;
+		
 	}
 	
 }
