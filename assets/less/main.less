@@ -306,11 +306,27 @@ hr,
 .wpb_content_element .wpb_accordion_wrapper .wpb_accordion_header, 
 .wpb_content_element.wpb_tabs .wpb_tour_tabs_wrapper .wpb_tab {
 	
+	position: relative;
+	
 	background-color: @primary-dark;
-	border: 1px solid transparent;
+	border: none;
 	font-size: 1.2em;
 	a {
 		color: @primary-light;
+	}
+	
+	&:before {
+		content: " ";
+		position: absolute;
+		top: 0;
+		bottom: 0;
+		left: 0;
+		background: #d8d8d8;
+		width: 100%;
+		width: 0px;
+		z-index: -1;
+		
+		.transition( width )
 	}
 	
 /*
@@ -328,12 +344,20 @@ hr,
 	transition: box-shadow .28s cubic-bezier(.4, 0, .2, 1);
 	
 	&:hover {
-		box-shadow: 0 6px 10px rgba(0,0,0,0.23),0 10px 30px rgba(0,0,0,0.19);
+		//box-shadow: 0 6px 10px rgba(0,0,0,0.23),0 10px 30px rgba(0,0,0,0.19);
+		
+		//border-left-color: @primary-light; 
+		
+		&:before {
+			width: 5px;
+		}
 		
 		z-index: 10;
 		
 		&.ui-accordion-header-active {
-			box-shadow: none;
+			&:before {
+				width: 0;
+			}
 		}
 	}
 }
