@@ -19,9 +19,9 @@ function heroOrganism($hero) {
 				</div>
 				
 				<div class="hero-foreground animated fadeIn animated-3s animated-delay-1s" style="<?php //BG Color Overlay
-					if( get_field('page_color') ): 
-						?>background: <?php echo get_field('page_color'); ?>; <?php //#000000
-						?>background: rgba(<?php echo hex2rgb( get_field('page_color') ); ?>,0.85); <?php //rgba(0,0,0,0.8)
+					if( !empty( $hero->color ) ): 
+						?>background: <?php echo $hero->color; ?>; <?php //#000000
+						?>background: rgba(<?php echo hex2rgb( $hero->color ); ?>,0.85); <?php //rgba(0,0,0,0.8)
 					endif; ?>">
 				
 					<div class="container">
@@ -29,6 +29,17 @@ function heroOrganism($hero) {
 							<h1><?php 
 								echo parse_title( $hero->text ); 
 							?></h1>
+							
+							<?php if( $hero->ctas !== false ): ?>
+								<div class="hero-ctas">
+									<?php foreach($hero->ctas as $key => $value): ?>
+										<a href="<?php echo $value['link']; ?>">
+											<div class="hero-cta"><?php echo $value['text']; ?></div>
+										</a>
+									<?php endforeach; ?>
+								</div>
+							<?php endif; ?>
+							
 						</div>
 					</div>
 					
@@ -171,12 +182,52 @@ function heroOrganism($hero) {
 
 			
 		break;
+		case 'welcome':
+			
+			ob_start(); ?>
+			
+			<div class="hero-slide hero-welcome" >
+				
+				<div class="hero-background">
+					<img <?php echo $hero->srcType; ?>="<?php echo $hero->src; ?>" alt="<?php echo $hero->text; ?>">
+				</div>
+				
+				<div class="hero-foreground animated fadeIn animated-3s animated-delay-1s" style="<?php //BG Color Overlay
+					if( !empty( $hero->color ) ): 
+						?>background: <?php echo $hero->color; ?>; <?php //#000000
+						?>background: rgba(<?php echo hex2rgb( $hero->color ); ?>,0.85); <?php //rgba(0,0,0,0.8)
+					endif; ?>">
+				
+					<div class="container">
+						<div class="page-header">
+							<span class="icon-font hero-header spaced" style="margin: 1em 0;">GUTSchurch</span>
+							
+							<?php if( $hero->ctas !== false ): ?>
+								<div class="hero-ctas">
+									<?php foreach($hero->ctas as $key => $value): ?>
+										<a href="<?php echo $value['link']; ?>">
+											<div class="hero-cta"><?php echo $value['text']; ?></div>
+										</a>
+									<?php endforeach; ?>
+								</div>
+							<?php endif; ?>
+							
+						</div>
+					</div>
+					
+				</div>
+				
+			</div>
+			
+			<?php $hero->output = ob_get_clean();
+			
+		break;
 		default:
 	}
 	
 	
 	//Link Wrapper
-	if( $hero->link && $hero->link !== "" ){ 
+	if( $hero->link && $hero->link !== "" && !$hero->ctas ){ 
 		
 		$hero->output = '<a href="'.$hero->link.'" >'.$hero->output.'</a>';
 		
@@ -974,6 +1025,8 @@ function hero() {
 	
 	$hero->kind = "text";
 	
+	$hero->all_kind = false;
+	
 	$hero->template = basename( get_post_meta( get_the_ID(), '_wp_page_template', TRUE ), '.php');
 	
 	$hero->text = get_the_title();
@@ -989,6 +1042,12 @@ function hero() {
 	$hero->page_options = custom_options();
 	
 	$hero->post = $post;
+	
+	$hero->color = false;
+	
+	$hero->ctas = false;
+	
+	//if( !empty( $hero->page_options->page_color ) ) $hero->color = $hero->page_options->page_color;
 	
 	if( !empty( $hero->page_options->logo ) ) $hero->logo = $hero->page_options->logo;
 	
@@ -1078,7 +1137,7 @@ function hero() {
 	//Add Slick class if there's more than one hero
 	if( $hero->heroesCount > 1 && $hero->kind !== "shortcode" ) array_push( $hero->classes, "slick" );
 
-	
+	$hero->all_kind = $hero->kind;
 	
 	ob_start();
 ?>
@@ -1109,7 +1168,6 @@ function hero() {
 			
 		}
 		
-		
 		$hero->index = 0;
 		
 		//For Multiple Heroes
@@ -1132,8 +1190,22 @@ function hero() {
 				
 				$hero->link = get_sub_field('link');
 				
+				//$hero->kind = 'media';
+				
+				$hero->kind = $hero->all_kind;
+				if( $hero->link === '/welcome' ) $hero->kind = 'welcome';
+				
+				$hero->color = false;
+				$color = get_sub_field('color');
+				if( !empty($color) ) $hero->color = $color;
+				
+				$hero->ctas = false;
+				$ctas = get_sub_field('ctas');
+				if( !empty($ctas) ) $hero->ctas = $ctas;
+				
+				
 				//Setup Foreground
-				if( $hero->heroesCount === 1 ) {
+				if( $hero->heroesCount === 1 || $color ) {
 					$hero->text = $hero->title;
 					if( get_sub_field('title') ) $hero->text = get_sub_field('title');
 					$hero->text = trim( $hero->text );
@@ -1151,12 +1223,14 @@ function hero() {
 			
 			
 			<?php 
+				//debug( $hero );
 				echo heroOrganism($hero); 
 				$hero->index++;
 			?>
 			
+			
 		
-		<?php endwhile; 
+		<?php endwhile;
 		
 		else: echo heroOrganism($hero); endif; ?>
 		
