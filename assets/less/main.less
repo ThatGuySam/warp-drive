@@ -895,9 +895,27 @@ Hero
 	//height: 100%;
 	
 	.hero-slick & {
-		max-width: 1140px;
+		//max-width: 1140px;
 		margin: 0 auto;
-    	.ir();
+    	//.ir();
+    	
+    	
+    	@media (max-width:768px) {
+	    	.container {
+		    	font-size: 0.5em;
+		    	padding: 0;
+	    	}
+	    	
+	    	.page-header,
+	    	.hero-ctas {
+		    	margin: 0;
+	    	}
+	    	
+	    	.hero-cta {
+		    	font-size: 1.5em;
+	    	}
+    	}
+    	
     }
 	
 	position: relative;
@@ -913,8 +931,12 @@ Hero
 		
 		//css-tricks.com/centering-css-complete-guide/
 		height: 100%;
-		&:before{
+		&:before,
+		&:before:focus,
+		&:active:before {
 			content: '';
+			font-size: 0;
+			text-decoration: none;
 			display: inline-block;
 			height: 100%; 
 			vertical-align: middle;
@@ -935,6 +957,48 @@ Hero
 		@media (min-width:768px) {
 	    	letter-spacing: 0.2em;
 	    }
+	}
+	
+	.hero-welcome {
+		
+		.page-header > span {
+			
+		}
+		
+	}
+	
+	.hero-header {
+		font-size: 4em;
+	}
+	
+	.hero-ctas {
+		
+		padding: 1em;
+		margin: 1em 0;
+	
+		.hero-cta {
+			font-weight: 500;
+			text-transform: uppercase;
+			text-align: center;
+			display: inline-block;
+			
+			min-width: 4em;
+			padding: .75em 2em;
+			margin: 0 .5em;
+			border: 1px solid @primary-light;
+			color: @primary-light;
+			
+			&:hover {
+				color: @primary-dark;
+				background: @primary-light;
+				text-decoration: none;
+				text-shadow: none;
+			}
+			
+		}
+		
+		
+		
 	}
 	
 	&.hero-media {
@@ -967,7 +1031,6 @@ Hero
 			max-width: 99%;
 			@media (max-width:768px) {
 				font-size: .9em;
-				margin: 0;
 			}
 			
 			h1 {
@@ -992,6 +1055,19 @@ Hero
 	
 	&.hero-text {
 		padding-top: 60px;
+		
+		@media (max-width:768px) {
+			
+			padding-top: 0px;
+			
+			.page-header {
+				margin: 0;
+				h1 {
+					margin: 0;
+				}
+			}
+		}
+		
 	}
 	
 	.read-more {
@@ -1025,6 +1101,10 @@ Hero
 		
 	}
 	
+	.slick-list,
+	.slick-track {
+    	height: 100%;
+	}
 	
 	&:hover {
 		
@@ -1138,7 +1218,6 @@ Widgets
 	
 	> h3 {
 		text-transform: uppercase;
-		
 	}
 	
 }
