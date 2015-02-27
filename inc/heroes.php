@@ -745,9 +745,7 @@ class Bars {
 					
 					$( window ).resize(function() {
 						sizeBars();
-					});
-					
-					sizeBars();
+					}).trigger('resize');
 					
 				}); }
 			</script>
