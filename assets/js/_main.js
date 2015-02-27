@@ -82,7 +82,9 @@ var Roots = {
 						
 						$("html").addClass("expanded-nav-open");
 						$(".expanded-nav").css( 'height' , exMenuHeight+'px' );
-						$(".search-toggle i").removeClass("gc-search").addClass("gc-cancel");
+						
+						//$(".search-toggle i").removeClass("gc-search").addClass("gc-cancel");
+						$(".search-toggle a").text("Close");
 						
 						$("#search").focus();
 						
@@ -93,7 +95,8 @@ var Roots = {
 						
 						$("html").removeClass("expanded-nav-open");
 						$(".expanded-nav").css( 'height' , '' );
-						$(".search-toggle i").removeClass("gc-cancel").addClass("gc-search");
+						$(".search-toggle a").text("More");
+						//$(".search-toggle i").removeClass("gc-cancel").addClass("gc-search");
 						
 						console.log( "Closing Menu!" );
 						

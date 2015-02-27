@@ -145,10 +145,9 @@ function add_outer_menu($items, $args) {
 	
 	ob_start(); ?>
 		
-	<li class="menu-outer-item search-toggle col-xs-1 pull-right">
-		<a href="#">
-			<i class="gc-search"></i>
-		</a>
+	<li class="menu-outer-item menu-item search-toggle col-xs-1 pull-right">
+		<a href="#">More</a>
+		<!-- <i class="gc-search"></i> -->
 	</li>
 		    
 	<?php $after = ob_get_clean();
