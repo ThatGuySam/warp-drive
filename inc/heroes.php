@@ -188,11 +188,11 @@ function heroOrganism($hero) {
 			
 			<div class="hero-slide hero-welcome" >
 				
-				<div class="hero-background">
+				<div class="hero-background animated fadeIn animated-3s animated-delay-1s">
 					<img <?php echo $hero->srcType; ?>="<?php echo $hero->src; ?>" alt="<?php echo $hero->text; ?>">
 				</div>
 				
-				<div class="hero-foreground animated fadeIn animated-3s animated-delay-1s" style="<?php //BG Color Overlay
+				<div class="hero-foreground" style="<?php //BG Color Overlay
 					if( !empty( $hero->color ) ): 
 						?>background: <?php echo $hero->color; ?>; <?php //#000000
 						?>background: rgba(<?php echo hex2rgb( $hero->color ); ?>,0.85); <?php //rgba(0,0,0,0.8)
@@ -203,7 +203,7 @@ function heroOrganism($hero) {
 							<span class="icon-font hero-header spaced" style="margin: 1em 0;">GUTSchurch</span>
 							
 							<?php if( $hero->ctas !== false ): ?>
-								<div class="hero-ctas">
+								<div class="hero-ctas animated fadeIn animated-3s animated-delay-1s">
 									<?php foreach($hero->ctas as $key => $value): ?>
 										<a href="<?php echo $value['link']; ?>">
 											<div class="hero-cta"><?php echo $value['text']; ?></div>

@@ -14,7 +14,7 @@
     echo socialBar();
   ?>
 
-  <div class="wrap container-fluid" role="document">
+  <div class="wrap container-fluid<?php if( isset( $page_options->pagefade ) ) {?> animated fadeIn animated-3s animated-delay-1s<?php } ?>" role="document">
     <div id="content" class="content row">
       <main class="main" role="main">
         <?php include roots_template_path(); ?>

@@ -1,4 +1,5 @@
-<header class="banner navbar navbar-default navbar-static-top" role="banner">
+<?php //debug( $page_options ); ?>
+<header class="banner navbar navbar-default navbar-static-top <?php global $page_options; if( isset( $page_options->pagefade ) ) {?> animated fadeIn animated-3s animated-delay-1s<?php } ?>" role="banner">
 	<div class="container-fluid primary-nav-container">
 	
 		<div class="primary-nav" role="navigation">
