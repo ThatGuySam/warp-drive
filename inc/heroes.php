@@ -1239,7 +1239,7 @@ function hero() {
 		
 		<a href="#content" class="scrollto">
 			<div class="read-more hidden-sm hidden-xs">
-				<span class="read-more-text">Learn More</span>
+				<span class="read-more-text"><?php if( isset( $hero->page_options->readmore ) ): echo $hero->page_options->readmore; else: ?>Learn More<?php endif; ?></span>
 				<br>
 				<span><i class="down-arrow"></i></span>
 			</div>
