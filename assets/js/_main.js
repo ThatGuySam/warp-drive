@@ -66,12 +66,12 @@ var Roots = {
 			
 			/* Menu */
 			
-			
 			function toggleExMenu( action ) { 
 				
 				var actions = ['close','open'];
 				var closed = $("html").hasClass("expanded-nav-open") ? 0 : 1;
 				var exMenuHeight = $('#menu-expanded-navigation').outerHeight();
+				var toggleSelector = '.search-toggle a span:visible';
 				
 				if(typeof(action)==='undefined'){ action = actions[closed]; }
 				
@@ -84,7 +84,10 @@ var Roots = {
 						$(".expanded-nav").css( 'height' , exMenuHeight+'px' );
 						
 						//$(".search-toggle i").removeClass("gc-search").addClass("gc-cancel");
-						$(".search-toggle a").text("Close");
+						window.menuClosedText = $(toggleSelector).text();
+						$(toggleSelector).text("Close");
+						
+						console.log( window.menuClosedText );
 						
 						$("#search").focus();
 						
@@ -95,7 +98,7 @@ var Roots = {
 						
 						$("html").removeClass("expanded-nav-open");
 						$(".expanded-nav").css( 'height' , '' );
-						$(".search-toggle a").text("More");
+						$(toggleSelector).text(window.menuClosedText);
 						//$(".search-toggle i").removeClass("gc-cancel").addClass("gc-search");
 						
 						console.log( "Closing Menu!" );
@@ -275,7 +278,7 @@ var Roots = {
 				arrows: !Modernizr.touch,
 				autoplay: true,
 				accessibility: true,
-				autoplaySpeed: 6000,
+				autoplaySpeed: 8000,
 				speed: 750,
 				fade: !Modernizr.touch,
 				easing: 'easeOutQuint'

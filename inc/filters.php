@@ -136,7 +136,7 @@ function add_outer_menu($items, $args) {
  
 	ob_start(); ?>
 		
-	<li class="menu-outer-item col-xs-1">
+	<li class="menu-outer-item col-sm-1 col-xs-3">
       <a href="<?php echo esc_url(home_url('/')); ?>"><span class="icon-font">GUTS</span></a>
 	</li>
 		    
@@ -145,8 +145,12 @@ function add_outer_menu($items, $args) {
 	
 	ob_start(); ?>
 		
-	<li class="menu-outer-item menu-item search-toggle col-xs-1 pull-right">
-		<a href="#">More</a>
+	<li class="menu-outer-item menu-item search-toggle col-sm-1 col-xs-3 pull-right">
+		<a href="#">
+			<span class="hidden-xs">More</span>
+			<span class="visible-xs">Menu</span>
+		</a>
+
 		<!-- <i class="gc-search"></i> -->
 	</li>
 		    
