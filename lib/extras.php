@@ -313,6 +313,7 @@ class Countdown {
 		    //Get any events
 		    $countdown->objects = cacheHandler( $countdown );
 		    
+		    
 		    //Parse next event date into js friendly date
 		    $until_js = date( 'Y/m/d H:i:00', $countdown->objects[0]->start_time );
 		
