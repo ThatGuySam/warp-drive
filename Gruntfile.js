@@ -29,7 +29,7 @@ module.exports = function(grunt) {
     'assets/vendor/bootstrap-material-design/dist/js/ripples.js',
     'assets/js/plugins/*.js',
     'assets/js/_*.js',
-    '../../plugins/js_composer/assets/js/js_composer_front.js'
+    '../../plugins/js_composer/assets/js/js_composer_front.js',//Visual Composer
   ];
   
   var domain = 'http://localhost:8888/gc-dev/';
