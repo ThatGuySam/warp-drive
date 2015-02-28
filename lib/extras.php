@@ -105,6 +105,7 @@ function deregister_styles() {
 		array('css', 'ai1ec-general'),// All-in-one Events
 		array('css', 'ai1ec-event'),
 		array('css', 'ai1ec-calendar'),
+		//array('js', 'dsq_count_script'),//Disqus
 		//array('ai1ec_style','css')
 	);
 	
@@ -115,10 +116,12 @@ function deregister_styles() {
 		
 		switch ($type) {
 		    case 'js':
-		        if( wp_script_is( $slug, 'registered' ) ) wp_deregister_script($slug);
+		        if( wp_script_is( $slug, 'registered' ) )	wp_deregister_script($slug);
+		        if( wp_script_is( $slug, 'enqueued' ) )		wp_dequeue_script($slug);
 		        break;
 		    case 'css':
-		        if( wp_style_is( $slug, 'registered' ) ) wp_deregister_style($slug);
+		        if( wp_style_is( $slug, 'registered' ) )	wp_deregister_style($slug);
+		        if( wp_style_is( $slug, 'enqueued' ) )		wp_dequeue_style($slug);
 		        break;
 		}	
 		
