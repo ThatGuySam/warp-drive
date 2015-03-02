@@ -206,7 +206,7 @@ function heroOrganism($hero) {
 								<div class="hero-ctas animated fadeIn animated-3s animated-delay-1s">
 									<?php foreach($hero->ctas as $key => $value): ?>
 										<a href="<?php echo $value['link']; ?>">
-											<div class="hero-cta"><?php echo $value['text']; ?></div>
+											<div class="hero-cta ease-background"><?php echo $value['text']; ?></div>
 										</a>
 									<?php endforeach; ?>
 								</div>
