@@ -7,4 +7,8 @@
 	  © Guts Church <?php echo date('Y'); ?>
   </div>
   
+  <div class="feedback" style="text-align: center; padding: 1em;">
+	  <a href="http://form.jotformpro.com/form/30093898678977" target="_blank" >New Website Feedback</a>
+  </div>
+  
 </footer>
