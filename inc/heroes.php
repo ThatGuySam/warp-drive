@@ -184,7 +184,13 @@ function heroOrganism($hero) {
 		break;
 		case 'welcome':
 			
-			ob_start(); ?>
+			ob_start(); 
+			
+			if( isLive() ){
+				$hero->src = 'http://gutschurch.com/wp-content/uploads/2014/10/Watch-Live_Banner-1280x720.jpg';
+			}
+			
+			?>
 			
 			<div class="hero-slide hero-welcome" >
 				
@@ -202,11 +208,17 @@ function heroOrganism($hero) {
 						<div class="page-header">
 							<span class="icon-font hero-header spaced" style="margin: 1em 0;">GUTSchurch</span>
 							
-							<?php if( $hero->ctas !== false ): ?>
+							<?php if( isLive() ): ?>
+								<div class="hero-ctas animated fadeIn animated-3s animated-delay-1s">
+									<a href="http://live.gutschurch.com">
+										<div class="hero-cta ease-background cta-live">Watch Live</div>
+									</a>
+								</div>
+							<?php elseif( $hero->ctas !== false ): ?>
 								<div class="hero-ctas animated fadeIn animated-3s animated-delay-1s">
 									<?php foreach($hero->ctas as $key => $value): ?>
 										<a href="<?php echo $value['link']; ?>">
-											<div class="hero-cta ease-background"><?php echo $value['text']; ?></div>
+											<div class="hero-cta ease"><?php echo $value['text']; ?></div>
 										</a>
 									<?php endforeach; ?>
 								</div>
