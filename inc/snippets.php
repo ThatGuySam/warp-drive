@@ -319,8 +319,6 @@ function clean_user_url($user_url) {
 	
 	$url = parse_url($user_url);
 	
-	debug( $user_url );
-	
 	extract($url);
 	
 	return $scheme.'://'.$host.$path.'?'.$query.'#'.$fragment;
