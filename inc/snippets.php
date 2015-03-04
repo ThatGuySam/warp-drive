@@ -457,6 +457,8 @@ function countdownEvents( $object=false ) {
 
 function isLive() {
 	
+	//return true;
+	
 	$countdown = new stdClass();
 	$countdown->cache = new stdClass();
 	$min = 60;
