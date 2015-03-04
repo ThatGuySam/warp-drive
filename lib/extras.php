@@ -85,10 +85,9 @@ function custom_options_actions() {
 	if( !empty( $page_options->redirect ) ) $user_url = $page_options->redirect;
 	
 	if($user_url){
-		$redirect_url = clean_user_url( $user_url );
-		wp_redirect( $redirect_url );
+		//$redirect_url = clean_user_url( $user_url );
+		wp_redirect( $user_url, '301' );
 	}
-	
 	
 }
 
