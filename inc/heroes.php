@@ -779,6 +779,7 @@ class Bars {
 					padding: 0;
 					border: none;
 					height: 400px;
+					min-height: 400px;
 					text-align: center;
 					overflow: hidden;
 				}
