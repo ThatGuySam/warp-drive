@@ -175,7 +175,10 @@ function cacheHandler( $object ) {
     if( $object->cache->cache_name ) $filename = $object->cache->cache_name.'-'.$filename;
     $cacheFile = 'cache' . DIRECTORY_SEPARATOR . $filename;
 	
-	if( array_key_exists( 'purge' , $_GET ) || $object->purge === true ) @unlink($cacheFile);
+	if( array_key_exists( 'purge' , $_GET ) || $object->purge === true ) {
+		w3tc_pgcache_flush();
+		@unlink($cacheFile);
+	}
 	
     if (file_exists($cacheFile)) {
         $fh = fopen($cacheFile, 'r');
@@ -197,7 +200,7 @@ function cacheHandler( $object ) {
 
         // else delete cache file
         fclose($fh);
-        unlink($cacheFile);
+        @unlink($cacheFile);
     }
 
     
