@@ -745,10 +745,12 @@ class Bars {
 							
 						$media.each(function() {
 							
+							if( wh === 0 || ww === 0 ) return true;
+							
 							if( ww > 992 ){
 								$(this).css("height", wh+"px");
 							} else {
-								$(this).css("height", "");
+								$(this).css("height", "400px");
 							}
 							
 						});
