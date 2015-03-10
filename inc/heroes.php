@@ -761,6 +761,14 @@ class Bars {
 						sizeBars();
 					}).trigger('resize');
 					
+					//Nudge Bars for height fix
+					$( document ).ready(function() {
+						
+						$( window ).trigger('resize');
+						
+					});
+					
+					
 				}); }
 			</script>
 			
