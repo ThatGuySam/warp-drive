@@ -815,6 +815,7 @@ Menu
 		position: relative;
 		padding: 1em;
 		cursor: pointer;
+		@media (max-width:768px) { width: 100%; }
 		li li {
 			padding: 0;
 			font-size: 0.85em;
@@ -930,14 +931,6 @@ Hero
 		    	padding: 0;
 	    	}
 	    	
-	    	.page-header,
-	    	.hero-ctas {
-		    	margin: 0;
-	    	}
-	    	
-	    	.hero-cta {
-		    	font-size: 1.5em;
-	    	}
     	}
     	
     }
@@ -952,6 +945,7 @@ Hero
 	.container {
 		padding: 10% 0;
 		text-align: center;
+		@media (max-width:768px) { font-size: 0.7em; }
 		
 		//css-tricks.com/centering-css-complete-guide/
 		height: 100%;
@@ -997,8 +991,10 @@ Hero
 	
 	.hero-ctas {
 		
-		padding: 1em;
-		margin: 1em 0;
+		@media (min-width:768px) {
+			padding: 1em;
+			margin: 1em 0;
+		}
 		
 		a:hover {
 			text-decoration: none;
@@ -1022,6 +1018,12 @@ Hero
 				text-decoration: none;
 				text-shadow: none;
 			}
+			
+			@media (max-width:768px) {
+				margin: 0;
+				font-size: 1.3em;
+			}
+			
 			
 		}
 		
@@ -1070,11 +1072,14 @@ Hero
 			text-shadow: 0 0 1px #000000;
 			max-width: 99%;
 			@media (max-width:768px) {
-				font-size: .9em;
+				font-size: 1.2em;
+				margin: 0;
+				padding: 0;
 			}
 			
 			h1 {
 				font-size: 3em;
+				@media (max-width:768px) { font-size: 2em; }
 				font-weight: 700;
 			}
 		}

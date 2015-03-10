@@ -206,7 +206,7 @@ function heroOrganism($hero) {
 				
 					<div class="container">
 						<div class="page-header">
-							<span class="icon-font hero-header spaced" style="margin: 1em 0;">GUTSchurch</span>
+							<span class="icon-font hero-header spaced" style="margin: 1em 0; font-size: 2.7em; ">GUTSchurch</span>
 							
 							<?php if( isLive() ): ?>
 								<div class="hero-ctas animated fadeIn animated-3s animated-delay-1s">
