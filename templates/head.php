@@ -11,6 +11,8 @@
 	
 	<title><?php wp_title('|', true, 'right'); ?></title>
 	
+	<meta name="google-translate-customization" content="2bb56840952938af-cb225d851fa218c0-gf4f618bfb8d33d55-e"></meta>
+	
 	<meta name="application-name" content="Guts Church"/>
 	
 	<!-- For IE10 & Metro: -->
