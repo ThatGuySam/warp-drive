@@ -89,7 +89,7 @@ var Roots = {
 						
 						console.log( window.menuClosedText );
 						
-						$("#search").focus();
+						if(!Modernizr.touch) { $("#search").focus(); }
 						
 						console.log( "Opening Menu!" );
 						
