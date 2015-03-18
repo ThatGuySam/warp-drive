@@ -15328,6 +15328,12 @@ var Roots = {
 			
 			/* Generic Functions */
 			
+			
+			//Google Translate
+			function googleTranslateElementInit() {
+				new google.translate.TranslateElement({pageLanguage: 'en', layout: google.translate.TranslateElement.FloatPosition.TOP_LEFT, gaTrack: true, gaId: 'UA-9224686-1'}, 'google_translate_element');
+			}
+			
 			//UX Friendly scroll
 			gc.scrollTo = function ( $here ) {
 				
@@ -15381,7 +15387,7 @@ var Roots = {
 						
 						console.log( window.menuClosedText );
 						
-						$("#search").focus();
+						if(!Modernizr.touch) { $("#search").focus(); }
 						
 						console.log( "Opening Menu!" );
 						
@@ -16204,7 +16210,15 @@ if (typeof window['vc_tabsBehaviour'] !== 'function') {
 				  activate: function (event, ui) {
 					  wpb_prepare_tab_content(event, ui);
 				  }
-			  }); // .tabs('rotate', interval * 1000);
+			  });
+			  if(interval && interval > 0) {
+				  try {
+					  $tabs.tabs('rotate', interval * 1000);
+				  } catch(e){
+					  // nothing.
+					  window.console && window.console.log && console.log(e);
+				  }
+			  }
 
 			  jQuery(this).find('.wpb_tab').each(function () {
 				  tabs_array.push(this.id);
@@ -16460,7 +16474,7 @@ if (typeof window['vc_slidersBehaviour'] !== 'function') {
     //var sliders_count = 0;
     jQuery('.wpb_gallery_slides').each(function (index) {
       var this_element = jQuery(this);
-      var ss_count = 0;
+      var ss_count = 0, $imagesGrid;
 
       /*if ( this_element.hasClass('wpb_slider_fading') ) {
        var sliderSpeed = 500, sliderTimeout = this_element.attr('data-interval')*1000, slider_fx = 'fade';
@@ -16522,18 +16536,22 @@ if (typeof window['vc_slidersBehaviour'] !== 'function') {
         });
       }
       else if (this_element.hasClass('wpb_image_grid')) {
-        var isotope = this_element.find('.wpb_image_grid_ul');
-        isotope.isotope({
-          // options
-          itemSelector:'.isotope-item',
-          layoutMode:'fitRows'
-        });
-        jQuery(window).load(function () {
-          // isotope.isotope("layout");
-        });
-        jQuery(window).resize(function () {
-          isotope.isotope("layout");
-        });
+        if(jQuery.fn.imagesLoaded) {
+          $imagesGrid = this_element.find('.wpb_image_grid_ul').imagesLoaded(function(){
+            $imagesGrid.isotope({
+              // options
+              itemSelector:'.isotope-item',
+              layoutMode:'fitRows'
+            });
+          });
+        } else {
+          this_element.find('.wpb_image_grid_ul').isotope({
+            // options
+            itemSelector:'.isotope-item',
+            layoutMode:'fitRows'
+          });
+        }
+
       }
     });
   }
@@ -16543,25 +16561,28 @@ if (typeof window['vc_prettyPhoto'] !== 'function') {
   window.vc_prettyPhoto = function() {
     try {
       // just in case. maybe prettyphoto isnt loaded on this site
-      jQuery('a.prettyphoto, .gallery-icon a[href*=".jpg"]').prettyPhoto({
-        animationSpeed:'normal', /* fast/slow/normal */
-        padding:15, /* padding for each side of the picture */
-        opacity:0.7, /* Value betwee 0 and 1 */
-        showTitle:true, /* true/false */
-        allowresize:true, /* true/false */
-        counter_separator_label:'/', /* The separator for the gallery counter 1 "of" 2 */
-        //theme: 'light_square', /* light_rounded / dark_rounded / light_square / dark_square */
-        hideflash:false, /* Hides all the flash object on a page, set to TRUE if flash appears over prettyPhoto */
-        deeplinking:false, /* Allow prettyPhoto to update the url to enable deeplinking. */
-        modal:false, /* If set to true, only the close button will close the window */
-        callback:function () {
-          var url = location.href;
-          var hashtag = (url.indexOf('#!prettyPhoto')) ? true : false;
-          if (hashtag) location.hash = "!";
-        } /* Called when prettyPhoto is closed */,
-        social_tools:''
-      });
+	  if(jQuery && jQuery.fn && jQuery.fn.prettyPhoto) {
+		  jQuery('a.prettyphoto, .gallery-icon a[href*=".jpg"]').prettyPhoto({
+			  animationSpeed: 'normal', /* fast/slow/normal */
+			  padding: 15, /* padding for each side of the picture */
+			  opacity: 0.7, /* Value betwee 0 and 1 */
+			  showTitle: true, /* true/false */
+			  allowresize: true, /* true/false */
+			  counter_separator_label: '/', /* The separator for the gallery counter 1 "of" 2 */
+			  //theme: 'light_square', /* light_rounded / dark_rounded / light_square / dark_square */
+			  hideflash: false, /* Hides all the flash object on a page, set to TRUE if flash appears over prettyPhoto */
+			  deeplinking: false, /* Allow prettyPhoto to update the url to enable deeplinking. */
+			  modal: false, /* If set to true, only the close button will close the window */
+			  callback: function () {
+				  var url = location.href;
+				  var hashtag = (url.indexOf('#!prettyPhoto')) ? true : false;
+				  if (hashtag) location.hash = "!";
+			  } /* Called when prettyPhoto is closed */,
+			  social_tools: ''
+		  });
+	  }
     } catch (err) {
+	    window.console && window.console.log && console.log(err);
     }
   }
 }
@@ -16700,7 +16721,7 @@ if (typeof window['wpb_prepare_tab_content'] !== 'function') {
     }
     $pie_charts.length && jQuery.fn.vcChat && $pie_charts.vcChat();
     $carousel.length && jQuery.fn.carousel && $carousel.carousel('resizeAction');
-    $ui_panel = panel.find('.isotope');
+    $ui_panel = panel.find('.isotope, .wpb_image_grid_ul'); // why var name '$ui_panel'?
     $google_maps = panel.find('.wpb_gmaps_widget');
     if ($ui_panel.length > 0) {
       $ui_panel.isotope("layout");
@@ -16723,7 +16744,7 @@ var vc_accordionActivate = function (event, ui) {
     var $pie_charts = ui.newPanel.find('.vc_pie_chart:not(.vc_ready)'),
         $carousel = ui.newPanel.find('[data-ride="vc_carousel"]');
     if (jQuery.fn.isotope != undefined) {
-      ui.newPanel.find('.isotope').isotope("layout");
+      ui.newPanel.find('.isotope, .wpb_image_grid_ul').isotope("layout");
     }
     if(ui.newPanel.find('.vc_masonry_media_grid, .vc_masonry_grid').length) {
       ui.newPanel.find('.vc_masonry_media_grid, .vc_masonry_grid').each(function(){
@@ -16731,7 +16752,7 @@ var vc_accordionActivate = function (event, ui) {
         grid && grid.gridBuilder && grid.gridBuilder.setMasonry && grid.gridBuilder.setMasonry();
       });
     }
-    jQuery('html, body').animate({scrollTop: ui.newHeader.offset().top - 100}, 1000);
+    //jQuery('html, body').animate({scrollTop: ui.newHeader.offset().top - 100}, 1000); // #1370 enhancement, #1762 issue.
     vc_carouselBehaviour(ui.newPanel);
     vc_plugin_flexslider(ui.newPanel);
     $pie_charts.length && jQuery.fn.vcChat && $pie_charts.vcChat();
