@@ -64,6 +64,7 @@ function custom_options_actions() {
 	global $post;
 	global $detect;//Device Detection
 	global $page_options;
+	global $user_redirect_url;
 	
 	$page_options = custom_options();
 	
@@ -87,6 +88,16 @@ function custom_options_actions() {
 	if($user_url){
 		//$redirect_url = clean_user_url( $user_url );
 		wp_redirect( $user_url, '301' );
+		
+		debug( $user_url );
+		
+		$user_redirect_url = $user_url;
+		
+		function custom_options_js_redirect() {
+			global $user_redirect_url;
+		    echo '<script type="text/javascript">window.location.replace("' . $user_redirect_url . '");</script>//'.$user_url;
+		}
+		add_action('wp_head', 'custom_options_js_redirect');
 	}
 	
 }
