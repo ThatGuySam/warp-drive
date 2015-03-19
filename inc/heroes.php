@@ -625,7 +625,7 @@ class Bars {
 								
 								
 					            <!-- bar-bar - <?php the_title(); ?> -->
-					            <div class="youth-program bar-bar col-md-2 ease bar-<?php echo $p; ?>" rel="" style="<?php //BG Color Overlay
+					            <div class="youth-program bar-bar col-md-2 ease bar-<?php echo $p; ?>" rel="" onclick="location.href='<?php the_permalink(); ?>';" style="height: 400px; cursor: pointer; <?php //BG Color Overlay
 									if( get_field('page_color') ): 
 										?>background: <?php echo get_field('page_color'); ?>; <?php //#000000
 									endif; ?>">
