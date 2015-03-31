@@ -208,13 +208,11 @@ function heroOrganism($hero) {
 						<div class="page-header">
 							<span class="icon-font hero-header spaced" style="margin: 1em 0;">GUTSchurch</span>
 							
-							<?php if( isLive() ): ?>
-								<div class="hero-ctas animated fadeIn animated-3s animated-delay-1s">
+								<div class="hero-ctas hero-ctas-live animated fadeIn animated-3s animated-delay-1s">
 									<a href="http://live.gutschurch.com">
-										<div class="hero-cta ease-background cta-live">Watch Live</div>
+										<div class="hero-cta ease cta-live">Watch Live</div>
 									</a>
 								</div>
-							<?php elseif( $hero->ctas !== false ): ?>
 								<div class="hero-ctas animated fadeIn animated-3s animated-delay-1s">
 									<?php foreach($hero->ctas as $key => $value): ?>
 										<a href="<?php echo $value['link']; ?>">
@@ -222,7 +220,6 @@ function heroOrganism($hero) {
 										</a>
 									<?php endforeach; ?>
 								</div>
-							<?php endif; ?>
 							
 						</div>
 					</div>

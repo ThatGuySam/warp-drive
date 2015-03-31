@@ -389,6 +389,11 @@ function countdownEvents( $object=false ) {
 	
 	$until = false;
 	
+	
+	//live.gutschurch.com/api/v1/events/current?expand=event
+	
+	//Live Test
+	//samcarlton.s3.amazonaws.com/current.json
 	$chop_json = @file_get_contents('http://live.gutschurch.com/api/v1/events/current?expand=event');//Get contents and supress warnings to allow for fallback
 	
 	if( $chop_json ) {

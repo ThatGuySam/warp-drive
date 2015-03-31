@@ -391,6 +391,7 @@ class Countdown {
 				
 				.countdown .live {
 					text-shadow: 0 0 3px #ff0000;
+					color: #ffffff;
 				}
 				
 			</style>

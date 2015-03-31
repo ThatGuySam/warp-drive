@@ -991,6 +991,10 @@ Hero
 	
 	.hero-ctas {
 		
+		.is-live & {
+			display: none;
+		}
+		
 		@media (min-width:768px) {
 			padding: 1em;
 			margin: 1em 0;
@@ -1043,12 +1047,35 @@ Hero
 		
 	}
 	
+	.hero-ctas-live {
+		display: none;
+		
+		.is-live & {
+			display: block;
+		}
+	}
+	
 	&.hero-media {
 		
 		.hero-organism {
 			position: relative;
 			height: 100%;
+			
+			.is-live & .hero-welcome .hero-background {
+				//display: block;
+			}
+			
+			.is-live & .hero-welcome {
+				background: url(http://gutschurch.com/wp-content/uploads/2014/10/Watch-Live_Banner-1280x720.jpg) no-repeat center center fixed; 
+				background-size: cover;
+				
+				.hero-background img { display: none; }
+				
+			}
+			
+			
 			.hero-background img {
+				
 				width: 100%;
 				@media (max-width:360px) {
 			    	width: auto;
