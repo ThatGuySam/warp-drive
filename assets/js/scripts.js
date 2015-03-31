@@ -15780,6 +15780,8 @@ var Roots = {
 						
 						console.log( "Finished" );
 						
+						$("html").addClass("is-live");
+						
 						var $this = $(this).html( '<span class="live">Live Now</span>' );
 						
 					});
