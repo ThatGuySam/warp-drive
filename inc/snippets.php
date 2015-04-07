@@ -176,7 +176,7 @@ function cacheHandler( $object ) {
     $cacheFile = 'cache' . DIRECTORY_SEPARATOR . $filename;
 	
 	if( array_key_exists( 'purge' , $_GET ) || $object->purge === true ) {
-		w3tc_pgcache_flush();
+		//w3tc_pgcache_flush();
 		@unlink($cacheFile);
 	}
 	
