@@ -7,7 +7,7 @@
       <?php the_content(); ?>
       <div class="social-share">
       	<div class="addthis_native_toolbox"></div>
-      	<script> gc.globalScripts.push("//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-5149d8572d6ab06e");  </script>
+      	<script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-5149d8572d6ab06e" async="async"></script>
       </div>
     </div>
     <footer>
