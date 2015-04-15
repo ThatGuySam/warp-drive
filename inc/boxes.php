@@ -189,18 +189,36 @@ function boxesEvents($boxes) {
 	
 	//$categories = get_the_terms($post->ID, 'ai1ec_event');
 	
-	$source = array( 5 );
+	//debug( $boxes->source );
 	
+	$filters = array();
+	
+	//Default to Category ID
 	if( $boxes->source !== '' && is_numeric( $boxes->source ) ){
-		$source = array( $boxes->source );
+		$source = array( intval($boxes->source) );
+		
+		//debug( 'It\'s a Number' );
+		
+		$filters = array(
+			'cat_ids'  => $source,
+			//'tag_ids'  => array( 40 ), 
+			//'post_ids' => array(),
+			//'auth_ids' => array(),
+			
+		);
+		
+	} else {
+		
+		parse_str( html_entity_decode( $boxes->source ), $source);
+		
+		foreach( $source as $arg => $val) {
+			$ids = explode(',', $val);
+			$filters[$arg] = array_map('intval', $ids );
+		}
+		
+		//debug( $source );
 	}
 	
-	$filters = array(
-		'cat_ids'  => $source,
-		//'tag_ids'  => array(),
-		//'post_ids' => array(),
-		//'auth_ids' => array(),
-	);
 		
 	$events_result = $search->get_events_between($start_time, $end_time, $filters, true);
 	
