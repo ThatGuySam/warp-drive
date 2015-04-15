@@ -236,7 +236,7 @@ function heroOrganism($hero) {
 	
 	
 	//Link Wrapper
-	if( $hero->link && $hero->link !== "" && !$hero->ctas ){ 
+	if( !empty( $hero->link )  && $hero->link !== "" && !$hero->ctas ){ 
 		
 		$hero->output = '<a href="'.$hero->link.'" >'.$hero->output.'</a>';
 		
@@ -244,10 +244,14 @@ function heroOrganism($hero) {
 	
 	
 	//Organism Wrapper
-	$hero->output = '<div class="hero-organism">'.$hero->output.'</div>';
 	
-	
-	return $hero->output;
+	if( !empty( $hero->output ) ) {
+		
+		$hero->output = '<div class="hero-organism">'.$hero->output.'</div>';
+		
+		return $hero->output;
+		
+	}
 }
 
 
