@@ -18,6 +18,7 @@ function debug( $thing ) {
 	
 }
 
+
 //$current_id = get_the_ID();
 
 function getImage($id = false, $size = 'thumb-hd') {
