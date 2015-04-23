@@ -183,9 +183,9 @@ add_action( 'wp_head', 'load_google_fonts' , 1);
 
 
 //Custom Admin CSS
-add_action('admin_head', 'my_custom_css');
+add_action('admin_head', 'admin_custom_css');
 
-function my_custom_css() {
-  echo '<link rel="stylesheet" type="text/css" href="'.get_template_directory_uri() . '/assets/css/admin.css'.'">';
+function admin_custom_css() {
+  echo '<link rel="stylesheet" type="text/css" href="'.get_template_directory_uri() . '/dist/styles/admin.css'.'">';
   //get_template_directory_uri() . '/css/responsive.css'
 }
