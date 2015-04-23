@@ -33,13 +33,14 @@ class NavWalker extends \Walker_Nav_Menu {
 
   // @codingStandardsIgnoreStart
   function start_lvl(&$output, $depth = 0, $args = []) {
-    $output .= "\n<ul class=\"dropdown-menu\">\n";
+  	$output .= "\n<ul class=\"sub-menu\">\n";
   }
 
   function start_el(&$output, $item, $depth = 0, $args = [], $id = 0) {
     $item_html = '';
     parent::start_el($item_html, $item, $depth, $args);
 
+/*
     if ($item->is_dropdown && ($depth === 0)) {
       $item_html = str_replace('<a', '<a class="dropdown-toggle" data-toggle="dropdown" data-target="#"', $item_html);
       $item_html = str_replace('</a>', ' <b class="caret"></b></a>', $item_html);
@@ -48,6 +49,7 @@ class NavWalker extends \Walker_Nav_Menu {
     } elseif (stristr($item_html, 'li class="dropdown-header')) {
       $item_html = preg_replace('/<a[^>]*>(.*)<\/a>/iU', '$1', $item_html);
     }
+*/
 
     $item_html = apply_filters('sage/wp_nav_menu_item', $item_html);
     $output .= $item_html;
@@ -57,7 +59,7 @@ class NavWalker extends \Walker_Nav_Menu {
     $element->is_dropdown = ((!empty($children_elements[$element->ID]) && (($depth + 1) < $max_depth || ($max_depth === 0))));
 
     if ($element->is_dropdown) {
-      $element->classes[] = 'dropdown';
+//      $element->classes[] = 'dropdown';
 
       foreach ($children_elements[$element->ID] as $child) {
         if ($child->current_item_parent || Utils\url_compare($this->archive, $child->url)) {
