@@ -120,14 +120,6 @@ add_filter( 'nav_menu_css_class', 'expanded_nav_menu_css_class', 10, 3 );
 /* Outer Menu Buttons */
 
 function add_outer_menu($items, $args) {
-	
-/*
- if( ($args->theme_location == 'expanded_navigation') ){
-	$before = '<li class="menu-outer-item menu-item col-lg-1"></li>';
-	
-	return $before . $items;
- }
-*/
  
  // If this isn't the main navbar menu, do nothing
  if( !($args->theme_location == 'primary_navigation') )
@@ -135,23 +127,14 @@ function add_outer_menu($items, $args) {
  
 	ob_start(); ?>
 		
-	<li class="menu-outer-item col-sm-1 col-xs-3">
-      <a href="<?php echo esc_url(home_url('/')); ?>"><span class="icon-font">GUTS</span></a>
-	</li>
+	<li class="menu-outer-item col-sm-1 col-xs-3"></li>
 		    
 	<?php $before = ob_get_clean();
 	
 	
 	ob_start(); ?>
 		
-	<li class="menu-outer-item menu-item search-toggle col-sm-1 col-xs-3 pull-right">
-		<a href="#">
-			<span class="hidden-xs">More</span>
-			<span class="visible-xs">Menu</span>
-		</a>
-
-		<!-- <i class="gc-search"></i> -->
-	</li>
+	<li class="menu-outer-item menu-item col-sm-1 col-xs-3 pull-right"></li>
 		    
 	<?php $after = ob_get_clean();
 		
