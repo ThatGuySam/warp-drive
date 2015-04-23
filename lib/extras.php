@@ -79,6 +79,7 @@ function deregister_styles() {
 	
 	$scripts = array(
 		array('js', 'wpb_composer_front_js'),
+		array('js', 'modernizr'),
 		array('css', 'js_composer_front'),// Visual Composer
 		array('css', 'js_composer_custom_css'),
 		array('css', 'ai1ec-general'),// All-in-one Events
