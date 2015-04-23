@@ -53,14 +53,21 @@ Variables
 
 @guts-red: #a20000;
 
-@primary-light: #d8d8d8;
-@off-white: @primary-light;
+
+@primary-color: #ffffff;
+
+@secondary-color: #323232;
+
+@tertiary-color: #323232;
+
+
+@off-white: @secondary-color;
 
 @secondary-light: #eaeaea;
 
-@primary-dark: #323232;
 
-@off-black: @primary-dark;
+
+@off-black: @primary-color;
 
 @secondary-dark: #4d4d4d;
 
@@ -77,14 +84,14 @@ Variables
 
 // Type
 
-@primary-font: "Lato","Helvetica Neue",Helvetica,Arial,sans-serif;
+@primary-font: "museo-slab","Helvetica Neue",Helvetica,Arial,sans-serif;
 
-@body-font: "Open Sans","Helvetica Neue",Helvetica,Arial,sans-serif;
+@body-font: "Geomanist","Helvetica Neue",Helvetica,Arial,sans-serif;
 
 @letter-spacing: 0.1em;
 
 
-@link-color:		@primary-dark;
+@link-color:		@primary-color;
 
 @link-hover-color:	@secondary-dark;
 
@@ -98,7 +105,7 @@ Mixins
 */
 
 
-.backgroundRGBa(@colour: @primary-dark, @alpha: 1.0) {
+.backgroundRGBa(@colour: @primary-color, @alpha: 1.0) {
 	@alphaColour: hsla(hue(@colour), saturation(@colour), lightness(@colour), @alpha);
 	@ieAlphaColour: argb(@alphaColour);
 	
@@ -263,10 +270,14 @@ Typography
 
 */
 
-
 body, h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4 {
 	font-family: @primary-font;
 	font-weight: 300;
+}
+
+h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4 {
+	font-weight: 700;
+	text-transform: uppercase;
 }
 
 p {
@@ -274,12 +285,12 @@ p {
 }
 
 ::selection {  /* WebKit/Blink Browsers */
-	.backgroundRGBa();
-	color: @primary-light;
+	.backgroundRGBa(@secondary-color);
+	color: @primary-color;
 }
 ::-moz-selection { /* Gecko Browsers */
-	.backgroundRGBa();
-	color: @primary-light;
+	.backgroundRGBa(@secondary-color);
+	color: @primary-color;
 }
 
 /*
@@ -317,11 +328,11 @@ hr,
 	
 	position: relative;
 	
-	background-color: @primary-dark;
+	background-color: @primary-color;
 	border: none;
 	font-size: 1.2em;
 	a {
-		color: @primary-light;
+		color: @secondary-color;
 	}
 	
 	&:before {
@@ -341,11 +352,11 @@ hr,
 /*
 	&.ui-accordion-header-active,
 	&.ui-state-active {
-		background-color: @primary-light;
-		border-bottom-color: @primary-dark;
+		background-color: @secondary-color;
+		border-bottom-color: @primary-color;
 		
 		a {
-			color: @primary-dark;
+			color: @primary-color;
 		}
 	}
 */
@@ -355,7 +366,7 @@ hr,
 	&:hover {
 		//box-shadow: 0 6px 10px rgba(0,0,0,0.23),0 10px 30px rgba(0,0,0,0.19);
 		
-		//border-left-color: @primary-light; 
+		//border-left-color: @secondary-color; 
 		
 		&:before {
 			width: 5px;
@@ -384,7 +395,7 @@ hr,
 
 .dark {
 	.backgroundRGBa();
-	color: @primary-light;
+	color: @secondary-color;
 	
 	a {
 		color: #ffffff;
@@ -392,7 +403,7 @@ hr,
 	
 	a:hover,
 	a:focus {
-		color: @primary-light;
+		color: @secondary-color;
 	}
 	
 	.btn {
@@ -400,13 +411,13 @@ hr,
 	}
 	
 	.btn:not(.btn-link):not(.btn-flat), .btn-default:not(.btn-link):not(.btn-flat) {
-		background-color: @primary-dark;
-		color: @primary-light;
+		background-color: @primary-color;
+		color: @secondary-color;
 		margin-top: 0;
 	}
 	
 	.btn:not([class^="btn btn-"]):hover, .btn-default:hover {
-		color: @primary-light;
+		color: @secondary-color;
 	}
 	
 	.btn:not([class^="btn btn-"]):hover {
@@ -417,8 +428,8 @@ hr,
 
 
 .light {
-	.backgroundRGBa( @primary-light );
-	color: @primary-dark;
+	.backgroundRGBa( @secondary-color );
+	color: @primary-color;
 	
 	a {
 		color: @secondary-dark;
@@ -426,7 +437,7 @@ hr,
 	
 	a:hover,
 	a:focus {
-		color: @primary-dark;
+		color: @primary-color;
 	}
 }
 
@@ -435,8 +446,8 @@ span.wpb_button,
 .button {
 	.btn;
 	&.wpb_wpb_button.wpb_wpb_button {
-		background-color: @primary-dark;
-		color: @primary-light;
+		background-color: @primary-color;
+		color: @secondary-color;
 		text-shadow: none;
 	}
 	
@@ -458,7 +469,7 @@ span.wpb_button,
 	-moz-user-select: none;
 	-ms-user-select: none;
 	user-select: none;
-	border: 1px solid @primary-dark;
+	border: 1px solid @primary-color;
 	
 	&:hover,
 	&:after:hover {
@@ -498,7 +509,7 @@ span.wpb_button,
 			position: absolute;
 			z-index: 3;
 			padding: 0.4em;
-			color: @primary-light;
+			color: @secondary-color;
 			text-align: center;
 			white-space: nowrap;
 			overflow: hidden;
@@ -506,7 +517,7 @@ span.wpb_button,
 			height: 100%;
 			top: 0;
 			right: 0;
-			//border: 1px solid @primary-light;
+			//border: 1px solid @secondary-color;
 			
 			.backgroundRGBa();
 			
@@ -542,7 +553,7 @@ span.wpb_button,
 	}
 	
 	&.valid-number span.front-button{
-		border: 1px solid @primary-light;
+		border: 1px solid @secondary-color;
 		&:hover { border-color: #ffffff; }
 		&:active { background-color: #f1f1f1; }
 		&:before { content: "Send"; }
@@ -632,7 +643,8 @@ html {
 }
 
 body {
-	background: @primary-light;
+	background: @primary-color;
+	color: @tertiary-color;
 	font-size: 16px;
 	overflow-x: hidden;
 }
@@ -659,8 +671,8 @@ Menu
 		background-color: transparent;
 		
 		a {
-			color: @primary-light;
-			text-shadow: 0 0 1px @primary-dark;
+			color: @secondary-color;
+			text-shadow: 0 0 1px @primary-color;
 		}
 		
 	}
@@ -670,7 +682,7 @@ Menu
 .expanded-nav-open header.banner.navbar {
 	top: 0;
 	&.navbar-default {
-		.backgroundRGBa(@primary-dark, 0.97);
+		.backgroundRGBa(@primary-color, 0.97);
 	}
 }
 
@@ -687,11 +699,11 @@ Menu
 	
 	
 	//&:extend(&:-moz-placeholder);
-	.backgroundRGBa(@primary-dark, 0.8);
+	.backgroundRGBa(@primary-color, 0.8);
 	
 	@media only screen and (max-width: 992px) {
 		position: relative;
-		background-color: @primary-dark;
+		background-color: @primary-color;
 	}
 	
 	.transition();
@@ -705,7 +717,7 @@ Menu
 
 .navbar .navbar-nav {
 	width: 100%;
-	color: @primary-light;
+	color: @secondary-color;
 	margin: 0 0;
 	
 	&#menu-primary-navigation > li {	
@@ -723,7 +735,7 @@ Menu
 	> .active > a,
 	> .active > a:hover,
 	> .active > a:focus {
-		color: @primary-dark;
+		color: @primary-color;
 		text-shadow: none;
 	}
 	
@@ -756,7 +768,7 @@ Menu
 		position: absolute;
 		bottom: 0;
 		left: 0;
-		background: @primary-light;
+		background: @secondary-color;
 		width: 100%;
 		height: 0px;
 		z-index: -1;
@@ -769,8 +781,8 @@ Menu
 	}
 	
 	.menu-item.active, .menu-item.active:hover {
-		color: @primary-dark;
-		.backgroundRGBa(@primary-light);
+		color: @primary-color;
+		.backgroundRGBa(@secondary-color);
 	}
 	
 	li.menu-outer-item {
@@ -789,12 +801,12 @@ Menu
 	border: none;
 	border-bottom: 2px solid transparent;
 	outline: none;
-	color: @primary-light;
+	color: @secondary-color;
 	font-size: 2em;
 }
 
 #search:focus {
-	border-bottom: 2px solid @primary-light;
+	border-bottom: 2px solid @secondary-color;
 }
 
 .expanded-nav {
@@ -817,7 +829,7 @@ Menu
 	}
 	
 	a {
-		color: @primary-light;
+		color: @secondary-color;
 		&:hover {text-decoration: none;}
 	}
 	
@@ -850,14 +862,14 @@ Menu
 				
 				padding-left: 0;
 				padding-right: 0;
-				border: 1px solid @primary-light;
-				color: @primary-light;
+				border: 1px solid @secondary-color;
+				color: @secondary-color;
 			}
 			
 			&.active >a,
 			&:hover >a:hover {
-				color: @primary-dark;
-				background: @primary-light;
+				color: @primary-color;
+				background: @secondary-color;
 			}
 			
 			>ul {
@@ -1031,12 +1043,12 @@ Hero
 			min-width: 4em;
 			padding: .75em 2em;
 			margin: 0 .5em;
-			border: 1px solid @primary-light;
-			color: @primary-light;
+			border: 1px solid @secondary-color;
+			color: @secondary-color;
 			
 			&:hover {
-				color: @primary-dark;
-				background: @primary-light;
+				color: @primary-color;
+				background: @secondary-color;
 				text-decoration: none;
 				text-shadow: none;
 			}
@@ -1176,7 +1188,7 @@ Hero
 		text-shadow: 0 0 2px rgba(0, 0, 0, 1.0);
 		font-weight: 500;
 		
-		.backgroundRGBa(@primary-dark, 0.9);
+		.backgroundRGBa(@primary-color, 0.9);
 		
 		.transition( bottom , 750ms );
 		
@@ -1201,7 +1213,7 @@ Hero
 	&:hover {
 		
 		.slick-prev,.slick-next {
-			.backgroundRGBa(@primary-dark, 0.9);
+			.backgroundRGBa(@primary-color, 0.9);
 		}
 		
 		.slick-prev {
@@ -1391,7 +1403,7 @@ Organisms
 		    
 		    z-index: -1;
 		    
-		    background: @primary-dark;
+		    background: @primary-color;
 		    //.scrim();
 		}
 		
@@ -1445,7 +1457,7 @@ Organisms
 			padding: 0.8em;
 			font-weight: 600;
 			overflow: hidden;
-			text-shadow: 0 0 4px @primary-dark;
+			text-shadow: 0 0 4px @primary-color;
 			line-height: 1em;
 		}
 		
@@ -1482,7 +1494,7 @@ Organisms
 	/* Controls */
 	.slick-prev, .slick-next{
 		&:before {
-			color: @primary-dark;
+			color: @primary-color;
 		}
 	}
 	
@@ -1692,7 +1704,7 @@ Organisms
 		
 		>.wpb_wrapper {
 			@media (min-width:768px) { .ir(); }
-			background: @primary-dark;
+			background: @primary-color;
 			
 			>.wpb_single_image {
 				position: absolute;
@@ -1791,7 +1803,7 @@ Organisms
 		
 		>.wpb_wrapper {
 			@media (min-width:768px) { .ir(); }
-			background: @primary-dark;
+			background: @primary-color;
 			
 			>.wpb_single_image {
 				position: absolute;
@@ -1885,7 +1897,7 @@ Organisms
 
 
 		.wpb_single_image {
-			background: @primary-dark;
+			background: @primary-color;
 			overflow: hidden;
 			
 			.wpb_wrapper {
@@ -1958,7 +1970,7 @@ Events
 .timely {
 	font-family: @primary-font;
 	font-size: 1em;
-	color: @primary-dark;
+	color: @primary-color;
 	
 	//General
 	
@@ -1974,8 +1986,8 @@ Events
 	//light
 	.ai1ec-calendar-toolbar,
 	table.ai1ec-month-view {
-		color: @primary-dark;
-		background-color: @primary-light;
+		color: @primary-color;
+		background-color: @secondary-color;
 	}
 	
 	.ai1ec-month-view .ai1ec-date {
@@ -1984,7 +1996,7 @@ Events
 		height: auto;
 		padding-top: 0.7em;
 		a {
-			color: @primary-dark;
+			color: @primary-color;
 			text-shadow: none;
 			font-size: 1.4em;
 		}
@@ -2002,8 +2014,8 @@ Events
 	
 	//Freakin !imporant overrides
 	.ai1ec-month-view th {
-		color: @primary-light !important;
-		background-color: @primary-dark !important;
+		color: @secondary-color !important;
+		background-color: @primary-color !important;
 		text-shadow: none;
 	}
 	
@@ -2030,15 +2042,15 @@ Events
 		}
 		
 		.ai1ec-month, {
-			background: @primary-dark;
-			color: @primary-light;
+			background: @primary-color;
+			color: @secondary-color;
 		}
 		
 		.ai1ec-event-title,
 		.ai1ec-date-title,
 		.ai1ec-event {
-			background: @primary-light;
-			color: @primary-dark;
+			background: @secondary-color;
+			color: @primary-color;
 		}
 		
 		.ai1ec-event {
