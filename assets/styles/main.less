@@ -117,7 +117,7 @@ Mixins
 	//background-color: transparent\9;
 }
 
-.scrim() {	
+.scrim() {
 	background: -moz-linear-gradient(top,  rgba(0,0,0,0) 0%, rgba(0,0,0,1) 100%);
 	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(0,0,0,0)), color-stop(100%,rgba(0,0,0,1)));
 	background: -webkit-linear-gradient(top,  rgba(0,0,0,0) 0%,rgba(0,0,0,1) 100%);
@@ -125,6 +125,15 @@ Mixins
 	background: -ms-linear-gradient(top,  rgba(0,0,0,0) 0%,rgba(0,0,0,1) 100%);
 	background: linear-gradient(to bottom,  rgba(0,0,0,0) 0%,rgba(0,0,0,1) 100%);
 	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#00000000', endColorstr='#000000',GradientType=0 );
+}
+
+
+.box-shadow() {
+	//codepen.io/indraptama/pen/hjHli
+	//box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22);
+	//box-shadow: 0 10px 20px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.23);//Depth3
+	box-shadow: 0 6px 10px rgba(0,0,0,0.23),0 10px 30px rgba(0,0,0,0.19);
+	.transition( box-shadow, 250ms );
 }
 
 
@@ -171,9 +180,6 @@ Mixins
 .spaced( @spacing: @letter-spacing ){
 	letter-spacing: @spacing;
 }
-
-
-
 
 
 
@@ -666,8 +672,9 @@ Menu
 .transparent-menu {
 	
 	.navbar,
-	.primary-nav .menu-item.active, 
-	.primary-nav .menu-item.active:hover  {
+	//.primary-nav .menu-item.active, 
+	//.primary-nav .menu-item.active:hover  
+	{
 		background-color: transparent;
 		
 		a {
@@ -720,9 +727,36 @@ Menu
 	color: @secondary-color;
 	margin: 0 0;
 	
+	&:hover .tth-logo {
+		box-shadow: none;
+		z-index: 0;
+	}
+	
 	&#menu-primary-navigation > li {	
 	
 		font-size: 0;
+		
+		&.tth-logo > a {
+			font-size: 0;
+			padding: 30px 0;
+			
+			&:before {
+				font-size: 128px;
+				content: '\e9df';
+				
+				font-family: "gc-icon";
+				font-style: normal;
+				font-weight: normal;
+				display: inline-block;
+				text-decoration: inherit;
+				text-align: center;
+				vertical-align: middle;
+				font-variant: normal;
+				text-transform: none;
+				-webkit-font-smoothing: antialiased;
+				-moz-osx-font-smoothing: grayscale;
+			}
+		}
 		
 		> a {	
 			padding: 20px 0;
@@ -735,7 +769,7 @@ Menu
 	> .active > a,
 	> .active > a:hover,
 	> .active > a:focus {
-		color: @primary-color;
+		//color: @primary-color;
 		text-shadow: none;
 	}
 	
@@ -751,10 +785,27 @@ Menu
 	text-align: center;
 	z-index: 0;
 	font-weight: 500;
+	background: @primary-color;
+	
+	-ms-touch-action: manipulation;
+	touch-action: manipulation;
+	cursor: pointer;
+	background-image: none;
+	white-space: nowrap;
+	-webkit-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
+}
+
+.tth-logo,
+.navbar .navbar-nav:hover .tth-logo:hover {
+	.box-shadow();
+	z-index: 10;
 }
 
 .primary-nav-container {
-	max-width: 1140px;
+	//max-width: 1140px;
 }
 
 .primary-nav {
@@ -776,14 +827,17 @@ Menu
 		.transition( height, 250ms);
 	}
 	
-	.menu-item:hover:after {
-		height: 5px;
+	.menu-item:hover {
+		.box-shadow();
+		z-index: 10;
 	}
 	
+/*
 	.menu-item.active, .menu-item.active:hover {
 		color: @primary-color;
 		.backgroundRGBa(@secondary-color);
 	}
+*/
 	
 	li.menu-outer-item {
 		//a i { font-size: 1.1em; }
@@ -866,11 +920,13 @@ Menu
 				color: @secondary-color;
 			}
 			
+/*
 			&.active >a,
 			&:hover >a:hover {
 				color: @primary-color;
 				background: @secondary-color;
 			}
+*/
 			
 			>ul {
 				font-size: 1.2em;
