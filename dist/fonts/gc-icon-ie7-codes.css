@@ -497,4 +497,5 @@
 .gc-youtube-play { *zoom: expression( this.runtimeStyle['zoom'] = '1', this.innerHTML = '&#xe9dc;&nbsp;'); }
 .gc-blank { *zoom: expression( this.runtimeStyle['zoom'] = '1', this.innerHTML = '&#xe9dd;&nbsp;'); }
 .gc-lemon { *zoom: expression( this.runtimeStyle['zoom'] = '1', this.innerHTML = '&#xe9de;&nbsp;'); }
+.gc-tth { *zoom: expression( this.runtimeStyle['zoom'] = '1', this.innerHTML = '&#xe9df;&nbsp;'); }
 .gc-instagram { *zoom: expression( this.runtimeStyle['zoom'] = '1', this.innerHTML = '&#xe9e0;&nbsp;'); }
