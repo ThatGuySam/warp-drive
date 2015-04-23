@@ -346,6 +346,7 @@ function parse_shortcode( $raw_string ){
 	if( empty( $string ) ) return false;
 	
 	preg_match('/\[([^\]]*)\]/', $string, $matches);
+	if( empty( $matches[1] ) ) return false;
 	$naked_shortcode = $matches[1];
 	if( empty($naked_shortcode) ) return false;
 	
