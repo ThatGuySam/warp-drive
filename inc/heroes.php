@@ -1215,7 +1215,7 @@ function hero() {
 				
 				//Setup Foreground
 				if( $hero->heroesCount === 1 || $color ) {
-					$hero->text = $hero->title;
+					//$hero->text = $hero->title;
 					if( get_sub_field('title') ) $hero->text = get_sub_field('title');
 					$hero->text = trim( $hero->text );
 				} else {
@@ -1245,8 +1245,10 @@ function hero() {
 		
 	</div>
 	
+	<?php //debug(  ); ?>
 	
-	<?php if( $hero->kind !== 'text' && $hero->page_options->readmore !== 'hidden' ): ?>
+	<?php /*
+if( $hero->kind !== 'text' && @$hero->page_options->readmore !== 'hidden' ): ?>
 		
 		<a href="#content" class="scrollto">
 			<div class="read-more hidden-sm hidden-xs">
@@ -1255,7 +1257,8 @@ function hero() {
 			</div>
 		</a>
 		
-	<?php endif; ?>
+	<?php endif;
+*/ ?>
 	
 	
 	
