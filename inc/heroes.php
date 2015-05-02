@@ -1,5 +1,7 @@
 <?php
-	
+
+//use Roots\Sage\Extras;
+
 $hero = new stdClass();
 
 function heroOrganism($hero) {
