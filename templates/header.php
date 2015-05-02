@@ -1,6 +1,6 @@
 <?php use Roots\Sage\Nav\NavWalker; ?>
 
-<header class="banner navbar navbar-default navbar-static-top <?php global $page_options; if( isset( $page_options->pagefade ) ) {?> animated fadeIn animated-3s animated-delay-1s<?php } ?>" role="banner">
+<header class="banner navbar navbar-default navbar-fixed-top hidden-xs <?php global $page_options; if( isset( $page_options->pagefade ) ) {?> animated fadeIn animated-3s animated-delay-1s<?php } ?>" role="banner">
   <div class="container-fluid primary-nav-container">
   
     <div class="primary-nav" role="navigation">
