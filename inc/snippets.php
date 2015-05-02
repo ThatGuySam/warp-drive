@@ -679,7 +679,9 @@ function webFontLoader() {
 		</style>
 		
 		<script type="text/javascript">
-				
+		//Namespace
+		window.gc = window.gc || {}; gc.pageScripts = [];
+		
 		WebFontConfig = {typekit: { id: 'rxw8wmu' }};
 			/* Web Font Loader v1.5.10 - (c) Adobe Systems, Google. License: Apache 2.0 */
 ;(function(window,document,undefined){var k=this;function l(a,b){var c=a.split("."),d=k;c[0]in d||!d.execScript||d.execScript("var "+c[0]);for(var e;c.length&&(e=c.shift());)c.length||void 0===b?d=d[e]?d[e]:d[e]={}:d[e]=b}function aa(a,b,c){return a.call.apply(a.bind,arguments)}
@@ -720,3 +722,4 @@ Y.prototype.load=function(a){a(this.o)};function Z(a,b){this.d=a;this.f=b}Z.prot
 }
 // Add hook for front-end <head></head>
 add_action('wp_head', 'webFontLoader');
+
