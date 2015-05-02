@@ -15,7 +15,6 @@ include get_theme_root().'/'.get_template().'/inc/heroes.php';
 
 include get_theme_root().'/'.get_template().'/inc/boxes.php';
 
-
 global $page_options;
 
 if( array_key_exists( 'watchservice' , $_GET ) ) {
@@ -125,28 +124,28 @@ Static Organisms
 
 function socialBar() {
 
-$profiles = social_media_profiles(true);
-
-if( $profiles ): ob_start(); ?>
-
-<div class="social-container container-fluid dark <?php global $page_options; if( isset( $page_options->pagefade ) ) {?>animated fadeIn animated-3s animated-delay-1s<?php } ?>">
+	$profiles = social_media_profiles(true);
 	
-	<div class="social-bar row">
+	if( $profiles ): ob_start(); ?>
+	
+	<div class="social-container container-fluid dark <?php global $page_options; if( isset( $page_options->pagefade ) ) {?>animated fadeIn animated-3s animated-delay-1s<?php } ?>">
 		
-		<?php echo $profiles; ?>
+		<div class="social-bar row">
+			
+			<?php echo $profiles; ?>
+			
+		</div>
 		
 	</div>
 	
-</div>
-
-<?php 
+	<?php 
 		
 	$content = ob_get_clean(); 
 	
 	return $content;
 	
 	endif;
-	
+
 	
 }
 
