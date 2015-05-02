@@ -17,7 +17,7 @@ use Roots\Sage\Wrapper;
       do_action('get_header');
       get_template_part('templates/header');
       echo hero();
-	  echo socialBar();
+	  echo Roots\Sage\Extras\socialBar();
     ?>
     <div class="wrap container" role="document">
       <div class="content row">
