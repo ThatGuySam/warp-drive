@@ -1,6 +1,7 @@
 <?php
 
 use Roots\Sage\Config;
+use Roots\Sage\Extras;
 use Roots\Sage\Wrapper;
 
 ?>
