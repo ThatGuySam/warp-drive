@@ -74,7 +74,7 @@ function roots_custom_nav_menu_css_class($classes, $item) {
 	$classes = preg_replace('/^((menu|page)[-_\w+]+)+/', '', $classes);
 	
 	if ( has_term($menu_locations['primary_navigation'], 'nav_menu', $item) ) {
-		$classes[] = 'col-xs-2 hidden-xs nopadding menu-item menu-' . $slug;
+		$classes[] = 'col-sm-2 col-xs-6 hidden-xs nopadding menu-item menu-' . $slug;
 	}
 	
 	$classes = array_unique($classes);
