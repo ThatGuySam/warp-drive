@@ -506,7 +506,7 @@ function isLive() {
     
     $countdown->isAfterPre = ( strtotime('now') > $countdown->eventPre );
     
-    $countdown->isBeforeEnd = ( strtotime('now') > $countdown->isBeforeEnd );
+    $countdown->isBeforeEnd = ( strtotime('now') > $countdown->eventEnd );
     
     $countdown->isLive = ( $countdown->isAfterPre && $countdown->isBeforeEnd );
 	
