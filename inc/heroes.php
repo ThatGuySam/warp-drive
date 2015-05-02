@@ -1165,7 +1165,7 @@ function hero() {
 	
 	ob_start();
 ?>
-<div id="hero" class="hero-container <?php foreach ($hero->classes as &$class) if($class !== "") echo "hero-".$class." ";//echo all classes ?>container-fluid nopadding dark" data-hero-count="<?php echo $hero->heroesCount; ?>" >
+<div id="hero" class="hero-container <?php foreach ($hero->classes as &$class) if($class !== "") echo "hero-".$class." ";//echo all classes ?>container-fluid nopadding" data-hero-count="<?php echo $hero->heroesCount; ?>" >
 	
 <!--
 	
