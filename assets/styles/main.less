@@ -2102,11 +2102,46 @@ Organisms
 	
 }
 
+
+.twoup {
+	
+	text-align: center;
+	
+	&:before {
+		content: '';
+		display: inline-block;
+		font-size: 0;
+		text-decoration: none;
+		height: 100%; 
+		vertical-align: middle;
+		margin-right: -0.25em; /* Adjusts for spacing */
+	}
+	
+	>.wpb_column,
+	> div {
+		width: 49%;
+		float: none;
+		display: inline-block;
+		vertical-align: middle;
+		text-align: center;
+	}
+	
+	.wpb_text_column {
+		padding: 10%;
+		font-size: 1.2em;
+		text-align: justify;
+	}
+	
+	.circle img {
+		width: 300px;
+		height: auto;
+	}
+}
+
 .vc_separator h4 {
 	font-size: 1.5em;
 	text-transform: uppercase;
 }
-
 
 
 
