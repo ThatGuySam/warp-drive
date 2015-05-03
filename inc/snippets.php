@@ -672,6 +672,13 @@ function webFontLoader() {
 	
 		<style type="text/css">
 			// Prevent FOUT
+			
+			.tth-logo > a:before {
+				opacity: 0;
+			}
+			.wf-inactive .tth-logo > a:before {
+				opacity: 1;
+			}
 			.wf-loading * {
 				opacity: 0;
 				visibility:hidden;
@@ -682,7 +689,14 @@ function webFontLoader() {
 		//Namespace
 		window.gc = window.gc || {}; gc.pageScripts = [];
 		
-		WebFontConfig = {typekit: { id: 'rxw8wmu' }};
+		WebFontConfig = {
+			typekit: { id: 'rxw8wmu' },
+			custom: {
+				families: ['gc-icon'],
+				urls: ['//tougherthanhell.s3.amazonaws.com/css/gc-icon.css']
+			}
+		};
+		
 			/* Web Font Loader v1.5.10 - (c) Adobe Systems, Google. License: Apache 2.0 */
 ;(function(window,document,undefined){var k=this;function l(a,b){var c=a.split("."),d=k;c[0]in d||!d.execScript||d.execScript("var "+c[0]);for(var e;c.length&&(e=c.shift());)c.length||void 0===b?d=d[e]?d[e]:d[e]={}:d[e]=b}function aa(a,b,c){return a.call.apply(a.bind,arguments)}
 function ba(a,b,c){if(!a)throw Error();if(2<arguments.length){var d=Array.prototype.slice.call(arguments,2);return function(){var c=Array.prototype.slice.call(arguments);Array.prototype.unshift.apply(c,d);return a.apply(b,c)}}return function(){return a.apply(b,arguments)}}function n(a,b,c){n=Function.prototype.bind&&-1!=Function.prototype.bind.toString().indexOf("native code")?aa:ba;return n.apply(null,arguments)}var q=Date.now||function(){return+new Date};function s(a,b){this.K=a;this.w=b||a;this.D=this.w.document}s.prototype.createElement=function(a,b,c){a=this.D.createElement(a);if(b)for(var d in b)b.hasOwnProperty(d)&&("style"==d?a.style.cssText=b[d]:a.setAttribute(d,b[d]));c&&a.appendChild(this.D.createTextNode(c));return a};function t(a,b,c){a=a.D.getElementsByTagName(b)[0];a||(a=document.documentElement);a&&a.lastChild&&a.insertBefore(c,a.lastChild)}function ca(a,b){function c(){a.D.body?b():setTimeout(c,0)}c()}

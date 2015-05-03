@@ -1,10 +1,10 @@
 @font-face {
   font-family: 'gc-icon';
-  src: url('../fonts/gc-icon.eot?38078465');
-  src: url('../fonts/gc-icon.eot?38078465#iefix') format('embedded-opentype'),
-       url('../fonts/gc-icon.woff?38078465') format('woff'),
-       url('../fonts/gc-icon.ttf?38078465') format('truetype'),
-       url('../fonts/gc-icon.svg?38078465#gc-icon') format('svg');
+  src: url('//tougherthanhell.s3.amazonaws.com/fonts/gc-icon.eot?38078465');
+  src: url('//tougherthanhell.s3.amazonaws.com/fonts/gc-icon.eot?38078465#iefix') format('embedded-opentype'),
+       url('//tougherthanhell.s3.amazonaws.com/fonts/gc-icon.woff?38078465') format('woff'),
+       url('//tougherthanhell.s3.amazonaws.com/fonts/gc-icon.ttf?38078465') format('truetype'),
+       url('//tougherthanhell.s3.amazonaws.com/fonts/gc-icon.svg?38078465#gc-icon') format('svg');
   font-weight: normal;
   font-style: normal;
 }
