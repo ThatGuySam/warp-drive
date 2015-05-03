@@ -29,7 +29,7 @@
 @import (inline) "../vendor/animate.css/animate.min.css";
 
 // External
-@import (inline) "../fonts/fontello/css/gc-icon.css";					// Guts Icons
+//@import (inline) "../fonts/fontello/css/gc-icon.css";					// Guts Icons
 @import (inline) "../fonts/geomanist/font.css";					// Geomanist Font
 
 
@@ -2121,6 +2121,7 @@ Organisms
 	>.wpb_column,
 	> div {
 		width: 49%;
+		@media (max-width:768px) { width: 100%; }
 		float: none;
 		display: inline-block;
 		vertical-align: middle;
