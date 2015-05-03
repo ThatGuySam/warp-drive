@@ -11,7 +11,7 @@ add_theme_support('soil-clean-up');         // Enable clean up from Soil
 add_theme_support('soil-relative-urls');    // Enable relative URLs from Soil
 add_theme_support('soil-nice-search');      // Enable nice search from Soil
 add_theme_support('soil-google-analytics'); // Enable H5BP's Google Analytics snippet
-add_theme_support('bootstrap-gallery');     // Enable Bootstrap's thumbnails component on [gallery]
+add_theme_support('bootstrap-gallery');     // Enable Bootstrap's thumbnails component on array(gallery)
 add_theme_support('jquery-cdn');            // Enable to load jQuery from the Google CDN
 
 /**
@@ -51,20 +51,20 @@ function display_sidebar() {
        *
        * 'is_single'
        * 'is_archive'
-       * ['is_page', 'about-me']
-       * ['is_tax', ['flavor', 'mild']]
-       * ['is_page_template', 'about.php']
-       * ['is_post_type_archive', ['foo', 'bar', 'baz']]
+       * array('is_page', 'about-me')
+       * array('is_tax', array('flavor', 'mild'))
+       * array('is_page_template', 'about.php')
+       * array('is_post_type_archive', array('foo', 'bar', 'baz'))
        *
        */
-      [
+      array(
 		'is_404',
 		'is_front_page',
 		'is_page',
 		'is_single',
 		'is_event',
-        ['is_page_template', 'template-custom.php']
-      ]
+        array('is_page_template', 'template-custom.php')
+      )
     );
 
     $display = apply_filters('sage/display_sidebar', $conditionalCheck->result);
