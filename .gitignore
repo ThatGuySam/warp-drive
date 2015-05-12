@@ -5,3 +5,4 @@ node_modules
 assets/css/main.css.map
 # assets/css/*main*.css
 # assets/js/*scripts*.js
+assets/vendor
