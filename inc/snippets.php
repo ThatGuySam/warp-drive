@@ -557,6 +557,7 @@ function social_media_profiles($strapped=0,$profiles=0) {
 		'instagram',
 		'pinterest',
 		'vimeo',
+		'rss',
 		'email'
 	);
 	
