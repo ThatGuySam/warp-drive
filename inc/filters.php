@@ -182,6 +182,34 @@ function load_google_fonts() {
 add_action( 'wp_head', 'load_google_fonts' , 1);
 
 
+
+
+
+
+function google_remarketing_code() {
+	echo '<!-- Google Code for Remarketing Tag -->
+<!--------------------------------------------------
+Remarketing tags may not be associated with personally identifiable information or placed on pages related to sensitive categories. See more information and instructions on how to setup the tag on: http://google.com/ads/remarketingsetup
+--------------------------------------------------->
+<script type="text/javascript">
+/* <![CDATA[ */
+var google_conversion_id = 1013885733;
+var google_custom_params = window.google_tag_params;
+var google_remarketing_only = true;
+/* ]]> */
+</script>
+<script type="text/javascript" src="//www.googleadservices.com/pagead/conversion.js">
+</script>
+<noscript>
+<div style="display:inline;">
+<img height="1" width="1" style="border-style:none;" alt="" src="//googleads.g.doubleclick.net/pagead/viewthroughconversion/1013885733/?value=0&amp;guid=ON&amp;script=0"/>
+</div>
+</noscript>'."\n";
+
+}
+add_action( 'wp_head', 'google_remarketing_code' , 1);
+
+
 //Custom Admin CSS
 add_action('admin_head', 'admin_custom_css');
 
