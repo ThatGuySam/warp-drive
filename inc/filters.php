@@ -147,7 +147,7 @@ function add_outer_menu($items, $args) {
 		
 	<li class="menu-outer-item menu-item search-toggle col-sm-1 col-xs-3 pull-right">
 		<a href="#">
-			<span class="hidden-xs">More</span>
+			<span class="hidden-xs">Search</span>
 			<span class="visible-xs">Menu</span>
 		</a>
 
