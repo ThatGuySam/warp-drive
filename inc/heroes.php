@@ -1088,13 +1088,15 @@ function hero() {
 		
 		$hero->src = $thumbnail_src[0];
 		
+		if( isset( $hero->page_options->heroblurred ) ){
+			array_push( $hero->classes, "blurred" );
+		}
 		
 		if( isset( $hero->heroes[0]['image'] ) ){
 			$hero->attachment_id = $hero->heroes[0]['image'];
 			$image_attachment = wp_get_attachment_image_src($hero->attachment_id, 'hd720');
 			$hero->src = $image_attachment[0];
 		}
-		
 		
 		//Set Kind
 		
