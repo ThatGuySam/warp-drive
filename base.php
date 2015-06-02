@@ -8,10 +8,12 @@
   <![endif]-->
 
   <?php
-    do_action('get_header');
-    get_template_part('templates/header');
-    echo hero();
-    echo socialBar();
+	if( empty( $_GET['no-header'] ) ){
+	    do_action('get_header');
+	    get_template_part('templates/header');
+	    echo hero();
+	    echo socialBar();
+	}
   ?>
 
   <div class="wrap container-fluid<?php if( isset( $page_options->pagefade ) ) {?> animated fadeIn animated-3s animated-delay-1s<?php } ?>" role="document">
