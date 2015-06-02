@@ -12334,6 +12334,7 @@ body .wpb_gallery_slides ul li,
   padding-right: 0;
   margin-left: 0;
   margin-right: 0;
+  overflow: hidden;
 }
 .vc_grid.vc_row.vc_grid-gutter-1px {
   margin-bottom: -1px;
