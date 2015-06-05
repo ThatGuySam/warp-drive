@@ -1,0 +1,29 @@
+/* Default */
+.inside > .field:not(.field_type-repeater) {
+	width: 22%;
+	margin: 1.5%;
+	display: inline-block;
+}
+
+/* Full Width Elements */
+#acf-news_carousel_title,
+#acf-posts_category,
+#acf-feed_1_title,
+#acf-vimeorss_1,
+#acf-social_carousel_title {
+	width: 97%;
+}
+
+/* Resets */
+#side-sortables .field {
+	width: inherit;
+}
+
+/* Fixes */
+.acf-input-table .row:before {
+	content: none;
+}
+
+.wp-color-result:after {
+	display: none;
+}
