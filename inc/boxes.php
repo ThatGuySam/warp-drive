@@ -394,6 +394,14 @@ class Boxes {
 		        $target = '_blank';
 		        
 		        break;
+		    case 'twitter':
+		        $boxes->objects = new stdClass();//boxesInstagram($boxes);
+		        
+		        $boxes->id = "live";
+		        
+		        $target = '_blank';
+		        
+		        break;
 		    case 'vimeo':
 		        
 		        $vid_url = parse_url($boxes->source);
@@ -458,7 +466,11 @@ class Boxes {
 			$i=0;
 		?>
 			
-			<div id="boxes-<?php echo $type; ?>-<?php echo $boxes->id; ?>" class="box-boxes boxes-<?php echo $type; ?> <?php echo 'boxes-'.$boxes->layout;?> <?php echo $boxes->class; ?>">
+			<div 
+				id="boxes-<?php echo $type; ?>-<?php echo $boxes->id; ?>" 
+				class="box-boxes boxes-<?php echo $type; ?> <?php echo 'boxes-'.$boxes->layout;?> <?php echo $boxes->class; ?>"
+				data-source="<?php echo $boxes->source; ?>"
+			>
 			
 			<?php if( !empty( $boxes->header ) ): ?>
 				<div class="boxes-header">
@@ -546,15 +558,16 @@ class Boxes {
 	}
 	
 	static function register_script() {
-		//wp_register_style( 'font-awesome', '//netdna.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css', array(), '4.1.0', 'screen' );
+		wp_register_style( 'liveTweets-css', '//codepen.io/ThatGuySam/pen/ZGewNb.css', array(), null, 'screen' );
 		//wp_register_script('imagesloaded', '//cdnjs.cloudflare.com/ajax/libs/jquery.imagesloaded/3.0.4/jquery.imagesloaded.js', array('jquery'), '3.0.4', true);
+		wp_register_script('codepen', '//codepen.io/ThatGuySam/pen/ZGewNb.js', array('jquery','masonry'), null, true);
 	}
 
 	static function print_script() {
 		if ( ! self::$add_script )
 			return;
-			//wp_print_styles('font-awesome');
-			//wp_print_scripts('imagesloaded');
+			wp_print_styles('liveTweets-css');
+			wp_print_scripts('codepen');
 	}
 	
 	static function internal_script() {

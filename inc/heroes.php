@@ -216,6 +216,34 @@ function heroOrganism($hero) {
 			<?php $hero->output = ob_get_clean();
 			
 		break;
+		case 'stream':
+			
+			ob_start();
+			
+			
+			?>
+			
+			<div class="hero-slide hero-welcome fadeIn" >
+				
+				<div class="hero-background animated fadeIn animated-3s animated-delay-1s">
+					
+				</div>
+				
+				<div class="hero-foreground" style="<?php //BG Color Overlay
+					if( !empty( $hero->color ) ): 
+						?>background: <?php echo $hero->color; ?>; <?php //#000000
+						?>background: rgba(<?php echo hex2rgb( $hero->color ); ?>,0.85); <?php //rgba(0,0,0,0.8)
+					endif; ?>">
+						
+						<?php echo do_shortcode('[boxes type="twitter" source="http://tougherthanhell.com/stream/" header="#TougherThanHell" class="text-overlay" amount="32" show="3" layout="masonry"]'); ?>
+											
+				</div>
+				
+			</div>
+			
+			<?php $hero->output = ob_get_clean();
+			
+		break;
 		default:
 	}
 	
@@ -1203,6 +1231,7 @@ function hero() {
 				
 				$hero->kind = $hero->all_kind;
 				if( $hero->link === '/welcome' ) $hero->kind = 'welcome';
+				if( $hero->link === '/stream' ) $hero->kind = 'stream';
 				
 				$hero->color = false;
 				$color = get_sub_field('color');
