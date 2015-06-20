@@ -15831,7 +15831,7 @@ var Roots = {
 				  	
 				  	status = "sending";
 				  	
-				  	console.log(request);
+				  	///console.log(request);
 				  	$(this)
 				  		.removeClass("opened")
 				  		.addClass("message-"+status);
