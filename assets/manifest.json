@@ -1,14 +1,30 @@
 {
-  "dest": "assets/manifest.json",
-  "querystring": true,
-  "assets/css/main.min.css": {
-    "path": "assets/css/main.min.css",
-    "hash": "52609a5fadf4c47b3d949385eb428726",
-    "handle": "roots_css"
+  "dependencies": {
+    "main.js": {
+      "files": [
+        "scripts/main.js"
+      ],
+      "main": true
+    },
+    "main.css": {
+      "files": [
+        "styles/main.scss"
+      ],
+      "main": true
+    },
+    "editor-style.css": {
+      "files": [
+        "styles/editor-style.scss"
+      ]
+    },
+    "jquery.js": {
+      "bower": ["jquery"]
+    },
+    "modernizr.js": {
+      "bower": ["modernizr"]
+    }
   },
-  "assets/js/scripts.min.js": {
-    "path": "assets/js/scripts.min.js",
-    "hash": "b779eba49775c9242cbff4e6fb847d4a",
-    "handle": "roots_js"
+  "config": {
+    "devUrl": "http://example.dev"
   }
 }
