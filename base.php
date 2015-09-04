@@ -17,8 +17,10 @@ use Roots\Sage\Wrapper;
     <?php
       do_action('get_header');
       get_template_part('templates/header');
+      echo hero();
+	  echo Roots\Sage\Extras\socialBar();
     ?>
-    <div class="wrap container" role="document">
+    <div class="wrap container-fluid nopadding" role="document">
       <div class="content row">
         <main class="main" role="main">
           <?php include Wrapper\template_path(); ?>
