@@ -624,8 +624,6 @@ function social_media_profiles($strapped=0,$profiles=0) {
 }
 
 
-
-
 //Function to count the total number of top level menus. Useful for menus with sub menus
 function count_top_level_menu_items($menu_id){
     $count = 0;
