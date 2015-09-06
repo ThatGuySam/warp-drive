@@ -79,7 +79,10 @@ function roots_custom_nav_menu_css_class($classes, $item) {
 	
 	$classes = array_unique($classes);
 	
-	return array_filter($classes, 'Roots\\Sage\\Utils\\is_element_empty');
+	return array_filter($classes, function ($element) {
+      $element = trim($element);
+      return !empty($element);
+    });
 	
 }
 add_filter('nav_menu_css_class', 'roots_custom_nav_menu_css_class', 10, 2);
