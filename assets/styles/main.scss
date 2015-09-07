@@ -95,7 +95,7 @@ $body-font: "Source Sans Pro","Helvetica Neue",Helvetica,Arial,sans-serif;
 $letter-spacing: 0.1em;
 
 
-$link-color:		$secondary-color;
+$link-color:		$tertiary-color;
 
 $link-hover-color:	$secondary-dark;
 
@@ -398,7 +398,7 @@ p {
 }
 
 a {
-	color: $secondary-color;
+	color: $link-color;
 	text-decoration: underline;
 }
 
@@ -437,6 +437,10 @@ hr,
 
 .btn {
 	border-radius: 0;
+}
+
+.ripple-wrapper div {
+	@include backgroundRGBa($nm-red);
 }
 
 //
@@ -869,7 +873,7 @@ Menu
 		background-color: $primary-color;
 	}
 	
-	@include transition();
+	//@include transition();
 }
 
 .nav > li > a:hover,
@@ -941,7 +945,30 @@ Menu
 	text-align: center;
 	z-index: 0;
 	font-weight: 900;
-	background: $primary-color;
+	text-transform: uppercase;
+	//background: $primary-color;
+	
+	a {
+		font-size: 1.4em;
+		letter-spacing: .2em;
+		text-decoration: none;
+	}
+	
+	.sub-menu {
+		.menu-item {
+			display: inline-block;
+			overflow: hidden;
+			height: 0px;
+			vertical-align: top;
+			padding: 0 0.7em;
+			
+			@include transition( height, 1s, 250ms );
+		}
+	}
+	
+	&:hover .sub-menu .menu-item {
+		height: 40px;
+	}
 	
 	-ms-touch-action: manipulation;
 	touch-action: manipulation;

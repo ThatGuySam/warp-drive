@@ -73,8 +73,12 @@ function roots_custom_nav_menu_css_class($classes, $item) {
 	$classes = preg_replace('/(current(-menu-|[-_]page[-_])(item|parent|ancestor))/', 'active', $classes);
 	$classes = preg_replace('/^((menu|page)[-_\w+]+)+/', '', $classes);
 	
-	if ( has_term($menu_locations['primary_navigation'], 'nav_menu', $item) ) {
-		$classes[] = 'col-sm-2 col-xs-6 hidden-xs nopadding menu-item menu-' . $slug;
+	if ( $item->menu_item_parent==0 && has_term($menu_locations['primary_navigation'], 'nav_menu', $item) ) {
+		$classes[] = 'col-sm-3 col-xs-6 hidden-xs nopadding menu-item menu-' . $slug;
+	}
+	
+	if ( $item->menu_item_parent>=0 && has_term($menu_locations['primary_navigation'], 'nav_menu', $item) ){
+		$classes[] = 'menu-item menu-' . $slug;
 	}
 	
 	$classes = array_unique($classes);
@@ -148,7 +152,7 @@ function add_outer_menu($items, $args) {
  	$before . $items . $after;
  	
 }
-add_filter('wp_nav_menu_items', 'add_outer_menu', 10, 2);
+//add_filter('wp_nav_menu_items', 'add_outer_menu', 10, 2);
 
 
 
