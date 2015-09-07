@@ -210,7 +210,7 @@ var google_remarketing_only = true;
 </noscript>'."\n";
 
 }
-add_action( 'wp_head', 'google_remarketing_code' , 1);
+add_action( 'wp_footer', 'google_remarketing_code' , 1);
 
 
 //Custom Admin CSS
