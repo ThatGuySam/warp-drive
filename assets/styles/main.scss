@@ -60,7 +60,7 @@ $primary-color: $nm-red;
 
 $secondary-color: #000000;
 
-$tertiary-color: #323232;
+$tertiary-color: #ffffff;
 
 
 $off-white: $secondary-color;
@@ -374,19 +374,20 @@ Typography
 
 body, h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4 {
 	font-family: $primary-font;
-	font-weight: 300;
+	font-weight: 900;
 }
 
-h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4 {
-	font-weight: 700;
+h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, b, strong {
+	font-weight: 900;
 	text-transform: uppercase;
+	color: $tertiary-color;
 }
 
 p {
 	font-size: 22px;
 	font-family: $body-font;
 	letter-spacing: .01rem;
-	font-weight: 400;
+	//font-weight: 300;
 	font-style: normal;
 	line-height: 1.5;
 	
@@ -781,7 +782,7 @@ html {
 }
 
 body {
-	background: $primary-color;
+	background: $secondary-color;
 	color: $secondary-color;
 	font-size: 16px;
 	overflow-x: hidden;
@@ -793,7 +794,27 @@ body {
 	//max-width: 1140px;
 }
 
+.hero-container {
+	background-color: $secondary-color;
+	@include transition(background-color, 15s, 3s);
+}
 
+.csstransitions .hero-container, .wrap, footer {
+	background-color: $primary-color;
+}
+
+
+.fadeInThird {
+	
+	opacity: 0;
+	
+	@include transition( opacity , 2s , 5s );
+	
+	.cssanimations & {
+		opacity: 1;
+	}
+	
+}
 
 
 
@@ -919,7 +940,7 @@ Menu
 .menu-item {
 	text-align: center;
 	z-index: 0;
-	font-weight: 500;
+	font-weight: 900;
 	background: $primary-color;
 	
 	-ms-touch-action: manipulation;
@@ -1194,11 +1215,11 @@ Hero
 	
 	position: relative;
 	overflow: hidden;
-	padding-bottom: 3em;
+	//padding-bottom: 3em;
 	
 	h1, h2, h3 {
 		text-transform: uppercase;
-		font-weight: 600;
+		font-weight: 900;
 		
 		@media (min-width:768px) {
 	    	letter-spacing: 0.2em;
@@ -1329,7 +1350,7 @@ Hero
 			display: inline-block;
 			vertical-align: middle;
 			color: $secondary-color;
-			text-shadow: 0 0 1px #000000;
+			//text-shadow: 0 0 1px #000000;
 			max-width: 99%;
 			@media (max-width:768px) {
 				font-size: 1em;
@@ -1340,7 +1361,7 @@ Hero
 			h1 {
 				font-size: 3em;
 				@media (max-width:768px) { font-size: 2em; }
-				font-weight: 700;
+				font-weight: 900;
 			}
 		}
 	}
@@ -1378,7 +1399,8 @@ Hero
 	.read-more {
 	
 		position: absolute;
-		bottom: -20%;
+		bottom: 0;
+		//opacity: 0;
 		left: 50%;
 		width: 150px;
 		margin-left: -75px;
@@ -1388,12 +1410,12 @@ Hero
 	
 		color: #ffffff;
 		text-transform: uppercase;
-		text-shadow: 0 0 2px rgba(0, 0, 0, 1.0);
-		font-weight: 500;
+		//text-shadow: 0 0 2px rgba(0, 0, 0, 1.0);
+		//font-weight: 500;
 		
-		@include backgroundRGBa($primary-color, 0.9);
+		//@include backgroundRGBa($primary-color, 0.9);
 		
-		@include transition( bottom , 750ms );
+		//@include transition( all , 750ms );
 		
 		span {
 			line-height: 1em;
@@ -1428,7 +1450,7 @@ Hero
 		}
 		
 		.read-more {
-			bottom: 0;
+			//bottom: 0;
 			
 			@include transition-delay( 500ms );
 			
@@ -2439,3 +2461,15 @@ Media Queries
 @-moz-keyframes fadeIn { from { opacity:0; } to { opacity:1; } }
 @-o-keyframes fadeIn { from { opacity:0; } to { opacity:1; } }
 @keyframes fadeIn { from { opacity:0; } to { opacity:1; } }
+
+
+/*
+@-webkit-keyframes fadeInRedBG { from { background-color: $secondary-color; } to { background-color: $primary-color; } }
+@-moz-keyframes fadeInRedBG { from { background-color: $secondary-color; } to { background-color: $primary-color; } }
+@-o-keyframes fadeInRedBG { from { background-color: $secondary-color; } to { background-color: $primary-color; } }
+@keyframes fadeInRedBG { from { background-color: $secondary-color; } to { background-color: $primary-color; } }
+*/
+
+
+
+

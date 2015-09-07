@@ -1276,18 +1276,16 @@ function hero() {
 	
 	<?php //debug(  ); ?>
 	
-	<?php /*
-if( $hero->kind !== 'text' && @$hero->page_options->readmore !== 'hidden' ): ?>
+	<?php if( $hero->kind !== 'text' && @$hero->page_options->readmore !== 'hidden' ): ?>
 		
-		<a href="#content" class="scrollto">
+		<a href="#content" class="scrollto fadeInThird">
 			<div class="read-more hidden-sm hidden-xs">
 				<span class="read-more-text"><?php if( isset( $hero->page_options->readmore ) ): echo $hero->page_options->readmore; else: ?>Learn More<?php endif; ?></span>
 				<span><i class="down-arrow"></i></span>
 			</div>
 		</a>
 		
-	<?php endif;
-*/ ?>
+	<?php endif; ?>
 	
 	
 	
