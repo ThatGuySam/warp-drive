@@ -61,10 +61,10 @@ add_action('wp_print_styles', __NAMESPACE__ .'\\deregister_styles', 100);
 function deregister_styles() {
 	
 	$scripts = array(
-		array('js', 'wpb_composer_front_js'),
+		//array('js', 'wpb_composer_front_js'),
 		array('js', 'modernizr'),
-		array('css', 'js_composer_front'),// Visual Composer
-		array('css', 'js_composer_custom_css'),
+		//array('css', 'js_composer_front'),// Visual Composer
+		//array('css', 'js_composer_custom_css'),
 		array('css', 'ai1ec-general'),// All-in-one Events
 		array('css', 'ai1ec-event'),
 		array('css', 'ai1ec-calendar'),
