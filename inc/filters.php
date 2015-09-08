@@ -223,8 +223,10 @@ var google_custom_params = window.google_tag_params;
 var google_remarketing_only = true;
 /* ]]> */
 </script>
+<div style="display:none">
 <script type="text/javascript" src="//www.googleadservices.com/pagead/conversion.js">
 </script>
+</div>
 <noscript>
 <div style="display:inline;">
 <img height="1" width="1" style="border-style:none;" alt="" src="//googleads.g.doubleclick.net/pagead/viewthroughconversion/1013885733/?value=0&amp;guid=ON&amp;script=0"/>
@@ -232,7 +234,7 @@ var google_remarketing_only = true;
 </noscript>'."\n";
 
 }
-add_action( 'wp_footer', 'google_remarketing_code' , 1);
+//add_action( 'wp_footer', 'google_remarketing_code' , 1);
 
 
 //Custom Admin CSS
