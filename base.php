@@ -20,7 +20,7 @@ use Roots\Sage\Wrapper;
       echo hero();
 	  //echo Roots\Sage\Extras\socialBar();
     ?>
-    <div class="wrap container-fluid nopadding" role="document">
+    <div id="content" class="wrap container-fluid nopadding" role="document">
       <div class="content row">
         <main class="main" role="main">
           <?php include Wrapper\template_path(); ?>
