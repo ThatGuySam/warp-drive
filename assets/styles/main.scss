@@ -803,7 +803,7 @@ body {
 	@include transition(background-color, 15s, 3s);
 }
 
-.csstransitions .hero-container, .wrap, footer {
+.csstransitions .hero-container, .wrap, footer, body#tinymce {
 	background-color: $primary-color;
 }
 
