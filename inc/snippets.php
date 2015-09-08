@@ -691,7 +691,7 @@ function webFontLoader() {
 		window.gc = window.gc || {}; gc.pageScripts = [];
 		
 		WebFontConfig = {
-			typekit: { id: 'rxw8wmu' },
+			//typekit: { id: 'rxw8wmu' },
 			custom: {
 				families: ['gc-icon'],
 				urls: ['//tougherthanhell.s3.amazonaws.com/css/gc-icon.css']
