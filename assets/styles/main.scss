@@ -462,6 +462,24 @@ hr,
 
 //Accordion
 
+.vc_tta-color-grey.vc_tta-style-classic .vc_tta-panel .vc_tta-panel-body, 
+.vc_tta-color-grey.vc_tta-style-classic .vc_tta-panel .vc_tta-panel-body::before, 
+.vc_tta-color-grey.vc_tta-style-classic .vc_tta-panel .vc_tta-panel-body::after,
+.vc_tta-color-grey.vc_tta-style-classic .vc_tta-panel .vc_tta-panel-heading,
+.vc_tta-color-grey.vc_tta-style-classic .vc_tta-panel.vc_active .vc_tta-panel-heading,
+.vc_tta-color-grey.vc_tta-style-classic .vc_active .vc_tta-panel-heading .vc_tta-controls-icon::before, 
+.vc_tta-color-grey.vc_tta-style-classic .vc_active .vc_tta-panel-heading .vc_tta-controls-icon::after,
+.vc_tta-color-grey.vc_tta-style-classic .vc_tta-controls-icon::before, 
+.vc_tta-color-grey.vc_tta-style-classic .vc_tta-controls-icon::after {
+    border-color: $secondary-color;
+    background-color: transparent;
+}
+
+.vc_tta-color-grey.vc_tta-style-classic .vc_tta-panel.vc_active .vc_tta-panel-title > a,
+.vc_tta-color-grey.vc_tta-style-classic .vc_tta-panel .vc_tta-panel-title > a {
+	color: $secondary-color;
+}
+
 .wpb_content_element .wpb_accordion_wrapper .wpb_accordion_header, 
 .wpb_content_element.wpb_tabs .wpb_tour_tabs_wrapper .wpb_tab {
 	
