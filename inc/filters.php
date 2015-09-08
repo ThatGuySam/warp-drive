@@ -190,6 +190,22 @@ add_action( 'wp_head', 'load_google_fonts' , 1);
 
 
 
+function google_translate_code() {
+	
+	ob_start(); ?>
+		
+		<div id="google_translate_element hidden"></div><script type="text/javascript">
+			function googleTranslateElementInit() {
+			  new google.translate.TranslateElement({pageLanguage: 'en', layout: google.translate.TranslateElement.FloatPosition.TOP_LEFT, gaTrack: true, gaId: 'UA-36145549-1'}, 'google_translate_element');
+			}
+		</script><script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+		    
+	<?php $content = ob_get_clean();
+		
+	echo $content;
+	
+}
+add_action( 'wp_footer', 'google_translate_code' , 1);
 
 
 
