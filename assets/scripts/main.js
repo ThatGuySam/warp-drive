@@ -606,7 +606,7 @@
 			
 			/* Init */
 			
-			$.material.init();
+			//$.material.init();
 			
 			//sizeFirstBox();
 			
