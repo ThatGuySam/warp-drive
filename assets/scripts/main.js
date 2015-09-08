@@ -586,9 +586,13 @@
 			
 			/* Content */
 			
+			
+			//TODO: Make this work with classes too
 			$("a.scrollto, .scrollto > a").each(function(){
 				
-				var selector = $(this).attr('href');
+				//var selector = $(this).attr('href');
+				
+				var selector = "#"+this.hash.substr(1)
 				
 				$(this).click(function(){
 					
