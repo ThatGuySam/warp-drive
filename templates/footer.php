@@ -3,6 +3,6 @@
     <?php dynamic_sidebar('sidebar-footer'); ?>
   </div>
   <div class="copyright">
-	  © The Nightmare <?php echo date('Y'); ?>
+	  © <?php echo bloginfo( 'name' ); ?> <?php echo date('Y'); ?>
   </div>
 </footer>
