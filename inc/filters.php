@@ -74,7 +74,7 @@ function roots_custom_nav_menu_css_class($classes, $item) {
 	$classes = preg_replace('/^((menu|page)[-_\w+]+)+/', '', $classes);
 	
 	if ( $item->menu_item_parent==0 && has_term($menu_locations['primary_navigation'], 'nav_menu', $item) ) {
-		$classes[] = 'col-sm-3 col-xs-6 hidden-xs nopadding scrollto menu-item menu-' . $slug;
+		$classes[] = 'col-sm-2 col-xs-6 hidden-xs nopadding scrollto menu-item pull-right menu-' . $slug;
 	}
 	
 	if ( $item->menu_item_parent>=0 && has_term($menu_locations['primary_navigation'], 'nav_menu', $item) ){
