@@ -95,9 +95,11 @@ $body-font: "Lora","Helvetica Neue",Helvetica,Arial,sans-serif;
 $letter-spacing: 0.1em;
 
 
-$link-color:		$tertiary-color;
+$link-color:		$primary-color;
 
-$link-hover-color:	$secondary-dark;
+$link-hover-color:	$secondary-color;
+
+$menu-color:		$secondary-color;
 
 
 
@@ -380,7 +382,7 @@ body, h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4 {
 h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, b, strong {
 	font-weight: 900;
 	text-transform: uppercase;
-	color: $tertiary-color;
+	//color: $tertiary-color;
 }
 
 p {
@@ -395,6 +397,10 @@ p {
 	-webkit-font-smoothing: antialiased;
 	-moz-osx-font-smoothing: grayscale;
 	-moz-font-feature-settings: "liga" on;
+	
+	main>& {
+		
+	}
 }
 
 a {
@@ -804,7 +810,7 @@ html {
 }
 
 body {
-	background: $secondary-color;
+	background: $tertiary-color;
 	color: $secondary-color;
 	font-size: 16px;
 	overflow-x: hidden;
@@ -822,7 +828,7 @@ body {
 }
 
 .csstransitions .hero-container, .wrap, footer, body#tinymce {
-	background-color: $primary-color;
+	background-color: $tertiary-color;
 }
 
 
@@ -867,16 +873,13 @@ Menu
 .expanded-nav-open header.banner.navbar {
 	top: 0;
 	&.navbar-default {
-		@include backgroundRGBa($primary-color, 0.97);
+		@include backgroundRGBa($tertiary-color, 0.97);
 	}
 }
 
 .navbar, 
 .navbar-default.navbar, 
 .expanded-nav-open header.banner.navbar {
-	//position: absolute;
-	//left: 0;
-	//right: 0;
 	
 	.watch-page & {
 		top: 0;
@@ -884,7 +887,7 @@ Menu
 	
 	
 	//&:extend(&:-moz-placeholder);
-	@include backgroundRGBa($primary-color, 0);
+	@include backgroundRGBa($tertiary-color, 0);
 	
 	@media only screen and (max-width: 992px) {
 		position: relative;
@@ -963,13 +966,14 @@ Menu
 	text-align: center;
 	z-index: 0;
 	font-weight: 900;
-	text-transform: uppercase;
+	//text-transform: uppercase;
 	//background: $primary-color;
 	
 	a {
-		font-size: 1.4em;
+		//font-size: 1.4em;
 		letter-spacing: .2em;
 		text-decoration: none;
+		color: $menu-color;
 	}
 	
 	.sub-menu {
@@ -1012,7 +1016,7 @@ Menu
 .primary-nav {
 
 	.menu-item {
-		text-transform: uppercase;
+		//text-transform: uppercase;
 	}
 	
 	.menu-item:after {
@@ -1114,7 +1118,7 @@ Menu
 			>a { //Column headers
 				font-size: 0.7em;
 				font-weight: 500;
-				text-transform: uppercase;
+				//text-transform: uppercase;
 				text-align: center;
 				
 				padding-left: 0;
@@ -1453,8 +1457,8 @@ Hero
 		padding-bottom: 5px;
 		text-align: center;
 	
-		color: #ffffff;
-		text-transform: uppercase;
+		//color: #ffffff;
+		//text-transform: uppercase;
 		//text-shadow: 0 0 2px rgba(0, 0, 0, 1.0);
 		//font-weight: 500;
 		
