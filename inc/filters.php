@@ -207,7 +207,7 @@ function google_translate_code() {
 	echo $content;
 	
 }
-add_action( 'wp_footer', 'google_translate_code' , 1);
+//add_action( 'wp_footer', 'google_translate_code' , 1);
 
 
 
