@@ -176,7 +176,7 @@ function show_sitemap() {
 add_action('template_redirect', 'show_sitemap');
 
 
-define("GOOGLE_FONTS", "Source+Sans+Pro:900");
+define("GOOGLE_FONTS", "Lora:400,700");
 
 
 /**
