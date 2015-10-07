@@ -423,6 +423,10 @@ a:focus, a:hover {
 	color: $primary-color;
 }
 
+.brand-color {
+	color: $brand-primary;
+}
+
 
 
 
@@ -910,36 +914,9 @@ Menu
 	color: $secondary-color;
 	margin: 0 0;
 	
-	&:hover .tth-logo {
-		box-shadow: none;
-		z-index: 0;
-	}
-	
 	&#menu-primary-navigation > li {	
 	
 		font-size: 0;
-		
-		&.tth-logo > a {
-			font-size: 0;
-			padding: 30px 0;
-			
-			&:before {
-				font-size: 128px;
-				content: '\e9df';
-				
-				font-family: "gc-icon";
-				font-style: normal;
-				font-weight: normal;
-				display: inline-block;
-				text-decoration: inherit;
-				text-align: center;
-				vertical-align: middle;
-				font-variant: normal;
-				text-transform: none;
-				-webkit-font-smoothing: antialiased;
-				-moz-osx-font-smoothing: grayscale;
-			}
-		}
 		
 		> a {	
 			padding: 20px 0;
@@ -1003,12 +980,6 @@ Menu
 	-moz-user-select: none;
 	-ms-user-select: none;
 	user-select: none;
-}
-
-.tth-logo,
-.navbar .navbar-nav:hover .tth-logo:hover {
-	@includes box-shadow();
-	z-index: 10;
 }
 
 .primary-nav-container {
