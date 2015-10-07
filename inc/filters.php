@@ -74,7 +74,7 @@ function roots_custom_nav_menu_css_class($classes, $item) {
 	$classes = preg_replace('/^((menu|page)[-_\w+]+)+/', '', $classes);
 	
 	if ( $item->menu_item_parent==0 && has_term($menu_locations['primary_navigation'], 'nav_menu', $item) ) {
-		$classes[] = 'col-sm-2 col-xs-6 hidden-xs nopadding scrollto menu-item pull-right menu-' . $slug;
+		$classes[] = 'col-sm-2 col-xs-6 hidden-xs nopadding scrollto menu-item menu-' . $slug;
 	}
 	
 	if ( $item->menu_item_parent>=0 && has_term($menu_locations['primary_navigation'], 'nav_menu', $item) ){
@@ -134,7 +134,9 @@ function add_outer_menu($items, $args) {
  
 	ob_start(); ?>
 		
-	<li class="menu-outer-item col-sm-1 col-xs-3"></li>
+	<li class="menu-outer-item menu-item col-sm-2 col-xs-3 logo">
+		<a href="/">MORE<span class="brand-color">2</span>LIFE</a>
+	</li>
 		    
 	<?php $before = ob_get_clean();
 	
@@ -146,13 +148,18 @@ function add_outer_menu($items, $args) {
 	<?php $after = ob_get_clean();
 		
 		
+		
+	//Disable after
+	$after = "";
+		
+		
  
  // On main menu: put styling around search and append it to the menu items
  return 
  	$before . $items . $after;
  	
 }
-//add_filter('wp_nav_menu_items', 'add_outer_menu', 10, 2);
+add_filter('wp_nav_menu_items', 'add_outer_menu', 10, 2);
 
 
 
