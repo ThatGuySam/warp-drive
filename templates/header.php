@@ -1,4 +1,4 @@
-<header class="banner navbar navbar-default navbar-fixed-top hidden-xs fadeInThird" role="banner">
+<header class="banner navbar navbar-default navbar-fixed-top" role="banner">
   <div class="container">
     <nav role="navigation">
       <?php

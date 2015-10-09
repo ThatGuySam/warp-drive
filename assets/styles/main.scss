@@ -828,12 +828,12 @@ body {
 }
 
 .hero-container {
-	background-color: $secondary-color;
-	@include transition(background-color, 15s, 3s);
+	//background-color: $secondary-color;
+	//@include transition(background-color, 15s, 3s);
 }
 
 .csstransitions .hero-container, .wrap, footer, body#tinymce {
-	background-color: $tertiary-color;
+	//background-color: $tertiary-color;
 }
 
 
