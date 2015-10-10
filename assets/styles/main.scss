@@ -1343,6 +1343,24 @@ Hero
 		}
 	}
 	
+	.hero-background img,
+	.hero-background video {
+		
+		width: 100%;
+		@media (max-width:360px) {
+	    	width: auto;
+	    	height: 100%;
+	    }
+		position: absolute;
+		
+		@include transition( margin, 750ms);
+		
+		&::-webkit-media-controls {
+		    display:none;
+		}
+		
+	}
+	
 	&.hero-media {
 		
 		.hero-organism {
@@ -1362,23 +1380,7 @@ Hero
 			}
 			
 			
-			.hero-background img,
-			.hero-background video {
-				
-				width: 100%;
-				@media (max-width:360px) {
-			    	width: auto;
-			    	height: 100%;
-			    }
-				position: absolute;
-				
-				@include transition( margin, 750ms);
-				
-				&::-webkit-media-controls {
-				    display:none;
-				}
-				
-			}
+			
 		}
 		
 		.page-header {
@@ -1419,7 +1421,7 @@ Hero
 	}
 	
 	&.hero-text {
-		padding-top: 60px;
+		//padding-top: 60px;
 		
 		@media (max-width:768px) {
 			

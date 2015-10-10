@@ -9,6 +9,46 @@ function heroOrganism($hero) {
 	switch ($hero->kind) {
 		case "text":
 			
+			
+			if( empty( $hero->color ) ) {
+				
+				$hero->color = "#ffffff";
+				
+			}
+			
+			ob_start(); ?>
+				
+				<!--
+				<div class="container">
+					<div class="page-header">
+						<h1><?php echo $hero->text; ?></h1>
+					</div>
+				</div>
+				-->
+				
+				<div class="hero-slide" >
+				
+					<div class="hero-background">
+						<img <?php echo $hero->srcType; ?>="<?php echo $hero->src; ?>" alt="<?php echo $hero->text; ?>">
+					</div>
+					
+					<div class="hero-foreground animated fadeIn animated-3s animated-delay-1s" style="<?php //BG Color Overlay
+							?>background: <?php echo $hero->color; ?>; <?php //#000000
+							?>background: rgba(<?php echo hex2rgb( $hero->color ); ?>,0.85); <?php //rgba(0,0,0,0.8)
+						?>">
+					
+						<div class="container">
+							<div class="page-header">
+								<h1><?php echo $hero->text; ?></h1>
+							</div>
+						</div>
+						
+					</div>
+					
+				</div>
+				
+			<?php $hero->output = ob_get_clean();
+			
 		break;
 		case 'media':
 			
@@ -1060,6 +1100,8 @@ function hero() {
 	
 	$hero->classes = array();
 	
+	$hero->post = $post;
+	
 	$hero->kind = "text";
 	
 	$hero->all_kind = false;
@@ -1070,15 +1112,13 @@ function hero() {
 	
 	$hero->srcType = "src";
 	
-	$hero->src = getImage();
+	$hero->src = getImage($hero->post->id, 'hd720' );
 	
 	$hero->heroes = false;
 	
 	$hero->heroesCount = 0;
 	
 	$hero->page_options = custom_options();
-	
-	$hero->post = $post;
 	
 	$hero->color = false;
 	
@@ -1191,6 +1231,7 @@ function hero() {
 	<div class="hero-section row">
 		
 	<?php 
+/*
 		if( in_array( "text", $hero->classes ) ){
 			
 			//ob_start(); ?>
@@ -1204,6 +1245,7 @@ function hero() {
 			<?php //$hero->output = ob_get_clean();
 			
 		}
+*/
 		
 		$hero->index = 0;
 		
