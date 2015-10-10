@@ -141,6 +141,23 @@ Mixins
 	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#00000000', endColorstr='#000000',GradientType=0 );
 }
 
+@mixin textOutline($colour: $tertiary-color, $thickness: 0px, $spread: 1px, $alpha: 0.3) {
+	
+	$alphaColour: hsla(hue($colour), saturation($colour), lightness($colour), $alpha);
+	
+	text-shadow: 
+		$thickness $thickness $spread $colour,
+		$thickness -$thickness $spread $colour,
+		-$thickness $thickness $spread $colour,
+		-$thickness -$thickness $spread $colour;
+	
+	text-shadow: 
+		$thickness $thickness $spread $alphaColour,
+		$thickness -$thickness $spread $alphaColour,
+		-$thickness $thickness $spread $alphaColour,
+		-$thickness -$thickness $spread $alphaColour;
+	
+}
 
 /*
 @mixin box-shadow() {
@@ -952,6 +969,7 @@ Menu
 		letter-spacing: .2em;
 		text-decoration: none;
 		color: $menu-color;
+		@include textOutline();
 	}
 	
 	.sub-menu {
