@@ -233,23 +233,22 @@ function heroOrganism($hero) {
 			
 			<div class="hero-slide hero-welcome fadeIn" >
 				
-				<div class="hero-background animated fadeIn animated-3s animated-delay-1s">
-					<video autoplay muted loop poster="//tougherthanhell.s3.amazonaws.com/image/video-cover_black.gif">
-						<source src="//tougherthanhell.s3.amazonaws.com/video/hero/hero.mp4" type="video/mp4">
-						<source src="//tougherthanhell.s3.amazonaws.com/video/hero/hero.ogv" type="video/ogg">
-						<source src="//tougherthanhell.s3.amazonaws.com/video/hero/hero.webm" type="video/webm">
-					</video>
-				</div>
-				
-				<div class="hero-foreground" style="<?php //BG Color Overlay
-					if( !empty( $hero->color ) ): 
-						?>background: <?php echo $hero->color; ?>; <?php //#000000
-						?>background: rgba(<?php echo hex2rgb( $hero->color ); ?>,0.85); <?php //rgba(0,0,0,0.8)
-					endif; ?>">
-						
-						<img src="//tougherthanhell.s3.amazonaws.com/image/0315-SC_TTH_PR-cover.png">
+				<div class="hero-background">
+						<img <?php echo $hero->srcType; ?>="<?php echo $hero->src; ?>" alt="<?php echo $hero->text; ?>">
+					</div>
 					
-				</div>
+					<div class="hero-foreground animated fadeIn animated-3s animated-delay-1s" style="<?php //BG Color Overlay
+							?>background: <?php echo $hero->color; ?>; <?php //#000000
+							?>background: rgba(<?php echo hex2rgb( $hero->color ); ?>,0.85); <?php //rgba(0,0,0,0.8)
+						?>">
+					
+						<div class="container">
+							<div class="page-header">
+								<h1>MORE<span class="brand-color">2</span>LIFE</h1>
+							</div>
+						</div>
+						
+					</div>
 				
 			</div>
 			
