@@ -1316,7 +1316,7 @@ function hero() {
 		
 	</div>
 	
-	<?php //debug(  ); ?>
+	<?php //debug( $hero ); ?>
 	
 	<?php if( $hero->kind !== 'text' && @$hero->page_options->readmore !== 'hidden' ): ?>
 		
