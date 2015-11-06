@@ -42,16 +42,16 @@ function getImage($id = false, $size = 'thumb-hd') {
 function getFillerImage( $digit ) {
 	
 	$fillers = array(
-		218,
-		219,
-		220,
-		221,
-		222,
-		223,
-		224,
-		225,
-		226,
-		227
+		218,//ball
+		275,//Kids Laughing
+		220,//cup
+		221,//girlfriends
+		222,//hands
+		223,//jumping
+		224,//kidhero
+		225,//laughing
+		226,//Sparkler
+		227//Sunglasses
 	);
 	
 	return $fillers[$digit];
