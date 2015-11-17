@@ -592,7 +592,7 @@
 				
 				//var selector = $(this).attr('href');
 				
-				var selector = "#"+this.hash.substr(1)
+				var selector = "#"+this.hash.substr(1);
 				
 				$(this).click(function(){
 					
